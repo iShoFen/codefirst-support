@@ -1,7 +1,6 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import AddTicketScreen from "../screens/AddTicketScreen";
 import StackTicketNavigation from "./StackTicketNavigation";
@@ -9,7 +8,7 @@ import {Text, View} from "react-native";
 
 
 export default function BottomBarNavigation() {
-  const BottomTabNavigator = createBottomTabNavigator()
+  const BottomTabNavigator = createBottomTabNavigator<BottomBarParamList>()
 
   return (
     <NavigationContainer>

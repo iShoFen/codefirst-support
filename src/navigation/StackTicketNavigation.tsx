@@ -7,8 +7,8 @@ export default function StackTicketNavigation() {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="List" navigationKey="TicketList" component={HomeScreen}/>
-      <Stack.Screen name="Item" navigationKey="TicketItem" component={TicketItemScreen}/>
+      <Stack.Screen name="List" component={HomeScreen}/>
+      <Stack.Screen name="Item" component={TicketItemScreen}/>
     </Stack.Navigator>
   )
 }

@@ -6,7 +6,7 @@ import {useNavigation} from "@react-navigation/native";
 export default function HomeScreen() {
   const navigation = useNavigation()
   const handleNavigate = useCallback(() => {
-    navigation.navigate()
+    navigation.navigate('Item')
   }, [])
 
   return (
