@@ -6,7 +6,7 @@
 - Statut
 - Catégorie (incorporation)
     - Nom
-- Commmentaires (incorporation, one to few)
+- Commentaires (incorporation, one to few)
     - Texte
     - Date
     - Auteur (mail)
@@ -32,8 +32,9 @@ Exemple de modèle [ici](https://github.com/anuraghazra/github-readme-stats/issu
     - Multiple (boolean)
     Permet de déterminer le type de choix Radio/Checkbox
 
-## Retours
+## Retour
 - Id du questionnaire (one to zillions, référence)
 - Date de création
 - Auteur (mail)
-- Reponses (valeur des réponses)
+- Titre de la question
+- Reponse (valeur ou tableau si choix multiple)

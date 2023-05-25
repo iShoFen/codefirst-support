@@ -1,0 +1,75 @@
+{
+    "issues": {
+        "_id": "ObjectId",
+        "title": "string",
+        "fields": [
+            {
+                "title": "string",
+                "description": "string",
+                "required": "boolean",
+                "value": "string"
+            }
+        ],
+        "author": "string",
+        "created_at": "date",
+        "status": "string",
+        "category": {
+            "name": "string"
+        },
+        "comments": [
+            {
+                "created_at": "date",
+                "author": "string",
+                "content": "string"
+            }
+        ],
+        "model": {
+            "name": "string",
+            "short_description": "string",
+            "description": "string"
+        }
+    },
+    "issue_models": {
+        "_id": "ObjectId",
+        "name": "string",
+        "short_description": "string",
+        "description": "string",
+        "category": {
+            "name": "string"
+        },
+        "fields": [
+            {
+                "title": "string",
+                "description": "string",
+                "required": "boolean"
+            }
+        ]
+    },
+    "surveys": {
+        "_id": "ObjectId",
+        "created_at": "date",
+        "published_at": "date",
+        "end_at": "date",
+        "title": "string",
+        "description": "string",
+        "questions": [
+            {
+                "title": "string",
+                "description": "string",
+                "type": ["text", "singlechoice", "multiplechoice"],
+                "choices": ["string"]
+            }
+        ]
+    },
+    "feedbacks": {
+        "_id": "ObjectId",
+        "survey_id": "ObjectId",
+        "created_at": "date",
+        "author": "string",
+        "question": {
+            "title": "string",
+            "type": ["text", "singlechoice", "multiplechoice"]
+        },
+        "answer": "string | string-array"
+    }
+}
