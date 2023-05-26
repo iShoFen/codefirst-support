@@ -1,40 +1,97 @@
-## Ticket:
-- Titre
-- Contenu
-- Auteur (mail)
-- Date de création
-- Statut
-- Catégorie (incorporation)
-    - Nom
-- Commentaires (incorporation, one to few)
-    - Texte
-    - Date
-    - Auteur (mail)
+```plantuml
+@startuml
 
-## Modèle
-Exemple de modèle [ici](https://github.com/anuraghazra/github-readme-stats/issues/new/choose)
-- Nom du modèle
-- Description du modèle
-- Catégorie
-- Champs (incorporation, one to few)
-    - Titre
-    - Description
+hide circle
+hide empty members
 
-## Questionnaire
-- Titre
-- Description
-- Champs (incorporation, one to few)
-    - Titre
-    - Description
-    - Choix: [string]
-    Si `Choix` est présent -> Sélection avec Radio/Checkbox
-    Sinon type -> `Text`
-    - Multiple (boolean)
-    Permet de déterminer le type de choix Radio/Checkbox
+entity "issue" as issue {
+    +_id: ObjectId
+    +title: string
+    +author: string
+    +created_at: date
+    +status: string
+}
 
-## Retour
-- Id du questionnaire (one to zillions, référence)
-- Date de création
-- Auteur (mail)
-- Titre de la question
-- Reponse (valeur ou tableau si choix multiple)
+entity "model_info" as model_info {
+    +name: string
+    +short_description: string
+    +description: string
+}
+
+entity "category" as category {
+     +name: string
+}
+
+entity "model_field" as model_field {
+    +title: string
+    +description: string
+    +required: boolean
+}
+
+entity "issue_field" as issue_field {
+    +title: string
+    +description: string
+    +required: boolean
+    +value: string
+}
+
+entity "comment" as comment {
+    +created_at: date
+    +author: string
+    +content: string
+}
+
+entity "issue_model" as issue_model {
+    +_id: ObjectId
+    +name: string
+    +short_description: string
+    +description: string
+}
+
+entity "survey" as survey {
+  +_id: ObjectId
+  +created_at: date
+  +published_at: date
+  +end_at: date
+  +title: string
+  +description: string
+}
+
+entity "question" as question {
+  +title: string
+  +description: string
+  +type: string
+  +choices: string
+}
+
+entity "question_info" as question_info {
+  +title: string
+  +type: string
+}
+
+entity "feedback" as feedback {
+  survey feedback
+  +_id: ObjectId
+  +created_at: date
+  +author: string
+  question feedback
+  +answer: Array<string>
+}
+
+issue ||-o{ model_info : contains
+issue }o--|| comment : contains
+issue }o--|{ issue_field : contains 
+
+model_info ||--|{ category : contains
+
+issue_model }o--{ model_field : contains
+issue_model ||--|{ category : contains
+
+
+survey }o--{ question : contains
+survey }o--|| feedback : contains
+
+feedback ||--|{ question_info : contains
+
+@enduml
+```
