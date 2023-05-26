@@ -70,6 +70,6 @@
             "title": "string",
             "type": ["text", "singlechoice", "multiplechoice"]
         },
-        "answer": "string | string-array"
+        "answers": ["string"]
     }
 }
