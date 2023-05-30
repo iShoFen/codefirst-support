@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.include;
 
-@Path("/api")
+@Path("")
 public class GreetingResource {
 
     @GET
@@ -26,9 +26,6 @@ public class GreetingResource {
         return "Hello from RESTEasy Reactive";
     }
 
-    @GET
-    @Path("/feedback")
-    @Produces(MediaType.APPLICATION_JSON)
     public String getFeedback() {
         String uri = "mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000";
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -50,9 +47,6 @@ public class GreetingResource {
         return "no result";
     }
 
-    @GET
-    @Path("/feedbacks")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getFeedbacks() {
         String uri = "mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000";
         try (MongoClient mongoClient = MongoClients.create(uri)) {

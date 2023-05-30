@@ -7,7 +7,7 @@ import jakarta.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/api/categories")
+@Path("/categories")
 public class CategoryController {
 
     @GET
