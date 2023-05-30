@@ -84,7 +84,7 @@ class QuestionInfo {
   title: string
 }
 
-Survey -up-> "comments *" Question
+Survey -up-> "questions *" Question
 Feedback --> "question 1" QuestionInfo
 QuestionInfo -right-> "type 1" QuestionType
 
