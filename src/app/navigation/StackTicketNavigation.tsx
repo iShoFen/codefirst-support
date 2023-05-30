@@ -3,7 +3,7 @@ import HomeScreen from "../screens/HomeScreen";
 import TicketItemScreen from "../screens/TicketItemScreen";
 
 export default function StackTicketNavigation() {
-  const Stack = createStackNavigator()
+  const Stack = createStackNavigator<TicketParamList>()
 
   return (
     <Stack.Navigator>

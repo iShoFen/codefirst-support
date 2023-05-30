@@ -2,9 +2,9 @@ type BottomBarParamList = {
   Home: undefined
   AddTicket: undefined
   Settings: undefined
-};
+}
 
-type TicketStackParamList = {
+type TicketParamList = {
   List: undefined
-  Ticket: undefined
+  Item: { id: number }
 }

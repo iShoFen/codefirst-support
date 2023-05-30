@@ -4,7 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SettingsScreen from "../screens/SettingsScreen";
 import AddTicketScreen from "../screens/AddTicketScreen";
 import StackTicketNavigation from "./StackTicketNavigation";
-import {Text, View} from "react-native";
 
 
 export default function BottomBarNavigation() {
@@ -15,36 +14,31 @@ export default function BottomBarNavigation() {
       <BottomTabNavigator.Navigator initialRouteName="Home"
                                     screenOptions={{headerShown: false}}>
         <BottomTabNavigator.Screen
-          name="Home" component={StackTicketNavigation}
+          name="Home"
+          component={StackTicketNavigation}
           options={{
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons name="home" color={color} size={size}/>
-            )
+            ),
+            tabBarLabel: 'Accueil'
           }}/>
         <BottomTabNavigator.Screen
-          name="AddTicket" component={AddTicketScreen}
+          name="AddTicket"
+          component={AddTicketScreen}
           options={{
             tabBarIcon: ({color, size}) => (
-              <View style={{
-                bottom: 20,
-                backgroundColor: 'darksalmon',
-                width: 64,
-                height: 64,
-                padding: 20,
-                borderRadius: 100
-              }
-              }>
-                <MaterialCommunityIcons name="plus" color={color} size={size}/>
-              </View>
+                <MaterialCommunityIcons name="plus-circle" color={color} size={size}/>
             ),
-            tabBarLabel: ''
+            tabBarLabel: 'Nouveau ticket'
           }}/>
         <BottomTabNavigator.Screen
-          name="Settings" component={SettingsScreen}
+          name="Settings"
+          component={SettingsScreen}
           options={{
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons name="cog" color={color} size={size}/>
-            )
+            ),
+            tabBarLabel: 'Paramètres'
           }}/>
       </BottomTabNavigator.Navigator>
     </NavigationContainer>
