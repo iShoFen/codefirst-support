@@ -3,7 +3,7 @@ package fr.iut.uca.entity.surveys;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class SurveyEntity {
@@ -14,13 +14,13 @@ public class SurveyEntity {
     private String title;
 
     @BsonProperty("created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @BsonProperty("published_at")
-    private Date publishedAt;
+    private LocalDate publishedAt;
 
     @BsonProperty("end_at")
-    private Date endAt;
+    private LocalDate endAt;
 
     private String description;
 
@@ -42,27 +42,27 @@ public class SurveyEntity {
         this.title = title;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getPublishedAt() {
+    public LocalDate getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(LocalDate publishedAt) {
         this.publishedAt = publishedAt;
     }
 
-    public Date getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(Date endAt) {
+    public void setEndAt(LocalDate endAt) {
         this.endAt = endAt;
     }
 

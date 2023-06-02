@@ -3,7 +3,7 @@ package fr.iut.uca.entity.surveys;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class FeedbackEntity {
@@ -15,7 +15,7 @@ public class FeedbackEntity {
     private ObjectId surveyId;
 
     @BsonProperty("created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     private String author;
 
@@ -39,11 +39,11 @@ public class FeedbackEntity {
         this.surveyId = surveyId;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 

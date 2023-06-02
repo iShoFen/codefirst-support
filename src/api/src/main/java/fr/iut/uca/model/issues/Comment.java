@@ -1,22 +1,24 @@
 package fr.iut.uca.model.issues;
 
-import java.util.Date;
+import com.aayushatharva.brotli4j.common.annotations.Local;
+
+import java.time.LocalDate;
 
 public class Comment {
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
     private String author;
 
     private String content;
 
-    public Comment(Date createdAt, String author, String content) {
+    public Comment(LocalDate createdAt, String author, String content) {
         this.createdAt = createdAt;
         this.author = author;
         this.content = content;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 

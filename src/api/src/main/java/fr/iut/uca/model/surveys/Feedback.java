@@ -3,7 +3,7 @@ package fr.iut.uca.model.surveys;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Feedback {
@@ -12,7 +12,7 @@ public class Feedback {
 
     private ObjectId surveyId;
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
     private String author;
 
@@ -20,7 +20,7 @@ public class Feedback {
 
     private final List<String> answers = new ArrayList<>();
 
-    public Feedback(ObjectId id, ObjectId surveyId, Date createdAt, String author, Question question) {
+    public Feedback(ObjectId id, ObjectId surveyId,LocalDate createdAt, String author, Question question) {
         this.id = id;
         this.surveyId = surveyId;
         this.createdAt = createdAt;
@@ -40,7 +40,7 @@ public class Feedback {
         this.surveyId = surveyId;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 

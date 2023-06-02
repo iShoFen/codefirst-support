@@ -2,7 +2,7 @@ package fr.iut.uca.model.surveys;
 
 import org.bson.types.ObjectId;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +12,17 @@ public class Survey {
 
     private String title;
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
-    private Date publishedAt;
+    private LocalDate publishedAt;
 
-    private Date endAt;
+    private LocalDate endAt;
 
     private String description;
 
     private final List<Question> questions = new ArrayList<>();
 
-    public Survey(ObjectId id, String title, Date createdAt, Date publishedAt, Date endAt, String description) {
+    public Survey(ObjectId id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -43,23 +43,23 @@ public class Survey {
         this.title = title;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public Date getPublishedAt() {
+    public LocalDate getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(LocalDate publishedAt) {
         this.publishedAt = publishedAt;
     }
 
-    public Date getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(Date endAt) {
+    public void setEndAt(LocalDate endAt) {
         this.endAt = endAt;
     }
 

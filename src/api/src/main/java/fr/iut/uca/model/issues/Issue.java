@@ -3,7 +3,7 @@ package fr.iut.uca.model.issues;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Issue {
@@ -14,7 +14,7 @@ public class Issue {
 
     private String author;
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
     private IssueStatus status;
 
@@ -26,7 +26,7 @@ public class Issue {
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(ObjectId id, String title, String author, Date createdAt, IssueStatus status, Category category, IssueModelInfo model) {
+    public Issue(ObjectId id, String title, String author,LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -56,7 +56,7 @@ public class Issue {
         this.author = author;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
