@@ -4,6 +4,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import fr.iut.uca.repository.FeedbackRepository;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -26,6 +28,9 @@ public class GreetingResource {
         return "Hello from RESTEasy Reactive";
     }
 
+
+    @GET
+    @Path("feedback")
     public String getFeedback() {
         String uri = "mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000";
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -39,14 +44,15 @@ public class GreetingResource {
             } else {
                 System.out.println("No matching documents found.");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return e.getMessage();
         }
 
         return "no result";
     }
 
+    @GET
+    @Path("feedbacks")
     public Response getFeedbacks() {
         String uri = "mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000";
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -56,11 +62,29 @@ public class GreetingResource {
             var documents = collection.find().projection(include("_id", "author", "content", "created_at")).into(new ArrayList<>());
             System.out.println(documents);
             return Response.ok(documents).build();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
         }
     }
 
+    @Inject
+    private DatabaseClient dbClient;
+
+    @Inject
+    private FeedbackRepository feedbackRepository;
+
+    @GET
+    @Path("/test1")
+    public Response test1() {
+        MongoCollection<Document> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS);
+        var documents = collection.find().projection(include("_id", "content", "created_at")).into(new ArrayList<>());
+        return Response.ok(documents).build();
+    }
+
+    @GET
+    @Path("/test2")
+    public Response test2() {
+        return Response.ok(feedbackRepository.getAll()).build();
+    }
 }
