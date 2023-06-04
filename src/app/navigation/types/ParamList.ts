@@ -6,5 +6,5 @@ type BottomBarParamList = {
 
 type TicketParamList = {
   List: undefined
-  Item: { id: number }
+  Item: { nounours: Nounours }
 }

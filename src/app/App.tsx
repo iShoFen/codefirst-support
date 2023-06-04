@@ -1,12 +1,16 @@
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper'
+import {StyleSheet} from 'react-native';
+//import {Provider as PaperProvider} from 'react-native-paper'
 import BottomBarNavigation from "./navigation/BottomBarNavigation";
+import store from "./redux/store";
+import {Provider} from "react-redux";
+import {PaperProvider} from "react-native-paper";
 
 export default function App() {
   return (
     <PaperProvider>
-      <BottomBarNavigation/>
+      <Provider store={store}>
+        <BottomBarNavigation/>
+      </Provider>
     </PaperProvider>
   );
 }

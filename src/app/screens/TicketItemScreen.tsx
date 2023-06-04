@@ -5,10 +5,13 @@ import {TicketItemRouteProps} from "../navigation/types/RouteProps";
 export default function TicketItemScreen() {
   const route = useRoute<TicketItemRouteProps>()
 
+  const {nounours} = route.params
+
   return (
     <View>
       <Text>TicketItemScreen</Text>
-      <Text>{route.params.id}</Text>
+      <Text>{nounours.name}</Text>
+      <Text>{nounours.age}</Text>
     </View>
   )
 }

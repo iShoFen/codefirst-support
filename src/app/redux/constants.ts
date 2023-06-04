@@ -1,0 +1,5 @@
+const FETCH_NOUNOURS: string = "FETCH_NOUNOURS"
+
+export {
+  FETCH_NOUNOURS
+}
