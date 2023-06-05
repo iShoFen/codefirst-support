@@ -2,8 +2,11 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SettingsScreen from "../screens/SettingsScreen";
-import AddTicketScreen from "../screens/AddTicketScreen";
 import StackTicketNavigation from "./StackTicketNavigation";
+import {BottomBarParamList} from "./types/ParamList";
+import HomeAddScreen from "../screens/HomeAddScreen";
+import HomeTicketScreen from "../screens/HomeTicketScreen";
+import HomeSurveyScreen from "../screens/HomeSurveyScreen";
 
 
 export default function BottomBarNavigation() {
@@ -23,13 +26,31 @@ export default function BottomBarNavigation() {
             tabBarLabel: 'Accueil'
           }}/>
         <BottomTabNavigator.Screen
-          name="AddTicket"
-          component={AddTicketScreen}
+          name="HomeTicket"
+          component={HomeTicketScreen}
           options={{
             tabBarIcon: ({color, size}) => (
-                <MaterialCommunityIcons name="plus-circle" color={color} size={size}/>
+              <MaterialCommunityIcons name="ticket" color={color} size={size}/>
             ),
-            tabBarLabel: 'Nouveau ticket'
+            tabBarLabel: 'Tickets'
+          }}/>
+        <BottomTabNavigator.Screen
+          name="Add"
+          component={HomeAddScreen}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <MaterialCommunityIcons name="plus-circle" color={color} size={size}/>
+            ),
+            tabBarLabel: 'Créer'
+          }}/>
+        <BottomTabNavigator.Screen
+          name="HomeSurvey"
+          component={HomeSurveyScreen}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <MaterialCommunityIcons name="text-box" color={color} size={size}/>
+            ),
+            tabBarLabel: 'Questionnaires'
           }}/>
         <BottomTabNavigator.Screen
           name="Settings"

@@ -1,10 +1,14 @@
-type BottomBarParamList = {
+import {Nounours} from "../../model/Nounours";
+
+export type BottomBarParamList = {
   Home: undefined
-  AddTicket: undefined
+  HomeTicket: undefined
+  Add: undefined
+  HomeSurvey: undefined
   Settings: undefined
 }
 
-type TicketParamList = {
+export type TicketParamList = {
   List: undefined
   Item: { nounours: Nounours }
 }
