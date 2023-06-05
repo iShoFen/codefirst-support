@@ -31,7 +31,7 @@ public class DatabaseClient {
         return client.getDatabase(databaseName);
     }
 
-    public MongoCollection<Document> getCollection(CollectionName collectionName) {
-        return database().getCollection(collectionName.name);
+    public <TDocument> MongoCollection<TDocument>  getCollection(CollectionName collectionName, Class<TDocument> documentClass) {
+        return database().getCollection(collectionName.name, documentClass);
     }
 }
