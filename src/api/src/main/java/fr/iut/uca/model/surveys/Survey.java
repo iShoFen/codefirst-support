@@ -1,14 +1,12 @@
 package fr.iut.uca.model.surveys;
 
-import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Survey {
 
-    private final ObjectId id;
+    private final String id;
 
     private String title;
 
@@ -22,7 +20,7 @@ public class Survey {
 
     private final List<Question> questions = new ArrayList<>();
 
-    public Survey(ObjectId id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description) {
+    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -31,7 +29,7 @@ public class Survey {
         this.description = description;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
