@@ -20,13 +20,18 @@ public class Survey {
 
     private final List<Question> questions = new ArrayList<>();
 
-    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description) {
+    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
         this.publishedAt = publishedAt;
         this.endAt = endAt;
         this.description = description;
+        this.questions.addAll(questions);
+    }
+
+    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description) {
+        this(id, title, createdAt, publishedAt, endAt, description, new ArrayList<>());
     }
 
     public String getId() {

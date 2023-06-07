@@ -2,6 +2,8 @@ package fr.iut.uca.model.surveys;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Feedback {
@@ -18,12 +20,17 @@ public class Feedback {
 
     private final List<String> answers = new ArrayList<>();
 
-    public Feedback(String id, String surveyId,LocalDate createdAt, String author, Question question) {
+    public Feedback(String id, String surveyId,LocalDate createdAt, String author, Question question, List<String> answers) {
         this.id = id;
         this.surveyId = surveyId;
         this.createdAt = createdAt;
         this.author = author;
         this.question = question;
+        this.answers.addAll(answers);
+    }
+
+    public Feedback(String id, String surveyId,LocalDate createdAt, String author, Question question) {
+        this(id, surveyId, createdAt, author, question, Collections.emptyList());
     }
 
     public String getId() {
