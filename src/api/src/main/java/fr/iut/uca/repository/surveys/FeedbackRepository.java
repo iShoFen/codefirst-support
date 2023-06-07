@@ -10,6 +10,7 @@ import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.entity.surveys.QuestionEntity;
 import fr.iut.uca.entity.surveys.QuestionTypeEntity;
 import fr.iut.uca.model.surveys.Feedback;
+import fr.iut.uca.utils.surveys.FeedbackExtensions;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
@@ -47,38 +48,14 @@ public class FeedbackRepository {
 
     @Nullable
     public InsertOneResult addFeedback(Feedback feedback) {
-        return getCollection().insertOne(toEntity(feedback));
+        return getCollection().insertOne(FeedbackExtensions.toEntity(feedback));
     }
 
     public UpdateResult updateFeedback(Feedback feedback) {
-        return getCollection().replaceOne(new Document("_id", new ObjectId(feedback.getId())), toEntity(feedback));
+        return getCollection().replaceOne(new Document("_id", new ObjectId(feedback.getId())), FeedbackExtensions.toEntity(feedback));
     }
 
     public DeleteResult deleteFeedback(String id) {
         return getCollection().deleteOne(new Document("_id", new ObjectId(id)));
-    }
-
-    private FeedbackEntity toEntity(Feedback feedback) {
-        var question = feedback.getQuestion();
-        var questionEntity = new QuestionEntity();
-
-        questionEntity.setChoices(question.getChoices());
-        questionEntity.setDescription(question.getDescription());
-        questionEntity.setTitle(question.getTitle());
-        questionEntity.setType(QuestionTypeEntity.valueOf((question.getType().name())));
-
-        var feedbackEntity = new FeedbackEntity();
-
-        if (!feedback.getId().equals("")) {
-            feedbackEntity.setId(new ObjectId(feedback.getId()));
-        }
-
-        feedbackEntity.setAnswers(feedback.getAnswers());
-        feedbackEntity.setSurveyId(new ObjectId(feedback.getSurveyId()));
-        feedbackEntity.setAuthor(feedback.getAuthor());
-        feedbackEntity.setCreatedAt(feedback.getCreatedAt());
-        feedbackEntity.setQuestion(questionEntity);
-
-        return feedbackEntity;
     }
 }

@@ -6,10 +6,12 @@ import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.lang.Nullable;
 import fr.iut.uca.DatabaseClient;
+import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.entity.surveys.SurveyEntity;
 import fr.iut.uca.entity.surveys.SurveyEntity;
 import fr.iut.uca.model.surveys.Survey;
 import fr.iut.uca.model.surveys.Survey;
+import fr.iut.uca.utils.surveys.SurveyExtensions;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -35,32 +37,21 @@ DatabaseClient mongoClient;
     public SurveyEntity getSurveyById(String id) {
         return getCollection().find(SurveyEntity.class).filter(new Document("_id", new ObjectId(id))).first();
     }
+
+    public List<FeedbackEntity> getFeedbacksBySurveyId(String surveyId) {
+        return getCollection().find(FeedbackEntity.class).filter(new Document("survey_id", new ObjectId(surveyId))).into(new ArrayList<>());
+    }
     
     @Nullable
     public InsertOneResult addSurvey(Survey survey) {
-        return getCollection().insertOne(toEntity(survey));
+        return getCollection().insertOne(SurveyExtensions.toEntity(survey));
     }
 
     public UpdateResult updateSurvey(Survey survey) {
-        return getCollection().replaceOne(new Document("_id", new ObjectId(survey.getId())), toEntity(survey));
+        return getCollection().replaceOne(new Document("_id", new ObjectId(survey.getId())), SurveyExtensions.toEntity(survey));
     }
 
     public DeleteResult deleteSurvey(String id) {
         return getCollection().deleteOne(new Document("_id", new ObjectId(id)));
-    }
-
-    private SurveyEntity toEntity(Survey survey) {
-        var surveyEntity =  new SurveyEntity();
-        surveyEntity.setCreatedAt(survey.getCreatedAt());
-        surveyEntity.setDescription(survey.getDescription());
-        surveyEntity.setTitle(survey.getTitle());
-        surveyEntity.setEndAt(survey.getEndAt());
-        surveyEntity.setPublishedAt(survey.getPublishedAt());
-
-        if (!survey.getId().equals("")) {
-            surveyEntity.setId(new ObjectId(survey.getId()));
-        }
-
-        return surveyEntity;
     }
 }
