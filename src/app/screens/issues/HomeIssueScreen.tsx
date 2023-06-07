@@ -1,6 +1,6 @@
 import {SafeAreaView, Text, View} from "react-native";
 
-export default function HomeTicketScreen() {
+export default function HomeIssueScreen() {
 
   return (<SafeAreaView>
     <View>

@@ -5,8 +5,6 @@ import SettingsScreen from "../screens/SettingsScreen";
 import StackTicketNavigation from "./StackTicketNavigation";
 import {BottomBarParamList} from "./types/ParamList";
 import HomeAddScreen from "../screens/HomeAddScreen";
-import HomeTicketScreen from "../screens/HomeTicketScreen";
-import HomeSurveyScreen from "../screens/HomeSurveyScreen";
 
 
 export default function BottomBarNavigation() {
@@ -26,15 +24,6 @@ export default function BottomBarNavigation() {
             tabBarLabel: 'Accueil'
           }}/>
         <BottomTabNavigator.Screen
-          name="HomeTicket"
-          component={HomeTicketScreen}
-          options={{
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons name="ticket" color={color} size={size}/>
-            ),
-            tabBarLabel: 'Tickets'
-          }}/>
-        <BottomTabNavigator.Screen
           name="Add"
           component={HomeAddScreen}
           options={{
@@ -42,15 +31,6 @@ export default function BottomBarNavigation() {
               <MaterialCommunityIcons name="plus-circle" color={color} size={size}/>
             ),
             tabBarLabel: 'Créer'
-          }}/>
-        <BottomTabNavigator.Screen
-          name="HomeSurvey"
-          component={HomeSurveyScreen}
-          options={{
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons name="text-box" color={color} size={size}/>
-            ),
-            tabBarLabel: 'Questionnaires'
           }}/>
         <BottomTabNavigator.Screen
           name="Settings"

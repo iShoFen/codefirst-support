@@ -1,43 +1,27 @@
-import {
-  DefaultSectionT,
-  SectionList,
-  SectionListData,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View
-} from "react-native";
+import {DefaultSectionT, SectionList, SectionListData, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useCallback, useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
-import {TicketListNavigationProp} from "../navigation/types/NavigationProp";
+import {HomeIssueNavigationProp, HomeSurveyNavigationProp,} from "../navigation/types/NavigationProp";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {getNounoursList} from "../redux/thunk/nounours";
-import {Nounours} from "../model/Nounours";
 
-type SectionId = 'survey' | 'ticket'
+type SectionId = 'survey' | 'issue'
 type NavigationCallbackProps = {
   sectionId: SectionId,
-  navigationKey: string
+  item: number
 }
-type SectionItemBase = DefaultSectionT & NavigationCallbackProps
+type SectionItemBase = DefaultSectionT & {
+  id: SectionId
+}
 type SectionItemData = SectionListData<string, SectionItemBase>
-
-
-
 
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch()
-  const navigation = useNavigation<TicketListNavigationProp>()
+  const issueNavigation = useNavigation<HomeIssueNavigationProp>()
+  const surveyNavigation = useNavigation<HomeSurveyNavigationProp>()
 
   const nounours = useAppSelector(state => state.appReducer.nounours)
-
-  const handleNavigate = useCallback((item: Nounours) => {
-    navigation.navigate('Item', {
-      nounours: item
-    })
-  }, [])
 
   useEffect(() => {
     const loadNounours = async () => {
@@ -49,14 +33,12 @@ export default function HomeScreen() {
   const DATA: SectionItemData[] = [
     {
       title: 'Tickets',
-      sectionId: 'ticket',
-      navigationKey: 'ticket',
+      id: 'issue',
       data: ['Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto'],
     },
     {
       title: 'Questionnaires',
-      sectionId: 'survey',
-      navigationKey: 'ticket',
+      id: 'survey',
       data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
       renderItem: ({item}) => {
         return (<View><Text style={{color: 'red'}}>{item}</Text></View>)
@@ -64,10 +46,15 @@ export default function HomeScreen() {
     }
   ]
 
-  const handleItemPress = useCallback(({sectionId, navigationKey}: NavigationCallbackProps) => {
-    navigation.navigate('Item', {
-      nounours: new Nounours(navigationKey, 0, 0, "")
-    })
+  const handleItemPress = useCallback(({sectionId}: NavigationCallbackProps) => {
+    switch (sectionId) {
+      case "survey":
+        surveyNavigation.navigate('Item', {item: ''})
+        break
+      case "issue":
+        issueNavigation.navigate('Item', {item: ''})
+        break
+    }
   }, [])
 
 
@@ -79,8 +66,8 @@ export default function HomeScreen() {
                    renderSectionHeader={({section}) => (<Text style={{fontSize: 40}}>{section.title}</Text>)}
                    renderItem={({item, section}) => (<View>
                      <TouchableOpacity onPress={() => handleItemPress({
-                       navigationKey: section.navigationKey,
-                       sectionId: section.sectionId
+                       sectionId: section.id,
+                       item: item.length
                      })}>
                        <Text>{item}</Text>
                      </TouchableOpacity>

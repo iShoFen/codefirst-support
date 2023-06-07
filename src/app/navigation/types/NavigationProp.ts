@@ -1,10 +1,11 @@
 import {BottomTabNavigationProp} from "@react-navigation/bottom-tabs";
 import {StackNavigationProp} from "@react-navigation/stack";
+import {BottomBarParamList, HomeParamList, IssueParamList, SurveyParamList} from "./ParamList";
 
 
 export type HomeScreenNavigationProps = BottomTabNavigationProp<BottomBarParamList, 'Home'>
-export type AddTicketScreenNavigationProps = BottomTabNavigationProp<BottomBarParamList, 'AddTicket'>
+export type AddScreenNavigationProps = BottomTabNavigationProp<BottomBarParamList, 'Add'>
 export type SettingsScreenNavigationProps = BottomTabNavigationProp<BottomBarParamList, 'Settings'>
 
-export type TicketListNavigationProp = StackNavigationProp<TicketParamList, 'List'>
-export type TicketItemNavigationProp = StackNavigationProp<TicketParamList, 'Item'>
+export type HomeIssueNavigationProp = StackNavigationProp<IssueParamList>
+export type HomeSurveyNavigationProp = StackNavigationProp<SurveyParamList>

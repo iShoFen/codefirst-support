@@ -1,6 +1,6 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
-import TicketItemScreen from "../screens/TicketItemScreen";
+import IssueItemScreen from "../screens/IssueItemScreen";
 
 export default function StackTicketNavigation() {
   const Stack = createStackNavigator<TicketParamList>()
@@ -8,7 +8,7 @@ export default function StackTicketNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="List" component={HomeScreen}/>
-      <Stack.Screen name="Item" component={TicketItemScreen}/>
+      <Stack.Screen name="Item" component={IssueItemScreen}/>
     </Stack.Navigator>
   )
 }
