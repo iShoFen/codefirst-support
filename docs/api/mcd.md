@@ -70,11 +70,10 @@ entity "question_info" as question_info {
 }
 
 entity "feedback" as feedback {
-  survey feedback
   +_id: ObjectId
+  +survey_id: ObjectId
   +created_at: date
   +author: string
-  question feedback
   +answer: Array<string>
 }
 
