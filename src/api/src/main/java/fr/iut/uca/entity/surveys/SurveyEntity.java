@@ -4,6 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SurveyEntity {
@@ -24,7 +25,7 @@ public class SurveyEntity {
 
     private String description;
 
-    private List<QuestionEntity> questions;
+    private final List<QuestionEntity> questions = new ArrayList<>();
 
     public ObjectId getId() {
         return id;
@@ -79,6 +80,7 @@ public class SurveyEntity {
     }
 
     public void setQuestions(List<QuestionEntity> questions) {
-        this.questions = questions;
+        this.questions.clear();
+        this.questions.addAll(questions);
     }
 }

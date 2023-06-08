@@ -4,6 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackEntity {
@@ -21,7 +22,7 @@ public class FeedbackEntity {
 
     private QuestionEntity question;
 
-    private List<String> answers;
+    private final List<String> answers  = new ArrayList<>();
 
     public ObjectId getId() {
         return id;
@@ -68,6 +69,7 @@ public class FeedbackEntity {
     }
 
     public void setAnswers(List<String> answers) {
-        this.answers = answers;
+        this.answers.clear();
+        this.answers.addAll(answers);
     }
 }
