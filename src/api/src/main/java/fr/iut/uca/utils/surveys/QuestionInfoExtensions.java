@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class QuestionInfoExtensions {
 
+    public static final String TITLE = "title";
+    public static final String TYPE = "type";
     public static QuestionInfoEntity toEntity(QuestionInfo questionInfo) {
         var questionInfoEntity = new QuestionInfoEntity();
 

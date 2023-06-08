@@ -8,6 +8,14 @@ import java.util.List;
 
 public abstract class SurveyExtensions {
 
+    public static final String ID = "_id";
+    public static final String CREATED_AT = "created_at";
+    public static final String PUBLISHED_AT = "published_at";
+    public static final String END_AT = "end_at";
+    public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
+    public static final String QUESTIONS = "questions";
+
     public static SurveyEntity toEntity(Survey survey) {
         var surveyEntity =  new SurveyEntity();
         surveyEntity.setCreatedAt(survey.getCreatedAt());

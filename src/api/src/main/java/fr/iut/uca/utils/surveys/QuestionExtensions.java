@@ -6,6 +6,12 @@ import fr.iut.uca.model.surveys.Question;
 import java.util.List;
 
 public abstract class QuestionExtensions {
+
+    public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
+    public static final String TYPE = "type";
+    public static final String CHOICES = "choices";
+
     public static QuestionEntity toEntity(Question question) {
         var questionEntity = new QuestionEntity();
 

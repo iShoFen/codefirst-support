@@ -8,6 +8,13 @@ import java.util.List;
 
 public abstract class FeedbackExtensions {
 
+    public static final String ID = "_id";
+    public static final String SURVEY_ID = "survey_id";
+    public static final String CREATED_AT = "created_at";
+    public static final String AUTHOR = "author";
+    public static final String QUESTION = "question";
+    public static final String ANSWERS = "answers";
+
     public static FeedbackEntity toEntity(Feedback feedback) {
         var feedbackEntity = new FeedbackEntity();
 
