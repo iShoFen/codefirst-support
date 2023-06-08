@@ -1,14 +1,12 @@
 package fr.iut.uca.model.issues;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Issue {
 
-    private final ObjectId id;
+    private final String id;
 
     private String title;
 
@@ -26,7 +24,7 @@ public class Issue {
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(ObjectId id, String title, String author,LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model) {
+    public Issue(String id, String title, String author,LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -36,7 +34,7 @@ public class Issue {
         this.model = model;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
