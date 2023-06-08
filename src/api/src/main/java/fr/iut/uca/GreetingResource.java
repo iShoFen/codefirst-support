@@ -4,6 +4,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.repository.surveys.FeedbackRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -77,7 +78,7 @@ public class GreetingResource {
     @GET
     @Path("/test1")
     public Response test1() {
-        MongoCollection<Document> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS);
+        MongoCollection<FeedbackEntity> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS, FeedbackEntity.class);
         var documents = collection.find().projection(include("_id", "content", "created_at")).into(new ArrayList<>());
         return Response.ok(documents).build();
     }
@@ -85,6 +86,8 @@ public class GreetingResource {
     @GET
     @Path("/test2")
     public Response test2() {
-        return Response.ok(feedbackRepository.getAll()).build();
+        var result = feedbackRepository.getFeedbacksCount();
+        return Response.ok(result).build();
+//        return Response.ok(feedbackRepository.getFeedbacksCount()).build();
     }
 }
