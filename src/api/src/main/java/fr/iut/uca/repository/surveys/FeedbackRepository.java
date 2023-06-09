@@ -8,7 +8,6 @@ import com.mongodb.lang.Nullable;
 import fr.iut.uca.DatabaseClient;
 import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.model.surveys.Feedback;
-import fr.iut.uca.utils.surveys.FeedbackExtensions;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
@@ -18,8 +17,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.iut.uca.utils.surveys.FeedbackExtensions.CREATED_AT;
 import static fr.iut.uca.utils.surveys.FeedbackExtensions.ID;
+import static fr.iut.uca.utils.surveys.FeedbackExtensions.CREATED_AT;
+import static fr.iut.uca.utils.surveys.FeedbackExtensions.toEntity;
 
 
 @ApplicationScoped
@@ -66,11 +66,11 @@ public class FeedbackRepository {
 
     @Nullable
     public InsertOneResult addFeedback(Feedback feedback) {
-        return getCollection().insertOne(FeedbackExtensions.toEntity(feedback));
+        return getCollection().insertOne(toEntity(feedback));
     }
 
     public UpdateResult updateFeedback(Feedback feedback) {
-        return getCollection().replaceOne(new Document(ID, new ObjectId(feedback.getId())), FeedbackExtensions.toEntity(feedback));
+        return getCollection().replaceOne(new Document(ID, new ObjectId(feedback.getId())), toEntity(feedback));
     }
 
     public DeleteResult deleteFeedback(String id) {

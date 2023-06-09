@@ -9,7 +9,6 @@ import fr.iut.uca.DatabaseClient;
 import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.entity.surveys.SurveyEntity;
 import fr.iut.uca.model.surveys.Survey;
-import fr.iut.uca.utils.surveys.SurveyExtensions;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -19,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static fr.iut.uca.utils.surveys.FeedbackExtensions.SURVEY_ID;
+
 import static fr.iut.uca.utils.surveys.SurveyExtensions.ID;
 import static fr.iut.uca.utils.surveys.SurveyExtensions.CREATED_AT;
 import static fr.iut.uca.utils.surveys.SurveyExtensions.PUBLISHED_AT;
 import static fr.iut.uca.utils.surveys.SurveyExtensions.END_AT;
+import static fr.iut.uca.utils.surveys.SurveyExtensions.toEntity;
 
 public class SurveyRepository {
     @Inject
@@ -110,11 +111,11 @@ public class SurveyRepository {
     
     @Nullable
     public InsertOneResult addSurvey(Survey survey) {
-        return getCollection().insertOne(SurveyExtensions.toEntity(survey));
+        return getCollection().insertOne(toEntity(survey));
     }
 
     public UpdateResult updateSurvey(Survey survey) {
-        return getCollection().replaceOne(new Document(ID, new ObjectId(survey.getId())), SurveyExtensions.toEntity(survey));
+        return getCollection().replaceOne(new Document(ID, new ObjectId(survey.getId())), toEntity(survey));
     }
 
     public DeleteResult deleteSurvey(String id) {
