@@ -1,0 +1,152 @@
+[
+    {
+        "name": "Article",
+        "short_description": "Modèle d'article",
+        "description": "Ce modèle représente les articles du système",
+        "category": {
+            "name": "Features"
+        },
+        "fields": [
+            {
+                "title": "Titre de l'article",
+                "description": "Le titre de l'article",
+                "required": true
+            },
+            {
+                "title": "Contenu de l'article",
+                "description": "Le contenu détaillé de l'article",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "Bug",
+        "short_description": "Modèle de bug",
+        "description": "Ce modèle représente les bugs du système",
+        "category": {
+            "name": "Bugs"
+        },
+        "fields": [
+            {
+                "title": "Titre du bug",
+                "description": "Le titre du bug",
+                "required": true
+            },
+            {
+                "title": "Description du bug",
+                "description": "La description détaillée du bug",
+                "required": true
+            },
+            {
+                "title": "Priorité",
+                "description": "La priorité assignée au bug",
+                "required": false
+            }
+        ]
+    },
+    {
+        "name": "Tâche",
+        "short_description": "Modèle de tâche",
+        "description": "Ce modèle représente les tâches à accomplir",
+        "category": {
+            "name": "Features"
+        },
+        "fields": [
+            {
+                "title": "Titre de la tâche",
+                "description": "Le titre de la tâche",
+                "required": true
+            },
+            {
+                "title": "Description de la tâche",
+                "description": "La description détaillée de la tâche",
+                "required": true
+            },
+            {
+                "title": "Assigné à",
+                "description": "L'utilisateur assigné à la tâche",
+                "required": false
+            },
+            {
+                "title": "Statut",
+                "description": "Le statut actuel de la tâche",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "Amélioration",
+        "short_description": "Modèle d'amélioration",
+        "description": "Ce modèle représente les améliorations à apporter",
+        "category": {
+            "name": "Features"
+        },
+        "fields": [
+            {
+                "title": "Titre de l'amélioration",
+                "description": "Le titre de l'amélioration",
+                "required": true
+            },
+            {
+                "title": "Description de l'amélioration",
+                "description": "La description détaillée de l'amélioration",
+                "required": true
+            },
+            {
+                "title": "Priorité",
+                "description": "La priorité assignée à l'amélioration",
+                "required": false
+            }
+        ]
+    },
+    {
+        "name": "Erreur",
+        "short_description": "Modèle d'erreur",
+        "description": "Ce modèle représente les erreurs du système",
+        "category": {
+            "name": "Bugs"
+        },
+        "fields": [
+            {
+                "title": "Nom de l'erreur",
+                "description": "Le nom de l'erreur rencontrée",
+                "required": true
+            },
+            {
+                "title": "Description de l'erreur",
+                "description": "La description détaillée de l'erreur",
+                "required": true
+            },
+            {
+                "title": "Date d'apparition",
+                "description": "La date à laquelle l'erreur est apparue",
+                "required": false
+            }
+        ]
+    },
+    {
+        "name": "Demande de fonctionnalité",
+        "short_description": "Modèle de demande de fonctionnalité",
+        "description": "Ce modèle représente les demandes de nouvelles fonctionnalités",
+        "category": {
+            "name": "Features"
+        },
+        "fields": [
+            {
+                "title": "Titre de la demande",
+                "description": "Le titre de la demande de fonctionnalité",
+                "required": true
+            },
+            {
+                "title": "Description de la demande",
+                "description": "La description détaillée de la demande de fonctionnalité",
+                "required": true
+            },
+            {
+                "title": "Priorité",
+                "description": "La priorité assignée à la demande de fonctionnalité",
+                "required": false
+            }
+        ]
+    }
+]

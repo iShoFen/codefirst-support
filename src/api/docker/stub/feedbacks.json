@@ -1,0 +1,182 @@
+[
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a84f"
+    },
+    "created_at": {
+      "$date": "2023-05-25T00:00:00.000Z"
+    },
+    "author": "user1@example.com",
+    "question": {
+      "title": "Quelle est votre satisfaction générale par rapport à notre produit ?",
+      "type": "singlechoice"
+    },
+    "answer": "4"
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a850"
+    },
+    "created_at": {
+      "$date": "2023-05-26T00:00:00.000Z"
+    },
+    "author": "user2@example.com",
+    "question": {
+      "title": "Quels sont les aspects que vous appréciez le plus dans notre produit ?",
+      "type": "multiplechoice"
+    },
+    "answer": [
+      "Interface utilisateur",
+      "Fonctionnalités"
+    ]
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a851"
+    },
+    "created_at": {
+      "$date": "2023-05-27T00:00:00.000Z"
+    },
+    "author": "user3@example.com",
+    "question": {
+      "title": "Avez-vous des suggestions d'amélioration pour notre produit ?",
+      "type": "text"
+    },
+    "answer": "J'aimerais voir plus de fonctionnalités de personnalisation."
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a84f"
+    },
+    "created_at": {
+      "$date": "2023-05-28T00:00:00.000Z"
+    },
+    "author": "user4@example.com",
+    "question": {
+      "title": "Quelle est votre note globale pour notre service client ?",
+      "type": "singlechoice"
+    },
+    "answer": "5"
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a850"
+    },
+    "created_at": {
+      "$date": "2023-05-29T00:00:00.000Z"
+    },
+    "author": "user5@example.com",
+    "question": {
+      "title": "Quels sont les avantages que vous trouvez dans notre programme de fidélité ?",
+      "type": "multiplechoice"
+    },
+    "answer": [
+      "Récompenses exclusives",
+      "Remises spéciales"
+    ]
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a851"
+    },
+    "created_at": {
+      "$date": "2023-05-30T00:00:00.000Z"
+    },
+    "author": "user6@example.com",
+    "question": {
+      "title": "Quelle est votre opinion sur notre nouvelle fonctionnalité récemment ajoutée ?",
+      "type": "text"
+    },
+    "answer": "Je trouve la nouvelle fonctionnalité très pratique et intuitive."
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a84f"
+    },
+    "created_at": {
+      "$date": "2023-06-01T00:00:00.000Z"
+    },
+    "author": "user7@example.com",
+    "question": {
+      "title": "Quelle est votre expérience globale avec notre application mobile ?",
+      "type": "singlechoice"
+    },
+    "answer": "3"
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a850"
+    },
+    "created_at": {
+      "$date": "2023-06-02T00:00:00.000Z"
+    },
+    "author": "user8@example.com",
+    "question": {
+      "title": "Quels sont les aspects que vous aimeriez voir améliorés dans notre produit ?",
+      "type": "multiplechoice"
+    },
+    "answer": [
+      "Performance",
+      "Interface utilisateur"
+    ]
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a851"
+    },
+    "created_at": {
+      "$date": "2023-06-03T00:00:00.000Z"
+    },
+    "author": "user9@example.com",
+    "question": {
+      "title": "Avez-vous des suggestions de nouvelles fonctionnalités pour notre produit ?",
+      "type": "text"
+    },
+    "answer": "J'aimerais voir une fonctionnalité de chat en direct ajoutée."
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a84f"
+    },
+    "created_at": {
+      "$date": "2023-06-04T00:00:00.000Z"
+    },
+    "author": "user10@example.com",
+    "question": {
+      "title": "Quelle est votre opinion sur notre service de livraison ?",
+      "type": "singlechoice"
+    },
+    "answer": "4"
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a850"
+    },
+    "created_at": {
+      "$date": "2023-06-05T00:00:00.000Z"
+    },
+    "author": "user11@example.com",
+    "question": {
+      "title": "Quels sont les critères les plus importants pour vous lors de l'achat d'un produit ?",
+      "type": "multiplechoice"
+    },
+    "answer": [
+      "Qualité",
+      "Prix"
+    ]
+  },
+  {
+    "survey_id": {
+      "$oid": "648108da615ad0038921a851"
+    },
+    "created_at": {
+      "$date": "2023-06-06T00:00:00.000Z"
+    },
+    "author": "user12@example.com",
+    "question": {
+      "title": "Comment évaluez-vous notre service après-vente ?",
+      "type": "text"
+    },
+    "answer": "Le service après-vente est réactif et efficace."
+  }
+]
