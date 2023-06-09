@@ -2,7 +2,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SettingsScreen from "../screens/SettingsScreen";
-import StackTicketNavigation from "./StackTicketNavigation";
+import StackIssueNavigation from "./StackIssueNavigation";
 import {BottomBarParamList} from "./types/ParamList";
 import HomeAddScreen from "../screens/HomeAddScreen";
 
@@ -16,7 +16,7 @@ export default function BottomBarNavigation() {
                                     screenOptions={{headerShown: false}}>
         <BottomTabNavigator.Screen
           name="Home"
-          component={StackTicketNavigation}
+          component={StackIssueNavigation}
           options={{
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons name="home" color={color} size={size}/>
