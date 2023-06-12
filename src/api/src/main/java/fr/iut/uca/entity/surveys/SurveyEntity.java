@@ -25,9 +25,9 @@ public class SurveyEntity {
 
     private String description;
 
-    private final List<QuestionEntity> questions = new ArrayList<>();
+    private List<QuestionEntity> questions;
 
-    private final List<FeedbackEntity> feedbacks = new ArrayList<>();
+    private List<FeedbackEntity> feedbacks;
 
     public ObjectId getId() {
         return id;
@@ -82,8 +82,9 @@ public class SurveyEntity {
     }
 
     public void setQuestions(List<QuestionEntity> questions) {
-        this.questions.clear();
-        this.questions.addAll(questions);
+//        this.questions.clear();
+//        this.questions.addAll(questions);
+        this.questions = questions;
     }
 
     public List<FeedbackEntity> getFeedbacks() {
@@ -91,7 +92,8 @@ public class SurveyEntity {
     }
 
     public void setFeedbacks(List<FeedbackEntity> feedbacks) {
-        this.feedbacks.clear();
-        this.feedbacks.addAll(feedbacks);
+//        this.feedbacks.clear();
+//        this.feedbacks.addAll(feedbacks);
+        this.feedbacks = feedbacks;
     }
 }

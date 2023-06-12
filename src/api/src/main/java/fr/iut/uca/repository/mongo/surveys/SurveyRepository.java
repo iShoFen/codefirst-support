@@ -121,27 +121,6 @@ public class SurveyRepository extends GenericRepository<SurveyEntity> implements
         return collection.find(SurveyEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
-    @Override
-    public Optional<SurveyEntity> getSurveyWithFeedbacks(String id, int index, int count) {
-        Bson matchStage = new Document(MATCH, new Document(SurveyExtensions.ID, id));
-
-        var surveyId = "surveyId";
-        Bson lookupStage = new Document(LOOKUP, new Document()
-                .append(FROM, DatabaseClient.CollectionName.FEEDBACKS)
-                .append(LET, new Document(surveyId, REF + SurveyExtensions.ID))
-                .append(PIPELINE, Arrays.asList(
-                        new Document(MATCH, new Document(EXPR, new Document(EQUAL, Arrays.asList(REF + FeedbackExtensions.SURVEY_ID , PIPELINE_REF + surveyId)))),
-                        new Document(SKIP, index),
-                        new Document(LIMIT, count))
-                )
-                .append(AS, SurveyExtensions.FEEDBACKS)
-        );
-
-        SurveyEntity result = collection.aggregate(Arrays.asList(matchStage, lookupStage)).first();
-
-        return Optional.ofNullable(result);
-    }
-
     /**
      * Delete a survey and all its feedbacks
      * @param id Id of the survey to delete

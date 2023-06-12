@@ -8,6 +8,7 @@ import fr.iut.uca.qualifier.RepositoryType;
 import fr.iut.uca.repository.issues.IIssueModelRepository;
 import fr.iut.uca.repository.mongo.GenericRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class IssueModelRepository extends GenericRepository<IssueModelEntity> im
     IssueModelRepository() {
         super(ID);
     }
+
     @Override
+    @Inject
     public void setMongoClient(DatabaseClient mongoClient) {
         this.mongoClient = mongoClient;
         this.collection = mongoClient.getCollection(DatabaseClient.CollectionName.ISSUE_MODELS, IssueModelEntity.class);

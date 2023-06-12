@@ -22,7 +22,7 @@ public class FeedbackEntity {
 
     private QuestionEntity question;
 
-    private final List<String> answers  = new ArrayList<>();
+    private List<String> answers;
 
     public ObjectId getId() {
         return id;
@@ -69,7 +69,8 @@ public class FeedbackEntity {
     }
 
     public void setAnswers(List<String> answers) {
-        this.answers.clear();
-        this.answers.addAll(answers);
+//        this.answers.clear();
+//        this.answers.addAll(answers);
+        this.answers = answers;
     }
 }
