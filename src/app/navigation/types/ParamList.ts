@@ -1,9 +1,11 @@
-import {Nounours} from "../../model/Nounours";
+import {Issue} from "../../model/issues/Issue";
+import {Survey} from "../../model/surveys/Survey";
 
 export type BottomBarParamList = {
   Home: undefined
   Add: undefined
   Settings: undefined
+  Test: undefined
 }
 
 export type HomeParamList = {
@@ -16,5 +18,5 @@ type FeatureParamList<T> = {
   Item: {item: T}
 }
 
-export type IssueParamList = FeatureParamList<string>
-export type SurveyParamList = FeatureParamList<string>
+export type IssueParamList = FeatureParamList<Issue>
+export type SurveyParamList = FeatureParamList<Survey>

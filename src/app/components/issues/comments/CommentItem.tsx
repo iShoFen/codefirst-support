@@ -1,18 +1,20 @@
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View, ViewStyle} from "react-native";
 import {Comment} from "../../../model/issues/Comment";
 import {Divider} from "react-native-paper";
 
 type CommentItemProps = {
   comment: Comment
+  style?: ViewStyle
 }
 
 export default function CommentItem(props: CommentItemProps) {
 
   const {
-    comment
+    comment,
+    style
   } = props
 
-  return (<View style={styles.container}>
+  return (<View style={[styles.container, style]}>
     <View style={styles.header}>
       <Text style={styles.author}>{comment.author}</Text>
       <Text>-</Text>
