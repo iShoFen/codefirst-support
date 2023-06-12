@@ -29,9 +29,10 @@ public class Feedback {
         this.answers.addAll(answers);
     }
 
-    public Feedback(String id, String surveyId,LocalDate createdAt, String author, Question question) {
-        this(id, surveyId, createdAt, author, question, Collections.emptyList());
+    public Feedback(String surveyId,LocalDate createdAt, String author, Question question, List<String> answers) {
+        this(null, surveyId, createdAt, author, question, answers);
     }
+
 
     public String getId() {
         return id;
@@ -66,6 +67,6 @@ public class Feedback {
     }
 
     public List<String> getAnswers() {
-        return answers;
+        return Collections.unmodifiableList(answers);
     }
 }

@@ -21,10 +21,10 @@ public class DatabaseClient {
     }
 
     @ConfigProperty(name = "codefirstsupport.database.name")
-    private String databaseName;
+    String databaseName;
 
     @Inject
-    private MongoClient client;
+    MongoClient client;
 
     private MongoDatabase database() {
         return client.getDatabase(databaseName);

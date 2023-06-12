@@ -4,7 +4,6 @@ public class IssueFieldEntity extends IssueModelFieldEntity {
 
     private String value;
 
-
     public String getValue() {
         return value;
     }

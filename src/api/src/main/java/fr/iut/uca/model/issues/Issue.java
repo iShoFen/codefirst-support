@@ -2,6 +2,7 @@ package fr.iut.uca.model.issues;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 public class Issue {
@@ -24,7 +25,7 @@ public class Issue {
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(String id, String title, String author,LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model) {
+    public Issue(String id, String title, String author,LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model, List<IssueField> fields, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -32,6 +33,12 @@ public class Issue {
         this.status = status;
         this.category = category;
         this.model = model;
+        this.fields.addAll(fields);
+        this.comments.addAll(comments);
+    }
+
+    public Issue(String title, String author, LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model, List<IssueField> fields) {
+        this(null, title, author, createdAt, status, category, model, fields, new ArrayList<>());
     }
 
     public String getId() {
@@ -83,10 +90,10 @@ public class Issue {
     }
 
     public List<Comment> getComments() {
-        return comments;
+        return Collections.unmodifiableList(comments);
     }
 
     public List<IssueField> getFields() {
-        return fields;
+        return Collections.unmodifiableList(fields);
     }
 }

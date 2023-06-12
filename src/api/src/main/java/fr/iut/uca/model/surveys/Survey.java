@@ -2,6 +2,7 @@ package fr.iut.uca.model.surveys;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Survey {
@@ -20,7 +21,9 @@ public class Survey {
 
     private final List<Question> questions = new ArrayList<>();
 
-    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions) {
+    private final List<Feedback> feedbacks = new ArrayList<>();
+
+    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions, List<Feedback> feedbacks) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -28,10 +31,11 @@ public class Survey {
         this.endAt = endAt;
         this.description = description;
         this.questions.addAll(questions);
+        this.feedbacks.addAll(feedbacks);
     }
 
-    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description) {
-        this(id, title, createdAt, publishedAt, endAt, description, new ArrayList<>());
+    public Survey(String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions) {
+        this(null, title, createdAt, publishedAt, endAt, description, questions, new ArrayList<>());
     }
 
     public String getId() {
@@ -75,6 +79,10 @@ public class Survey {
     }
 
     public List<Question> getQuestions() {
-        return questions;
+        return Collections.unmodifiableList(questions);
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return Collections.unmodifiableList(feedbacks);
     }
 }
