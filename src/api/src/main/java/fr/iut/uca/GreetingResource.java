@@ -5,7 +5,10 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import fr.iut.uca.entity.surveys.FeedbackEntity;
-import fr.iut.uca.repository.surveys.FeedbackRepository;
+import fr.iut.uca.qualifier.RepositoryQualifier;
+import fr.iut.uca.qualifier.RepositoryType;
+import fr.iut.uca.repository.issues.IIssueRepository;
+import fr.iut.uca.repository.mongo.surveys.SurveyRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -70,10 +73,15 @@ public class GreetingResource {
     }
 
     @Inject
-    private DatabaseClient dbClient;
+    DatabaseClient dbClient;
 
     @Inject
-    private FeedbackRepository feedbackRepository;
+    @RepositoryQualifier(RepositoryType.MONGO)
+    SurveyRepository surveyRepository;
+
+    @Inject
+    @RepositoryQualifier(RepositoryType.MONGO)
+    IIssueRepository issueRepository;
 
     @GET
     @Path("/test1")
@@ -85,9 +93,19 @@ public class GreetingResource {
 
     @GET
     @Path("/test2")
+    public Response test() {
+        return Response.ok(issueRepository.getIssuesCountByStatus()).build();
+    }
+
+    @GET
+    @Path("/test3")
     public Response test2() {
-        var result = feedbackRepository.getFeedbacksCount();
-        return Response.ok(result).build();
-//        return Response.ok(feedbackRepository.getFeedbacksCount()).build();
+        return Response.ok(surveyRepository.getItemById("64846962f660a9babbe122d8")).build();
+    }
+
+    @GET
+    @Path("/test4")
+    public Response test3() {
+        return Response.ok(surveyRepository.getSurveyWithFeedbacks("64846962f660a9babbe122d9", 0, 2)).build();
     }
 }
