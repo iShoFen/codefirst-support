@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.surveys;
+package fr.iut.uca.extension.surveys;
 
 import fr.iut.uca.entity.surveys.QuestionTypeEntity;
 import fr.iut.uca.model.surveys.QuestionType;

@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.issues;
+package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.entity.issues.IssueModelFieldEntity;
 import fr.iut.uca.model.issues.IssueModelField;
@@ -10,6 +10,8 @@ public abstract class IssueModelFiledExtensions {
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     public static final String REQUIRED = "required";
+
+    private IssueModelFiledExtensions() { }
 
     public static IssueModelFieldEntity toEntity(IssueModelField issueModelField) {
         IssueModelFieldEntity issueModelFieldEntity = new IssueModelFieldEntity();

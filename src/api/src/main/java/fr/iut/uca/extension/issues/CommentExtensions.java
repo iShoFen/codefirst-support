@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.issues;
+package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.entity.issues.CommentEntity;
 import fr.iut.uca.model.issues.Comment;
@@ -9,6 +9,8 @@ public abstract class CommentExtensions {
     public static final String CREATED_AT = "createdAt";
     public static final String AUTHOR = "author";
     public static final String CONTENT = "content";
+
+    private CommentExtensions() { }
 
     public static CommentEntity toEntity(Comment comment) {
         var commentEntity = new CommentEntity();

@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.surveys;
+package fr.iut.uca.extension.surveys;
 
 import fr.iut.uca.entity.surveys.SurveyEntity;
 import fr.iut.uca.model.surveys.Survey;
@@ -15,6 +15,7 @@ public abstract class SurveyExtensions {
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     public static final String QUESTIONS = "questions";
+    public static final String FEEDBACKS = "feedbacks";
 
     public static SurveyEntity toEntity(Survey survey) {
         var surveyEntity =  new SurveyEntity();
@@ -24,7 +25,7 @@ public abstract class SurveyExtensions {
         surveyEntity.setEndAt(survey.getEndAt());
         surveyEntity.setPublishedAt(survey.getPublishedAt());
 
-        if (!survey.getId().equals("")) {
+        if (survey.getId() != null) {
             surveyEntity.setId(new ObjectId(survey.getId()));
         }
 
@@ -43,12 +44,13 @@ public abstract class SurveyExtensions {
                 surveyEntity.getCreatedAt(),
                 surveyEntity.getPublishedAt(),
                 surveyEntity.getEndAt(),
-                surveyEntity.getDescription()
+                surveyEntity.getDescription(),
+                QuestionExtensions.toModels(surveyEntity.getQuestions()),
+                FeedbackExtensions.toModels(surveyEntity.getFeedbacks())
         );
     }
 
     public static List<Survey> toModels(List<SurveyEntity> surveyEntities) {
         return surveyEntities.stream().map(SurveyExtensions::toModel).toList();
     }
-
 }

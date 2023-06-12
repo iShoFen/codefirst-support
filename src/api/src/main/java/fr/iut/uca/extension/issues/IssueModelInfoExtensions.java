@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.issues;
+package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.entity.issues.IssueModelInfoEntity;
 import fr.iut.uca.model.issues.IssueModelInfo;
@@ -10,6 +10,8 @@ public abstract class IssueModelInfoExtensions {
     public static final String NAME = "name";
     public static final String SHORT_DESCRIPTION = "short_description";
     public static final String DESCRIPTION = "description";
+
+    private IssueModelInfoExtensions() { }
 
     public static IssueModelInfoEntity toEntity(IssueModelInfo issueModelInfo) {
         IssueModelInfoEntity issueModelInfoEntity = new IssueModelInfoEntity();

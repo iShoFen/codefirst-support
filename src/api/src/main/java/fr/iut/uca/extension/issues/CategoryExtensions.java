@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.issues;
+package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.entity.issues.CategoryEntity;
 import fr.iut.uca.model.issues.Category;
@@ -8,6 +8,8 @@ import java.util.List;
 public abstract class CategoryExtensions {
 
     public static final String NAME = "name";
+
+    private CategoryExtensions() { }
 
     public static CategoryEntity toEntity(Category category) {
         CategoryEntity categoryEntity = new CategoryEntity();

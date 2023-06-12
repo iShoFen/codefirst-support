@@ -1,4 +1,4 @@
-package fr.iut.uca.utils.surveys;
+package fr.iut.uca.extension.surveys;
 
 import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.model.surveys.Feedback;
@@ -18,7 +18,7 @@ public abstract class FeedbackExtensions {
     public static FeedbackEntity toEntity(Feedback feedback) {
         var feedbackEntity = new FeedbackEntity();
 
-        if (!feedback.getId().equals("")) {
+        if (feedback.getId() != null) {
             feedbackEntity.setId(new ObjectId(feedback.getId()));
         }
 
@@ -41,8 +41,9 @@ public abstract class FeedbackExtensions {
                 feedbackEntity.getSurveyId().toString(),
                 feedbackEntity.getCreatedAt(),
                 feedbackEntity.getAuthor(),
-                QuestionExtensions.toModel(feedbackEntity.getQuestion()
-        ));
+                QuestionExtensions.toModel(feedbackEntity.getQuestion()),
+                feedbackEntity.getAnswers()
+        );
     }
 
     public static List<Feedback> toModels(List<FeedbackEntity> feedbackEntities) {

@@ -1,6 +1,7 @@
-package fr.iut.uca.utils.surveys;
+package fr.iut.uca.extension.surveys;
 
 import fr.iut.uca.entity.surveys.QuestionInfoEntity;
+import fr.iut.uca.entity.surveys.QuestionTypeEntity;
 import fr.iut.uca.model.surveys.QuestionInfo;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public abstract class QuestionInfoExtensions {
         var questionInfoEntity = new QuestionInfoEntity();
 
         questionInfoEntity.setTitle(questionInfo.getTitle());
-        questionInfoEntity.setType(QuestionTypeExtensions.toEntity(questionInfo.getType()));
+        questionInfoEntity.setType(QuestionTypeExtensions.toEntity(questionInfo.getType()).toString());
 
         return questionInfoEntity;
     }
@@ -25,7 +26,7 @@ public abstract class QuestionInfoExtensions {
     public static QuestionInfo toModel(QuestionInfoEntity questionInfoEntity) {
         return new QuestionInfo(
                 questionInfoEntity.getTitle(),
-                QuestionTypeExtensions.toModel(questionInfoEntity.getType())
+                QuestionTypeExtensions.toModel(QuestionTypeEntity.valueOf(questionInfoEntity.getType()))
         );
     }
 

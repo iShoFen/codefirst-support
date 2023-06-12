@@ -1,8 +1,10 @@
-package fr.iut.uca.utils.issues;
+package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.model.issues.Issue;
 import org.bson.types.ObjectId;
+
+import java.util.List;
 
 public abstract class IssueExtensions {
     public static final String ID = "_id";
@@ -15,10 +17,12 @@ public abstract class IssueExtensions {
     public static final String COMMENTS = "comments";
     public static final String FIELDS = "fields";
 
+    private IssueExtensions() { }
+
     public static IssueEntity toEntity(Issue issue) {
         var entity = new IssueEntity();
 
-        if (!issue.getId().isBlank()) {
+        if (issue.getId() != null) {
             entity.setId(new ObjectId(issue.getId()));
         }
 
@@ -32,6 +36,28 @@ public abstract class IssueExtensions {
         entity.setFields(IssueFieldExtensions.toEntities(issue.getFields()));
 
         return entity;
+    }
+
+    public static List<IssueEntity> toEntities(List<Issue> issues) {
+        return issues.stream().map(IssueExtensions::toEntity).toList();
+    }
+
+    public static Issue toModel(IssueEntity entity) {
+        return new Issue(
+                entity.getId().toString(),
+                entity.getTitle(),
+                entity.getAuthor(),
+                entity.getCreatedAt(),
+                IssueStatusExtensions.toModel(entity.getStatus()),
+                CategoryExtensions.toModel(entity.getCategory()),
+                IssueModelInfoExtensions.toModel(entity.getModel()),
+                IssueFieldExtensions.toModels(entity.getFields()),
+                CommentExtensions.toModels(entity.getComments())
+        );
+    }
+
+    public static List<Issue> toModels(List<IssueEntity> entities) {
+        return entities.stream().map(IssueExtensions::toModel).toList();
     }
 
 }
