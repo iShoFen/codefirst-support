@@ -1,6 +1,7 @@
 package fr.iut.uca.model.surveys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Question extends QuestionInfo {
@@ -8,10 +9,6 @@ public class Question extends QuestionInfo {
     private String description;
 
     private final List<String> choices = new ArrayList<>();
-
-    public Question(String title, String description, QuestionType type) {
-        this(title, type, description, new ArrayList<>());
-    }
 
     public Question(String title, QuestionType type, String description, List<String> choices) {
         super(title, type);
@@ -28,6 +25,16 @@ public class Question extends QuestionInfo {
     }
 
     public List<String> getChoices() {
-        return choices;
+        return Collections.unmodifiableList(choices);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

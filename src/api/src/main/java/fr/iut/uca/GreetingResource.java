@@ -4,7 +4,13 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import fr.iut.uca.repository.FeedbackRepository;
+import fr.iut.uca.entity.surveys.FeedbackEntity;
+import fr.iut.uca.qualifier.RepositoryQualifier;
+import fr.iut.uca.qualifier.RepositoryType;
+import fr.iut.uca.repository.issues.IIssueRepository;
+import fr.iut.uca.repository.mongo.DatabaseClient;
+import fr.iut.uca.repository.mongo.surveys.FeedbackRepository;
+import fr.iut.uca.repository.mongo.surveys.SurveyRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -68,23 +74,44 @@ public class GreetingResource {
         }
     }
 
-    @Inject
-    private DatabaseClient dbClient;
+//    @Inject
+//    DatabaseClient dbClient;
 
     @Inject
-    private FeedbackRepository feedbackRepository;
+    @RepositoryQualifier(RepositoryType.MONGO)
+    SurveyRepository surveyRepository;
 
-    @GET
-    @Path("/test1")
-    public Response test1() {
-        MongoCollection<Document> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS);
-        var documents = collection.find().projection(include("_id", "content", "created_at")).into(new ArrayList<>());
-        return Response.ok(documents).build();
-    }
+    @Inject
+    @RepositoryQualifier(RepositoryType.MONGO)
+    IIssueRepository issueRepository;
+
+    @Inject
+    @RepositoryQualifier(RepositoryType.MONGO)
+    FeedbackRepository feedbackRepository;
+
+//    @GET
+//    @Path("/test1")
+//    public Response test1() {
+//        MongoCollection<FeedbackEntity> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS, FeedbackEntity.class);
+//        var documents = collection.find().projection(include("_id", "content", "created_at")).into(new ArrayList<>());
+//        return Response.ok(documents).build();
+//    }
 
     @GET
     @Path("/test2")
+    public Response test() {
+        return Response.ok(issueRepository.getItems(0,5)).build();
+    }
+
+    @GET
+    @Path("/test3")
     public Response test2() {
-        return Response.ok(feedbackRepository.getAll()).build();
+        return Response.ok(surveyRepository.getItemById("64846962f660a9babbe122d8")).build();
+    }
+
+    @GET
+    @Path("/test4")
+    public Response test3() {
+        return Response.ok(feedbackRepository.getSurveyWithFeedback("64846950f660a9babbe122bc")).build();
     }
 }

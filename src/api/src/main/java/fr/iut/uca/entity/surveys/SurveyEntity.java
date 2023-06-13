@@ -1,36 +1,33 @@
 package fr.iut.uca.entity.surveys;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
-
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SurveyEntity {
 
-    @BsonProperty("_id")
-    private ObjectId id;
+    private String id;
 
     private String title;
 
-    @BsonProperty("created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
-    @BsonProperty("published_at")
-    private Date publishedAt;
+    private LocalDate publishedAt;
 
-    @BsonProperty("end_at")
-    private Date endAt;
+    private LocalDate endAt;
 
     private String description;
 
-    private List<QuestionEntity> questions;
+    private final List<QuestionEntity> questions = new ArrayList<>();
 
-    public ObjectId getId() {
+    private FeedbackEntity feedback;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -42,27 +39,27 @@ public class SurveyEntity {
         this.title = title;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getPublishedAt() {
+    public LocalDate getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(LocalDate publishedAt) {
         this.publishedAt = publishedAt;
     }
 
-    public Date getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(Date endAt) {
+    public void setEndAt(LocalDate endAt) {
         this.endAt = endAt;
     }
 
@@ -79,6 +76,15 @@ public class SurveyEntity {
     }
 
     public void setQuestions(List<QuestionEntity> questions) {
-        this.questions = questions;
+        this.questions.clear();
+        this.questions.addAll(questions);
+    }
+
+    public Optional<FeedbackEntity> getFeedback() {
+        return Optional.ofNullable(feedback);
+    }
+
+    public void setFeedback(FeedbackEntity feedback) {
+        this.feedback = feedback;
     }
 }

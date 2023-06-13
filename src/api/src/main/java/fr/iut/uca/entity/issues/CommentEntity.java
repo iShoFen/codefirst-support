@@ -1,25 +1,21 @@
-package fr.iut.uca.model.issues;
-
-import com.aayushatharva.brotli4j.common.annotations.Local;
+package fr.iut.uca.entity.issues;
 
 import java.time.LocalDate;
 
-public class Comment {
+public class CommentEntity {
 
-    private final LocalDate createdAt;
+    private LocalDate createdAt;
 
     private String author;
 
     private String content;
 
-    public Comment(LocalDate createdAt, String author, String content) {
-        this.createdAt = createdAt;
-        this.author = author;
-        this.content = content;
-    }
-
     public LocalDate getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getAuthor() {

@@ -1,0 +1,130 @@
+[
+    {
+        "_id": { "$oid": "64846962f660a9babbe122d7" },
+        "created_at": {
+            "$date": "2023-05-25T00:00:00.000Z"
+        },
+        "published_at": {
+            "$date": "2023-05-26T00:00:00.000Z"
+        },
+        "end_at": {
+            "$date": "2023-06-02T00:00:00.000Z"
+        },
+        "title": "Sondage sur la satisfaction des utilisateurs",
+        "description": "Ce sondage vise à recueillir des informations sur la satisfaction des utilisateurs",
+        "questions": [
+            {
+                "title": "Quelle est votre satisfaction générale par rapport à notre produit ?",
+                "description": "Donnez une note de 1 à 5",
+                "type": "single_choice",
+                "choices": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5"
+                ]
+            },
+            {
+                "title": "Quels sont les aspects que vous appréciez le plus dans notre produit ?",
+                "description": "Choisissez toutes les réponses qui s'appliquent",
+                "type": "multi_choice",
+                "choices": [
+                    "Interface utilisateur",
+                    "Fonctionnalités",
+                    "Performances",
+                    "Support technique"
+                ]
+            },
+            {
+                "title": "Avez-vous des suggestions d'amélioration pour notre produit ?",
+                "description": "Veuillez indiquer vos suggestions dans le champ ci-dessous",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "_id": { "$oid": "64846962f660a9babbe122d8" },
+        "created_at": {
+            "$date": "2023-05-25T00:00:00.000Z"
+        },
+        "published_at": {
+            "$date": "2023-05-26T00:00:00.000Z"
+        },
+        "end_at": {
+            "$date": "2023-06-02T00:00:00.000Z"
+        },
+        "title": "Enquête de satisfaction des clients",
+        "description": "Cette enquête vise à recueillir des feedbacks des clients sur nos produits et services",
+        "questions": [
+            {
+                "title": "Êtes-vous satisfait de notre service clientèle ?",
+                "description": "Veuillez choisir une réponse",
+                "type": "single_choice",
+                "choices": [
+                    "Oui",
+                    "Non",
+                    "Neutre"
+                ]
+            },
+            {
+                "title": "Quel est votre produit préféré parmi notre gamme actuelle ?",
+                "description": "Sélectionnez un produit",
+                "type": "single_choice",
+                "choices": [
+                    "Produit A",
+                    "Produit B",
+                    "Produit C"
+                ]
+            },
+            {
+                "title": "Comment pourrions-nous améliorer nos produits ?",
+                "description": "Veuillez indiquer vos suggestions ci-dessous",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "_id": { "$oid": "64846962f660a9babbe122d9" },
+        "created_at": {
+            "$date": "2023-05-25T00:00:00.000Z"
+        },
+        "published_at": {
+            "$date": "2023-05-26T00:00:00.000Z"
+        },
+        "end_at": {
+            "$date": "2023-06-02T00:00:00.000Z"
+        },
+        "title": "Sondage sur les habitudes alimentaires",
+        "description": "Ce sondage vise à collecter des informations sur les habitudes alimentaires des participants",
+        "questions": [
+            {
+                "title": "Combien de fois par semaine consommez-vous des légumes ?",
+                "description": "Veuillez choisir une réponse",
+                "type": "single_choice",
+                "choices": [
+                    "Moins d'une fois",
+                    "1-3 fois",
+                    "4-6 fois",
+                    "Plus de 6 fois"
+                ]
+            },
+            {
+                "title": "Quel est votre plat préféré parmi les suivants ?",
+                "description": "Sélectionnez votre plat préféré",
+                "type": "single_choice",
+                "choices": [
+                    "Pizza",
+                    "Sushi",
+                    "Salade",
+                    "Pâtes"
+                ]
+            },
+            {
+                "title": "Avez-vous des allergies alimentaires ?",
+                "description": "Veuillez indiquer vos allergies ci-dessous",
+                "type": "text"
+            }
+        ]
+    }
+]

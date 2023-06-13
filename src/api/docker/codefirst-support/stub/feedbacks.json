@@ -1,0 +1,170 @@
+[
+  {
+    "_id": { "$oid": "64846950f660a9babbe122bc" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d7" },
+    "created_at": {
+      "$date": "2023-05-25T00:00:00.000Z"
+    },
+    "author": "user1@example.com",
+    "question": {
+      "title": "Quelle est votre satisfaction générale par rapport à notre produit ?",
+      "type": "single_choice"
+    },
+    "answer": ["4"]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122bd" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d8" },
+    "created_at": {
+      "$date": "2023-05-26T00:00:00.000Z"
+    },
+    "author": "user2@example.com",
+    "question": {
+      "title": "Quels sont les aspects que vous appréciez le plus dans notre produit ?",
+      "type": "multi_choice"
+    },
+    "answer": [
+      "Interface utilisateur",
+      "Fonctionnalités"
+    ]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122be" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d9" },
+    "created_at": {
+      "$date": "2023-05-27T00:00:00.000Z"
+    },
+    "author": "user3@example.com",
+    "question": {
+      "title": "Avez-vous des suggestions d'amélioration pour notre produit ?",
+      "type": "text"
+    },
+    "answer": ["J'aimerais voir plus de fonctionnalités de personnalisation."]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122bf" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d7" },
+    "created_at": {
+      "$date": "2023-05-28T00:00:00.000Z"
+    },
+    "author": "user4@example.com",
+    "question": {
+      "title": "Quelle est votre note globale pour notre service client ?",
+      "type": "single_choice"
+    },
+    "answer": ["5"]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c0" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d8" },
+    "created_at": {
+      "$date": "2023-05-29T00:00:00.000Z"
+    },
+    "author": "user5@example.com",
+    "question": {
+      "title": "Quels sont les avantages que vous trouvez dans notre programme de fidélité ?",
+      "type": "multi_choice"
+    },
+    "answer": [
+      "Récompenses exclusives",
+      "Remises spéciales"
+    ]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c1" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d9" },
+    "created_at": {
+      "$date": "2023-05-30T00:00:00.000Z"
+    },
+    "author": "user6@example.com",
+    "question": {
+      "title": "Quelle est votre opinion sur notre nouvelle fonctionnalité récemment ajoutée ?",
+      "type": "text"
+    },
+    "answer": ["Je trouve la nouvelle fonctionnalité très pratique et intuitive."]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c2" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d7" },
+    "created_at": {
+      "$date": "2023-06-01T00:00:00.000Z"
+    },
+    "author": "user7@example.com",
+    "question": {
+      "title": "Quelle est votre expérience globale avec notre application mobile ?",
+      "type": "single_choice"
+    },
+    "answer": ["3"]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c3" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d8" },
+    "created_at": {
+      "$date": "2023-06-02T00:00:00.000Z"
+    },
+    "author": "user8@example.com",
+    "question": {
+      "title": "Quels sont les aspects que vous aimeriez voir améliorés dans notre produit ?",
+      "type": "multi_choice"
+    },
+    "answer": [
+      "Performance",
+      "Interface utilisateur"
+    ]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c4" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d9" },
+    "created_at": {
+      "$date": "2023-06-03T00:00:00.000Z"
+    },
+    "author": "user9@example.com",
+    "question": {
+      "title": "Avez-vous des suggestions de nouvelles fonctionnalités pour notre produit ?",
+      "type": "text"
+    },
+    "answer": ["J'aimerais voir une fonctionnalité de chat en direct ajoutée."]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c5" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d7" },
+    "created_at": {
+      "$date": "2023-06-04T00:00:00.000Z"
+    },
+    "author": "user10@example.com",
+    "question": {
+      "title": "Quelle est votre opinion sur notre service de livraison ?",
+      "type": "single_choice"
+    },
+    "answer": ["4"]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c6" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d8" },
+    "created_at": {
+      "$date": "2023-06-05T00:00:00.000Z"
+    },
+    "author": "user11@example.com",
+    "question": {
+      "title": "Quels sont les critères les plus importants pour vous lors de l'achat d'un produit ?",
+      "type": "multi_choice"
+    },
+    "answer": [
+      "Qualité",
+      "Prix"
+    ]
+  },
+  {
+    "_id": { "$oid": "64846950f660a9babbe122c7" },
+    "survey_id": { "$oid": "64846962f660a9babbe122d9" },
+    "created_at": {
+      "$date": "2023-06-06T00:00:00.000Z"
+    },
+    "author": "user12@example.com",
+    "question": {
+      "title": "Comment évaluez-vous notre service après-vente ?",
+      "type": "text"
+    },
+    "answer": ["]Le service après-vente est réactif et efficace."]
+  }
+]

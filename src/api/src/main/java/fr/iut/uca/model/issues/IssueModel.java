@@ -1,26 +1,30 @@
 package fr.iut.uca.model.issues;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class IssueModel extends IssueModelInfo {
 
-    private final ObjectId id;
+    private final String id;
 
     private Category category;
 
     private final List<IssueModelField> fields = new ArrayList<>();
 
-    public IssueModel(String name, String shortDescription, String description, ObjectId id, Category category) {
+    public IssueModel(String id, String name, String shortDescription, String description, Category category, List<IssueModelField> fields) {
         super(name, shortDescription, description);
         this.id = id;
         this.category = category;
+        this.fields.addAll(fields);
     }
 
-    public ObjectId getId() {
+    public IssueModel(String name, String shortDescription, String description, Category category, List<IssueModelField> fields) {
+        this(null, name, shortDescription, description, category, fields);
+    }
+
+    public String getId() {
         return id;
     }
 
@@ -33,7 +37,7 @@ public class IssueModel extends IssueModelInfo {
     }
 
     public List<IssueModelField> getFields() {
-        return fields;
+        return Collections.unmodifiableList(fields);
     }
 
     @Override

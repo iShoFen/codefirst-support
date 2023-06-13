@@ -1,12 +1,13 @@
 package fr.iut.uca.entity.surveys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionEntity extends QuestionInfoEntity {
 
     private String description;
 
-    private List<String> choices;
+    private final List<String> choices = new ArrayList<>();
 
     public String getDescription() {
         return description;
@@ -21,6 +22,7 @@ public class QuestionEntity extends QuestionInfoEntity {
     }
 
     public void setChoices(List<String> choices) {
-        this.choices = choices;
+        this.choices.clear();
+        this.choices.addAll(choices);
     }
 }

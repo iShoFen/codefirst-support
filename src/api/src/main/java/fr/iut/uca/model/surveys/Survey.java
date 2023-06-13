@@ -1,37 +1,45 @@
 package fr.iut.uca.model.surveys;
 
-import org.bson.types.ObjectId;
-
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Survey {
 
-    private final ObjectId id;
+    private final String id;
 
     private String title;
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
-    private Date publishedAt;
+    private LocalDate publishedAt;
 
-    private Date endAt;
+    private LocalDate endAt;
 
     private String description;
 
     private final List<Question> questions = new ArrayList<>();
 
-    public Survey(ObjectId id, String title, Date createdAt, Date publishedAt, Date endAt, String description) {
+    private Feedback feedback;
+
+    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions, Feedback feedbacks) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
         this.publishedAt = publishedAt;
         this.endAt = endAt;
         this.description = description;
+        this.questions.addAll(questions);
+        this.feedback = feedbacks;
     }
 
-    public ObjectId getId() {
+    public Survey(String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions) {
+        this(null, title, createdAt, publishedAt, endAt, description, questions, null);
+    }
+
+    public String getId() {
         return id;
     }
 
@@ -43,23 +51,23 @@ public class Survey {
         this.title = title;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public Date getPublishedAt() {
+    public LocalDate getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(LocalDate publishedAt) {
         this.publishedAt = publishedAt;
     }
 
-    public Date getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(Date endAt) {
+    public void setEndAt(LocalDate endAt) {
         this.endAt = endAt;
     }
 
@@ -72,6 +80,22 @@ public class Survey {
     }
 
     public List<Question> getQuestions() {
-        return questions;
+        return Collections.unmodifiableList(questions);
+    }
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
+
+    public boolean removeQuestion(Question question) {
+        return questions.remove(question);
+    }
+
+    public Optional<Feedback> getFeedback() {
+        return Optional.ofNullable(feedback);
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
 }

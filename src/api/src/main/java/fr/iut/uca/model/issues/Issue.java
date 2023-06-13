@@ -1,20 +1,19 @@
 package fr.iut.uca.model.issues;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 public class Issue {
 
-    private final ObjectId id;
+    private final String id;
 
     private String title;
 
     private String author;
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
     private IssueStatus status;
 
@@ -26,7 +25,7 @@ public class Issue {
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(ObjectId id, String title, String author, Date createdAt, IssueStatus status, Category category, IssueModelInfo model) {
+    public Issue(String id, String title, String author,LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model, List<IssueField> fields, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -34,9 +33,15 @@ public class Issue {
         this.status = status;
         this.category = category;
         this.model = model;
+        this.fields.addAll(fields);
+        this.comments.addAll(comments);
     }
 
-    public ObjectId getId() {
+    public Issue(String title, String author, LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model, List<IssueField> fields) {
+        this(null, title, author, createdAt, status, category, model, fields, new ArrayList<>());
+    }
+
+    public String getId() {
         return id;
     }
 
@@ -56,7 +61,7 @@ public class Issue {
         this.author = author;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
@@ -85,10 +90,10 @@ public class Issue {
     }
 
     public List<Comment> getComments() {
-        return comments;
+        return Collections.unmodifiableList(comments);
     }
 
     public List<IssueField> getFields() {
-        return fields;
+        return Collections.unmodifiableList(fields);
     }
 }

@@ -1,46 +1,52 @@
 package fr.iut.uca.model.surveys;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Feedback {
 
-    private final ObjectId id;
+    private final String id;
 
-    private ObjectId surveyId;
+    private String surveyId;
 
-    private final Date createdAt;
+    private final LocalDate createdAt;
 
     private String author;
 
-    private Question question;
+    private QuestionInfo question;
 
     private final List<String> answers = new ArrayList<>();
 
-    public Feedback(ObjectId id, ObjectId surveyId, Date createdAt, String author, Question question) {
+    public Feedback(String id, String surveyId,LocalDate createdAt, String author, QuestionInfo question, List<String> answers) {
         this.id = id;
         this.surveyId = surveyId;
         this.createdAt = createdAt;
         this.author = author;
         this.question = question;
+        this.answers.addAll(answers);
     }
 
-    public ObjectId getId() {
+    public Feedback(String surveyId,LocalDate createdAt, String author, Question question, List<String> answers) {
+        this(null, surveyId, createdAt, author, question, answers);
+    }
+
+
+    public String getId() {
         return id;
     }
 
-    public ObjectId getSurveyId() {
+    public String getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(ObjectId surveyId) {
+    public void setSurveyId(String surveyId) {
         this.surveyId = surveyId;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
@@ -52,15 +58,15 @@ public class Feedback {
         this.author = author;
     }
 
-    public Question getQuestion() {
+    public QuestionInfo getQuestion() {
         return question;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(QuestionInfo question) {
         this.question = question;
     }
 
     public List<String> getAnswers() {
-        return answers;
+        return Collections.unmodifiableList(answers);
     }
 }
