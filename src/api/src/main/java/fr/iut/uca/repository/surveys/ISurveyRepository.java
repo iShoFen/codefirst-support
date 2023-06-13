@@ -123,13 +123,4 @@ public interface ISurveyRepository extends IGenericRepository<SurveyEntity> {
      * @return the list of surveys ending between the two dates
      */
     List<SurveyEntity> getSurveysEndBetween(LocalDate start, LocalDate end, int index, int count);
-
-    /**
-     * Get surveys with feedbacks
-     * @param id the id of the survey
-     * @param index the index of the first feedback to get
-     * @param count the number of feedbacks to get
-     * @return the survey with feedbacks
-     */
-    Optional<SurveyEntity> getSurveyWithFeedbacks(String id, int index, int count);
 }
