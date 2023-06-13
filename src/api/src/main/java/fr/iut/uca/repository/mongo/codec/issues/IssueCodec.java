@@ -1,105 +1,172 @@
 package fr.iut.uca.repository.mongo.codec.issues;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
+import fr.iut.uca.entity.issues.*;
+import fr.iut.uca.extension.issues.CommentExtensions;
+import fr.iut.uca.extension.issues.IssueFieldExtensions;
+import fr.iut.uca.extension.issues.IssueModelInfoExtensions;
+import org.bson.BsonReader;
+import org.bson.BsonWriter;
+import org.bson.codecs.Codec;
+import org.bson.codecs.DecoderContext;
+import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class IssueCodec {
+import static fr.iut.uca.extension.DateExtensions.toLocalDate;
+import static fr.iut.uca.extension.issues.IssueExtensions.*;
 
-    @BsonProperty(value = "_id")
-    private ObjectId id;
 
-    private String title;
+public class IssueCodec implements Codec<IssueEntity> {
+    @Override
+    public IssueEntity decode(BsonReader bsonReader, DecoderContext decoderContext) {
+        var issueEntity = new IssueEntity();
 
-    private String author;
+        bsonReader.readStartDocument();
 
-    @BsonProperty(value = "created_at")
-    private LocalDate createdAt;
+        issueEntity.setId(bsonReader.readObjectId(ID).toString());
+        issueEntity.setTitle(bsonReader.readString(TITLE));
+        issueEntity.setAuthor(bsonReader.readString(AUTHOR));
+        issueEntity.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CREATED_AT))));
+        issueEntity.setStatus(IssueStatusEntity.valueOf(bsonReader.readString(STATUS).toUpperCase()));
+        issueEntity.setCategory(IssueCodecHelper.decodeCategory(bsonReader));
+        issueEntity.setModel(decodeIssueModelInfo(bsonReader));
+        issueEntity.setComments(decodeComment(bsonReader));
+        issueEntity.setFields(decodeFields(bsonReader));
 
-    private IssueStatusCodec status;
+        bsonReader.readEndDocument();
 
-    private CategoryCodec category;
-
-    private IssueModelInfoCodec model;
-
-    private final List<CommentCodec> comments = new ArrayList<>();
-
-    private final List<IssueFieldCodec> fields = new ArrayList<>();
-
-    public ObjectId getId() {
-        return id;
+        return issueEntity;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id;
+    @Override
+    public void encode(BsonWriter bsonWriter, IssueEntity issueEntity, EncoderContext encoderContext) {
+        bsonWriter.writeStartDocument();
+
+        if (issueEntity.getId() != null)
+            bsonWriter.writeObjectId(ID, new ObjectId(issueEntity.getId()));
+
+        bsonWriter.writeString(TITLE, issueEntity.getTitle());
+        bsonWriter.writeString(AUTHOR, issueEntity.getAuthor());
+        bsonWriter.writeDateTime(CREATED_AT, issueEntity.getCreatedAt().toEpochDay());
+        bsonWriter.writeString(STATUS, issueEntity.getStatus().name().toLowerCase());
+        IssueCodecHelper.encodeCategory(bsonWriter, issueEntity.getCategory());
+        encodeIssueModelInfo(bsonWriter, issueEntity.getModel());
+        encodeComments(bsonWriter, issueEntity.getComments());
+        encodeFields(bsonWriter, issueEntity.getFields());
+
+        bsonWriter.writeEndDocument();
     }
 
-    public String getTitle() {
-        return title;
+    @Override
+    public Class<IssueEntity> getEncoderClass() {
+        return IssueEntity.class;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    private IssueModelInfoEntity decodeIssueModelInfo(BsonReader bsonReader) {
+        var issueModelInfo = new IssueModelInfoEntity();
+
+        bsonReader.readStartDocument();
+
+        issueModelInfo.setName(bsonReader.readString(IssueModelInfoExtensions.NAME));
+        issueModelInfo.setShortDescription(bsonReader.readString(IssueModelInfoExtensions.SHORT_DESCRIPTION));
+        issueModelInfo.setDescription(bsonReader.readString(IssueModelInfoExtensions.DESCRIPTION));
+
+        bsonReader.readEndDocument();
+
+        return issueModelInfo;
     }
 
-    public String getAuthor() {
-        return author;
-    }
+    private List<CommentEntity> decodeComment(BsonReader bsonReader) {
+        List<CommentEntity> comments = new ArrayList<>();
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+        bsonReader.readStartArray();
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
+        while (bsonReader.readBsonType() != org.bson.BsonType.END_OF_DOCUMENT) {
+            var comment = new CommentEntity();
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
+            bsonReader.readStartDocument();
 
-    public IssueStatusCodec getStatus() {
-        return status;
-    }
+            comment.setAuthor(bsonReader.readString(CommentExtensions.AUTHOR));
+            comment.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CommentExtensions.CREATED_AT))));
+            comment.setContent(bsonReader.readString(CommentExtensions.CONTENT));
 
-    public void setStatus(IssueStatusCodec status) {
-        this.status = status;
-    }
+            bsonReader.readEndDocument();
 
-    public CategoryCodec getCategory() {
-        return category;
-    }
+            comments.add(comment);
+        }
 
-    public void setCategory(CategoryCodec category) {
-        this.category = category;
-    }
+        bsonReader.readEndArray();
 
-    public IssueModelInfoCodec getModel() {
-        return model;
-    }
-
-    public void setModel(IssueModelInfoCodec model) {
-        this.model = model;
-    }
-
-    public List<CommentCodec> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentCodec> comments) {
-        this.comments.clear();
-        this.comments.addAll(comments);
-    }
+    private List<IssueFieldEntity> decodeFields(BsonReader bsonReader) {
+        List<IssueFieldEntity> fields = new ArrayList<>();
 
-    public List<IssueFieldCodec> getFields() {
+        bsonReader.readStartArray();
+
+        while (bsonReader.readBsonType() != org.bson.BsonType.END_OF_DOCUMENT) {
+            var field = new IssueFieldEntity();
+
+            bsonReader.readStartDocument();
+
+            field.setTitle(bsonReader.readString(IssueFieldExtensions.TITLE));
+            field.setDescription(bsonReader.readString(IssueFieldExtensions.DESCRIPTION));
+            field.setRequired(bsonReader.readBoolean(IssueFieldExtensions.REQUIRED));
+            field.setValue(bsonReader.readString(IssueFieldExtensions.VALUE));
+
+            bsonReader.readEndDocument();
+
+            fields.add(field);
+        }
+        bsonReader.readEndArray();
+
         return fields;
     }
 
-    public void setFields(List<IssueFieldCodec> fields) {
-        this.fields.clear();
-        this.fields.addAll(fields);
+    private void encodeIssueModelInfo(BsonWriter bsonWriter, IssueModelInfoEntity issueModelInfo) {
+        bsonWriter.writeStartDocument();
+
+        bsonWriter.writeString(IssueModelInfoExtensions.NAME, issueModelInfo.getName());
+        bsonWriter.writeString(IssueModelInfoExtensions.SHORT_DESCRIPTION, issueModelInfo.getShortDescription());
+        bsonWriter.writeString(IssueModelInfoExtensions.DESCRIPTION, issueModelInfo.getDescription());
+
+        bsonWriter.writeEndDocument();
+    }
+
+    private void encodeComments(BsonWriter bsonWriter, List<CommentEntity> comments) {
+        bsonWriter.writeStartArray();
+
+        for (var comment : comments) {
+            bsonWriter.writeStartDocument();
+
+            bsonWriter.writeString(CommentExtensions.AUTHOR, comment.getAuthor());
+            bsonWriter.writeDateTime(CommentExtensions.CREATED_AT, comment.getCreatedAt().toEpochDay());
+            bsonWriter.writeString(CommentExtensions.CONTENT, comment.getContent());
+
+            bsonWriter.writeEndDocument();
+        }
+
+        bsonWriter.writeEndArray();
+    }
+
+    private void encodeFields(BsonWriter bsonWriter, List<IssueFieldEntity> issueFieldEntities) {
+        bsonWriter.writeStartArray();
+
+        for (var field : issueFieldEntities) {
+            bsonWriter.writeStartDocument();
+
+            bsonWriter.writeString(IssueFieldExtensions.TITLE, field.getTitle());
+            bsonWriter.writeString(IssueFieldExtensions.DESCRIPTION, field.getDescription());
+            bsonWriter.writeBoolean(IssueFieldExtensions.REQUIRED, field.isRequired());
+            bsonWriter.writeString(IssueFieldExtensions.VALUE, field.getValue());
+
+            bsonWriter.writeEndDocument();
+        }
+
+        bsonWriter.writeEndArray();
     }
 }
