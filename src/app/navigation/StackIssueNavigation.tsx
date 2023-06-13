@@ -8,7 +8,10 @@ export default function StackIssueNavigation() {
 
   return (
     <Stack.Navigator initialRouteName="List">
-      <Stack.Screen name="List" component={HomeScreen}/>
+      <Stack.Screen name="List" component={HomeScreen}
+      options={{
+        headerShown: false
+      }}/>
       <Stack.Screen name="Item" component={IssueItemScreen}/>
     </Stack.Navigator>
   )

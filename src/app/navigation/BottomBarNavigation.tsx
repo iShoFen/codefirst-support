@@ -5,15 +5,21 @@ import SettingsScreen from "../screens/SettingsScreen";
 import StackIssueNavigation from "./StackIssueNavigation";
 import {BottomBarParamList} from "./types/ParamList";
 import HomeAddScreen from "../screens/HomeAddScreen";
+import {useColors} from "../themes/hooks/useColors";
 
 
 export default function BottomBarNavigation() {
   const BottomTabNavigator = createBottomTabNavigator<BottomBarParamList>()
+  const colors = useColors()
+
 
   return (
     <NavigationContainer>
       <BottomTabNavigator.Navigator initialRouteName="Home"
-                                    screenOptions={{headerShown: false}}>
+                                    screenOptions={{
+                                      headerShown: false,
+                                      tabBarActiveTintColor: colors.primary
+                                    }}>
         <BottomTabNavigator.Screen
           name="Home"
           component={StackIssueNavigation}

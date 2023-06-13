@@ -1,4 +1,13 @@
-import {DefaultSectionT, SectionList, SectionListData, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {
+  Button,
+  DefaultSectionT, SafeAreaView,
+  SectionList,
+  SectionListData,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import React, {useCallback, useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {HomeIssueNavigationProp, HomeSurveyNavigationProp,} from "../navigation/types/NavigationProp";
@@ -39,7 +48,7 @@ export default function HomeScreen() {
     {
       title: 'Questionnaires',
       id: 'survey',
-      data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
+      data: ['French Fries', 'Onion Rings', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps'],
       renderItem: ({item}) => {
         return (<View><Text style={{color: 'red'}}>{item}</Text></View>)
       }
@@ -49,31 +58,33 @@ export default function HomeScreen() {
   const handleItemPress = useCallback(({sectionId}: NavigationCallbackProps) => {
     switch (sectionId) {
       case "survey":
-        surveyNavigation.navigate('Item', {item: ''})
+        // surveyNavigation.navigate('Item', {item: ''})
         break
       case "issue":
-        issueNavigation.navigate('Item', {item: ''})
+        // issueNavigation.navigate('Item', {item: ''})
         break
     }
   }, [])
 
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleHeader}>Codefirst Support</Text>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.container}>
+        <Text style={styles.titleHeader}>Codefirst Support</Text>
 
-      <SectionList sections={DATA}
-                   renderSectionHeader={({section}) => (<Text style={{fontSize: 40}}>{section.title}</Text>)}
-                   renderItem={({item, section}) => (<View>
-                     <TouchableOpacity onPress={() => handleItemPress({
-                       sectionId: section.id,
-                       item: item.length
-                     })}>
-                       <Text>{item}</Text>
-                     </TouchableOpacity>
-                   </View>)}
-      />
-    </View>
+        <SectionList sections={DATA}
+                     stickySectionHeadersEnabled={false}
+                     renderSectionHeader={({section}) => (<Text style={{fontSize: 40}}>{section.title}</Text>)}
+                     renderItem={({item, section}) => (<View>
+                       <TouchableOpacity onPress={() => handleItemPress({
+                         sectionId: section.id,
+                         item: item.length
+                       })}>
+                         <Text>{item}</Text>
+                       </TouchableOpacity>
+                     </View>)}
+        />
+      </View>
+    </SafeAreaView>
   )
 }
 
