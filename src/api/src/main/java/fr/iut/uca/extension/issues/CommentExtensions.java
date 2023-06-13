@@ -6,7 +6,7 @@ import fr.iut.uca.model.issues.Comment;
 import java.util.List;
 
 public abstract class CommentExtensions {
-    public static final String CREATED_AT = "createdAt";
+    public static final String CREATED_AT = "created_at";
     public static final String AUTHOR = "author";
     public static final String CONTENT = "content";
 
