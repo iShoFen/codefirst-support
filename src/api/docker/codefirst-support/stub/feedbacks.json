@@ -8,9 +8,9 @@
     "author": "user1@example.com",
     "question": {
       "title": "Quelle est votre satisfaction générale par rapport à notre produit ?",
-      "type": "singlechoice"
+      "type": "single_choice"
     },
-    "answer": "4"
+    "answer": ["4"]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122bd" },
@@ -21,7 +21,7 @@
     "author": "user2@example.com",
     "question": {
       "title": "Quels sont les aspects que vous appréciez le plus dans notre produit ?",
-      "type": "multiplechoice"
+      "type": "multi_choice"
     },
     "answer": [
       "Interface utilisateur",
@@ -39,7 +39,7 @@
       "title": "Avez-vous des suggestions d'amélioration pour notre produit ?",
       "type": "text"
     },
-    "answer": "J'aimerais voir plus de fonctionnalités de personnalisation."
+    "answer": ["J'aimerais voir plus de fonctionnalités de personnalisation."]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122bf" },
@@ -50,9 +50,9 @@
     "author": "user4@example.com",
     "question": {
       "title": "Quelle est votre note globale pour notre service client ?",
-      "type": "singlechoice"
+      "type": "single_choice"
     },
-    "answer": "5"
+    "answer": ["5"]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122c0" },
@@ -63,7 +63,7 @@
     "author": "user5@example.com",
     "question": {
       "title": "Quels sont les avantages que vous trouvez dans notre programme de fidélité ?",
-      "type": "multiplechoice"
+      "type": "multi_choice"
     },
     "answer": [
       "Récompenses exclusives",
@@ -81,7 +81,7 @@
       "title": "Quelle est votre opinion sur notre nouvelle fonctionnalité récemment ajoutée ?",
       "type": "text"
     },
-    "answer": "Je trouve la nouvelle fonctionnalité très pratique et intuitive."
+    "answer": ["Je trouve la nouvelle fonctionnalité très pratique et intuitive."]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122c2" },
@@ -92,9 +92,9 @@
     "author": "user7@example.com",
     "question": {
       "title": "Quelle est votre expérience globale avec notre application mobile ?",
-      "type": "singlechoice"
+      "type": "single_choice"
     },
-    "answer": "3"
+    "answer": ["3"]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122c3" },
@@ -105,7 +105,7 @@
     "author": "user8@example.com",
     "question": {
       "title": "Quels sont les aspects que vous aimeriez voir améliorés dans notre produit ?",
-      "type": "multiplechoice"
+      "type": "multi_choice"
     },
     "answer": [
       "Performance",
@@ -123,7 +123,7 @@
       "title": "Avez-vous des suggestions de nouvelles fonctionnalités pour notre produit ?",
       "type": "text"
     },
-    "answer": "J'aimerais voir une fonctionnalité de chat en direct ajoutée."
+    "answer": ["J'aimerais voir une fonctionnalité de chat en direct ajoutée."]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122c5" },
@@ -134,9 +134,9 @@
     "author": "user10@example.com",
     "question": {
       "title": "Quelle est votre opinion sur notre service de livraison ?",
-      "type": "singlechoice"
+      "type": "single_choice"
     },
-    "answer": "4"
+    "answer": ["4"]
   },
   {
     "_id": { "$oid": "64846950f660a9babbe122c6" },
@@ -147,7 +147,7 @@
     "author": "user11@example.com",
     "question": {
       "title": "Quels sont les critères les plus importants pour vous lors de l'achat d'un produit ?",
-      "type": "multiplechoice"
+      "type": "multi_choice"
     },
     "answer": [
       "Qualité",
@@ -165,6 +165,6 @@
       "title": "Comment évaluez-vous notre service après-vente ?",
       "type": "text"
     },
-    "answer": "Le service après-vente est réactif et efficace."
+    "answer": ["]Le service après-vente est réactif et efficace."]
   }
 ]
