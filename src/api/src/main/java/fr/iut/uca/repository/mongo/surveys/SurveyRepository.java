@@ -3,11 +3,10 @@ package fr.iut.uca.repository.mongo.surveys;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
-import fr.iut.uca.DatabaseClient;
+import fr.iut.uca.repository.mongo.DatabaseClient;
 import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.entity.surveys.SurveyEntity;
 import fr.iut.uca.extension.surveys.FeedbackExtensions;
-import fr.iut.uca.extension.surveys.SurveyExtensions;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
 import fr.iut.uca.repository.mongo.GenericRepository;
@@ -15,20 +14,16 @@ import fr.iut.uca.repository.surveys.ISurveyRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static fr.iut.uca.extension.surveys.SurveyExtensions.CREATED_AT;
 import static fr.iut.uca.extension.surveys.SurveyExtensions.PUBLISHED_AT;
 import static fr.iut.uca.extension.surveys.SurveyExtensions.END_AT;
-import static fr.iut.uca.repository.mongo.MongoOperators.*;
-
+import static fr.iut.uca.extension.surveys.SurveyExtensions.ID;
 /**
  * Repository for surveys.
  */

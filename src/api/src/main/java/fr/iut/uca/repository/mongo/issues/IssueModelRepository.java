@@ -1,7 +1,7 @@
 package fr.iut.uca.repository.mongo.issues;
 
 import com.mongodb.client.model.Filters;
-import fr.iut.uca.DatabaseClient;
+import fr.iut.uca.repository.mongo.DatabaseClient;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
@@ -9,7 +9,6 @@ import fr.iut.uca.repository.issues.IIssueModelRepository;
 import fr.iut.uca.repository.mongo.GenericRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;

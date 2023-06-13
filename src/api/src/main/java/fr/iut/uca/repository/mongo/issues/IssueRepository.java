@@ -5,7 +5,7 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
-import fr.iut.uca.DatabaseClient;
+import fr.iut.uca.repository.mongo.DatabaseClient;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.entity.issues.IssueStatusEntity;
 import fr.iut.uca.extension.issues.IssueExtensions;
@@ -13,7 +13,6 @@ import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
 import fr.iut.uca.repository.issues.IIssueRepository;
 import fr.iut.uca.repository.mongo.GenericRepository;
-import fr.iut.uca.repository.mongo.MongoOperators;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static fr.iut.uca.extension.issues.IssueExtensions.*;
-import static fr.iut.uca.repository.mongo.MongoOperators.*;
 
 /**
  * Repository for issues.
@@ -41,6 +39,7 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
         super(IssueExtensions.ID);
     }
 
+    @Override
     @Inject
     public void setMongoClient(DatabaseClient mongoClient) {
         this.mongoClient = mongoClient;
@@ -51,8 +50,9 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
     public List<SimpleEntry<IssueStatusEntity, Long>> getIssuesCountByStatus() {
         String countParam = "count";
 
-        Bson groupStage = Aggregates.group(REF + STATUS, Accumulators.sum(countParam, 1));
-        Bson projectStage = new Document(PROJECT, new Document(MongoOperators.ID, 0).append(STATUS, MongoOperators.REF + MongoOperators.ID).append(countParam, 1));
+        Bson groupStage = Aggregates.group("$" + STATUS, Accumulators.sum(countParam, 1));
+
+        Bson projectStage = Aggregates.project(Projections.fields(Projections.excludeId(), Projections.computed(STATUS, "$" + ID), Projections.include(countParam)));
         AggregateIterable<Document> result = collection.aggregate(List.of(groupStage, projectStage), Document.class);
 
         List<SimpleEntry<IssueStatusEntity, Long>> issuesCountByStatus = new ArrayList<>();
@@ -76,37 +76,37 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
 
     @Override
     public List<IssueEntity> getIssuesByCreatedDate(LocalDate createdAt, String status, int index, int count) {
-        return collection.find(IssueEntity.class).filter(new Document(CREATED_AT, createdAt).append(STATUS, status))
-                .skip(index).limit(count).into(new ArrayList<>());
+        var filter = Filters.and(Filters.eq(STATUS, status), Filters.eq(CREATED_AT, createdAt));
+        return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
     public List<IssueEntity> getIssuesByCreatedDateBefore(LocalDate createdAt, String status, int index, int count) {
-        return collection.find(IssueEntity.class).filter(new Document(STATUS, status).append(CREATED_AT, new Document(LESS_THAN, createdAt)))
-                .skip(index).limit(count).into(new ArrayList<>());
+        var filter = Filters.and(Filters.eq(STATUS, status), Filters.lt(CREATED_AT, createdAt));
+        return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
     public List<IssueEntity> getIssuesByCreatedDateAfter(LocalDate createdAt, String status, int index, int count) {
-        return collection.find(IssueEntity.class).filter(new Document(STATUS, status).append(CREATED_AT, new Document(GREATER_THAN, createdAt)))
-                .skip(index).limit(count).into(new ArrayList<>());
+        var filter = Filters.and(Filters.eq(STATUS, status), Filters.gt(CREATED_AT, createdAt));
+        return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
     public List<IssueEntity> getIssuesByCreatedDateBetween(LocalDate start, String status, LocalDate end, int index, int count) {
-        return collection.find(IssueEntity.class).filter(new Document(STATUS, status).append(CREATED_AT, new Document(GREATER_THAN_OR_EQUALS, start).append(LESS_THAN_OR_EQUALS, end)))
-                .skip(index).limit(count).into(new ArrayList<>());
+        var filter = Filters.and(Filters.eq(STATUS, status), Filters.gte(CREATED_AT, start), Filters.lte(CREATED_AT, end));
+        return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
     public List<IssueEntity> getIssuesWithTitleContaining(String title, String status, int index, int count) {
-        return collection.find(IssueEntity.class).filter(new Document(STATUS, status).append(TITLE, new Document(REGEX, title)))
-                .skip(index).limit(count).into(new ArrayList<>());
+        var filter = Filters.and(Filters.eq(STATUS, status), Filters.regex(TITLE, title));
+        return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
     public List<IssueEntity> getIssuesOfAuthor(String author, String status, int index, int count) {
-        return collection.find(IssueEntity.class).filter(new Document(STATUS, status).append(AUTHOR, author))
-                .skip(index).limit(count).into(new ArrayList<>());
+        var filter = Filters.and(Filters.eq(STATUS, status), Filters.eq(AUTHOR, author));
+        return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 }
