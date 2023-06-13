@@ -16,11 +16,11 @@ public class Feedback {
 
     private String author;
 
-    private Question question;
+    private QuestionInfo question;
 
     private final List<String> answers = new ArrayList<>();
 
-    public Feedback(String id, String surveyId,LocalDate createdAt, String author, Question question, List<String> answers) {
+    public Feedback(String id, String surveyId,LocalDate createdAt, String author, QuestionInfo question, List<String> answers) {
         this.id = id;
         this.surveyId = surveyId;
         this.createdAt = createdAt;
@@ -58,11 +58,11 @@ public class Feedback {
         this.author = author;
     }
 
-    public Question getQuestion() {
+    public QuestionInfo getQuestion() {
         return question;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(QuestionInfo question) {
         this.question = question;
     }
 

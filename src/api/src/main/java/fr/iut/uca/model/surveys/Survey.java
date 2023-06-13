@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Survey {
 
@@ -21,9 +22,9 @@ public class Survey {
 
     private final List<Question> questions = new ArrayList<>();
 
-    private final List<Feedback> feedbacks = new ArrayList<>();
+    private Feedback feedback;
 
-    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions, List<Feedback> feedbacks) {
+    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions, Feedback feedbacks) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -31,11 +32,11 @@ public class Survey {
         this.endAt = endAt;
         this.description = description;
         this.questions.addAll(questions);
-        this.feedbacks.addAll(feedbacks);
+        this.feedback = feedbacks;
     }
 
     public Survey(String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions) {
-        this(null, title, createdAt, publishedAt, endAt, description, questions, new ArrayList<>());
+        this(null, title, createdAt, publishedAt, endAt, description, questions, null);
     }
 
     public String getId() {
@@ -82,7 +83,19 @@ public class Survey {
         return Collections.unmodifiableList(questions);
     }
 
-    public List<Feedback> getFeedbacks() {
-        return Collections.unmodifiableList(feedbacks);
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
+
+    public boolean removeQuestion(Question question) {
+        return questions.remove(question);
+    }
+
+    public Optional<Feedback> getFeedback() {
+        return Optional.ofNullable(feedback);
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
 }
