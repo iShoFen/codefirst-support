@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, ViewStyle} from "react-native";
 import {Comment} from "../../../model/issues/Comment";
-import {Divider} from "react-native-paper";
+import React from "react";
 
 type CommentItemProps = {
   comment: Comment
@@ -20,7 +20,7 @@ export default function CommentItem(props: CommentItemProps) {
       <Text>-</Text>
       <Text style={styles.createdAt}>{comment.createdAt.toLocaleDateString()}</Text>
     </View>
-    <Divider bold/>
+    <View style={{height: 1}} />
     <Text style={styles.content}>{comment.content}</Text>
   </View>)
 }
