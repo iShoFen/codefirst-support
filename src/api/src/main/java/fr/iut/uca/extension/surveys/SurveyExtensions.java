@@ -15,7 +15,9 @@ public abstract class SurveyExtensions {
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     public static final String QUESTIONS = "questions";
-    public static final String FEEDBACKS = "feedbacks";
+    public static final String FEEDBACK = "feedback";
+
+    private SurveyExtensions() { }
 
     public static SurveyEntity toEntity(Survey survey) {
         var surveyEntity =  new SurveyEntity();
@@ -24,10 +26,7 @@ public abstract class SurveyExtensions {
         surveyEntity.setTitle(survey.getTitle());
         surveyEntity.setEndAt(survey.getEndAt());
         surveyEntity.setPublishedAt(survey.getPublishedAt());
-
-        if (survey.getId() != null) {
-            surveyEntity.setId(new ObjectId(survey.getId()));
-        }
+        surveyEntity.setId(survey.getId());
 
         surveyEntity.setQuestions(QuestionExtensions.toEntities(survey.getQuestions()));
 
@@ -39,14 +38,14 @@ public abstract class SurveyExtensions {
 
     public static Survey toModel(SurveyEntity surveyEntity) {
         return new Survey(
-                surveyEntity.getId().toString(),
+                surveyEntity.getId(),
                 surveyEntity.getTitle(),
                 surveyEntity.getCreatedAt(),
                 surveyEntity.getPublishedAt(),
                 surveyEntity.getEndAt(),
                 surveyEntity.getDescription(),
                 QuestionExtensions.toModels(surveyEntity.getQuestions()),
-                FeedbackExtensions.toModels(surveyEntity.getFeedbacks())
+                surveyEntity.getFeedback().isPresent() ? FeedbackExtensions.toModel(surveyEntity.getFeedback().get()) : null
         );
     }
 

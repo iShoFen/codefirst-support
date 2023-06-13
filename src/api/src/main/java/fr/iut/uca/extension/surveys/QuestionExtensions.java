@@ -13,13 +13,15 @@ public abstract class QuestionExtensions {
     public static final String TYPE = "type";
     public static final String CHOICES = "choices";
 
+    private QuestionExtensions() { }
+
     public static QuestionEntity toEntity(Question question) {
         var questionEntity = new QuestionEntity();
 
         questionEntity.setChoices(question.getChoices());
         questionEntity.setDescription(question.getDescription());
         questionEntity.setTitle(question.getTitle());
-        questionEntity.setType(QuestionTypeExtensions.toEntity(question.getType()).toString());
+        questionEntity.setType(QuestionTypeExtensions.toEntity(question.getType()));
 
         return questionEntity;
     }
@@ -31,7 +33,7 @@ public abstract class QuestionExtensions {
     public static Question toModel(QuestionEntity questionEntity) {
         return new Question(
                 questionEntity.getTitle(),
-                QuestionTypeExtensions.toModel(QuestionTypeEntity.valueOf(questionEntity.getType())),
+                QuestionTypeExtensions.toModel(questionEntity.getType()),
                 questionEntity.getDescription(),
                 questionEntity.getChoices()
         );

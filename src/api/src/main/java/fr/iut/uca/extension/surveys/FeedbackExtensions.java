@@ -15,18 +15,20 @@ public abstract class FeedbackExtensions {
     public static final String QUESTION = "question";
     public static final String ANSWERS = "answers";
 
+    private FeedbackExtensions() { }
+
     public static FeedbackEntity toEntity(Feedback feedback) {
         var feedbackEntity = new FeedbackEntity();
 
         if (feedback.getId() != null) {
-            feedbackEntity.setId(new ObjectId(feedback.getId()));
+            feedbackEntity.setId(feedback.getId());
         }
 
         feedbackEntity.setAnswers(feedback.getAnswers());
-        feedbackEntity.setSurveyId(new ObjectId(feedback.getSurveyId()));
+        feedbackEntity.setSurveyId(feedback.getSurveyId());
         feedbackEntity.setAuthor(feedback.getAuthor());
         feedbackEntity.setCreatedAt(feedback.getCreatedAt());
-        feedbackEntity.setQuestion(QuestionExtensions.toEntity(feedback.getQuestion()));
+        feedbackEntity.setQuestion(QuestionInfoExtensions.toEntity(feedback.getQuestion()));
 
         return feedbackEntity;
     }
@@ -37,11 +39,11 @@ public abstract class FeedbackExtensions {
 
     public static Feedback toModel(FeedbackEntity feedbackEntity) {
         return new Feedback(
-                feedbackEntity.getId().toString(),
-                feedbackEntity.getSurveyId().toString(),
+                feedbackEntity.getId(),
+                feedbackEntity.getSurveyId(),
                 feedbackEntity.getCreatedAt(),
                 feedbackEntity.getAuthor(),
-                QuestionExtensions.toModel(feedbackEntity.getQuestion()),
+                QuestionInfoExtensions.toModel(feedbackEntity.getQuestion()),
                 feedbackEntity.getAnswers()
         );
     }

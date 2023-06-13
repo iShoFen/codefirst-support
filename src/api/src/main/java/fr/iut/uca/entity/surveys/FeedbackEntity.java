@@ -1,42 +1,36 @@
 package fr.iut.uca.entity.surveys;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackEntity {
 
-    @BsonProperty("_id")
-    private ObjectId id;
+    private String id;
 
-    @BsonProperty("survey_id")
-    private ObjectId surveyId;
+    private String surveyId;
 
-    @BsonProperty("created_at")
     private LocalDate createdAt;
 
     private String author;
 
-    private QuestionEntity question;
+    private QuestionInfoEntity question;
 
-    private List<String> answers;
+    private final List<String> answers = new ArrayList<>();
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public ObjectId getSurveyId() {
+    public String getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(ObjectId surveyId) {
+    public void setSurveyId(String surveyId) {
         this.surveyId = surveyId;
     }
 
@@ -56,11 +50,11 @@ public class FeedbackEntity {
         this.author = author;
     }
 
-    public QuestionEntity getQuestion() {
+    public QuestionInfoEntity getQuestion() {
         return question;
     }
 
-    public void setQuestion(QuestionEntity question) {
+    public void setQuestion(QuestionInfoEntity question) {
         this.question = question;
     }
 
@@ -69,8 +63,7 @@ public class FeedbackEntity {
     }
 
     public void setAnswers(List<String> answers) {
-//        this.answers.clear();
-//        this.answers.addAll(answers);
-        this.answers = answers;
+        this.answers.clear();
+        this.answers.addAll(answers);
     }
 }

@@ -1,23 +1,21 @@
 package fr.iut.uca.entity.issues;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class IssueModelEntity extends IssueModelInfoEntity {
 
-    private ObjectId id;
+    private String id;
 
     private CategoryEntity category;
 
     private final List<IssueModelFieldEntity> fields = new ArrayList<>();
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

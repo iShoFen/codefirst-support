@@ -10,11 +10,14 @@ public abstract class QuestionInfoExtensions {
 
     public static final String TITLE = "title";
     public static final String TYPE = "type";
+
+    private QuestionInfoExtensions() { }
+
     public static QuestionInfoEntity toEntity(QuestionInfo questionInfo) {
         var questionInfoEntity = new QuestionInfoEntity();
 
         questionInfoEntity.setTitle(questionInfo.getTitle());
-        questionInfoEntity.setType(QuestionTypeExtensions.toEntity(questionInfo.getType()).toString());
+        questionInfoEntity.setType(QuestionTypeExtensions.toEntity(questionInfo.getType()));
 
         return questionInfoEntity;
     }
@@ -26,7 +29,7 @@ public abstract class QuestionInfoExtensions {
     public static QuestionInfo toModel(QuestionInfoEntity questionInfoEntity) {
         return new QuestionInfo(
                 questionInfoEntity.getTitle(),
-                QuestionTypeExtensions.toModel(QuestionTypeEntity.valueOf(questionInfoEntity.getType()))
+                QuestionTypeExtensions.toModel(questionInfoEntity.getType())
         );
     }
 

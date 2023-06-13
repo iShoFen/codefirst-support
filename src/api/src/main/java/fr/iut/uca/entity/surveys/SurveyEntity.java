@@ -1,39 +1,33 @@
 package fr.iut.uca.entity.surveys;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SurveyEntity {
 
-    @BsonProperty("_id")
-    private ObjectId id;
+    private String id;
 
     private String title;
 
-    @BsonProperty("created_at")
     private LocalDate createdAt;
 
-    @BsonProperty("published_at")
     private LocalDate publishedAt;
 
-    @BsonProperty("end_at")
     private LocalDate endAt;
 
     private String description;
 
-    private List<QuestionEntity> questions;
+    private final List<QuestionEntity> questions = new ArrayList<>();
 
-    private List<FeedbackEntity> feedbacks;
+    private FeedbackEntity feedback;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -82,18 +76,15 @@ public class SurveyEntity {
     }
 
     public void setQuestions(List<QuestionEntity> questions) {
-//        this.questions.clear();
-//        this.questions.addAll(questions);
-        this.questions = questions;
+        this.questions.clear();
+        this.questions.addAll(questions);
     }
 
-    public List<FeedbackEntity> getFeedbacks() {
-        return feedbacks;
+    public Optional<FeedbackEntity> getFeedback() {
+        return Optional.ofNullable(feedback);
     }
 
-    public void setFeedbacks(List<FeedbackEntity> feedbacks) {
-//        this.feedbacks.clear();
-//        this.feedbacks.addAll(feedbacks);
-        this.feedbacks = feedbacks;
+    public void setFeedback(FeedbackEntity feedback) {
+        this.feedback = feedback;
     }
 }

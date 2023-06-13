@@ -19,7 +19,7 @@ public abstract class IssueModelExtensions {
     public static IssueModelEntity toEntity(IssueModel issueModel) {
         IssueModelEntity issueModelEntity = new IssueModelEntity();
 
-        issueModelEntity.setId(new ObjectId(issueModel.getId()));
+        issueModelEntity.setId(issueModel.getId());
         issueModelEntity.setName(issueModel.getName());
         issueModelEntity.setShortDescription(issueModel.getShortDescription());
         issueModelEntity.setDescription(issueModel.getDescription());
@@ -35,7 +35,7 @@ public abstract class IssueModelExtensions {
 
     public static IssueModel toModel(IssueModelEntity issueModelEntity) {
         return new IssueModel(
-                issueModelEntity.getId().toString(),
+                issueModelEntity.getId(),
                 issueModelEntity.getName(),
                 issueModelEntity.getShortDescription(),
                 issueModelEntity.getDescription(),

@@ -6,7 +6,6 @@ public class IssueModelInfoEntity {
 
     protected String name;
 
-    @BsonProperty(value = "short_description")
     protected String shortDescription;
 
     protected String description;

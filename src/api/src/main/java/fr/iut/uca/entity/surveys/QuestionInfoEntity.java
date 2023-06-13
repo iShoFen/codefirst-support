@@ -3,7 +3,7 @@ package fr.iut.uca.entity.surveys;
 public class QuestionInfoEntity {
     private String title;
 
-    private String type;
+    private QuestionTypeEntity type;
 
     public String getTitle() {
         return title;
@@ -13,11 +13,11 @@ public class QuestionInfoEntity {
         this.title = title;
     }
 
-    public String getType() {
+    public QuestionTypeEntity getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(QuestionTypeEntity type) {
         this.type = type;
     }
 }

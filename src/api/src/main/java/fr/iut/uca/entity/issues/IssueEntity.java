@@ -1,22 +1,17 @@
 package fr.iut.uca.entity.issues;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IssueEntity {
 
-    @BsonProperty(value = "_id")
-    private ObjectId id;
+    private String id;
 
     private String title;
 
     private String author;
 
-    @BsonProperty(value = "created_at")
     private LocalDate createdAt;
 
     private IssueStatusEntity status;
@@ -29,11 +24,11 @@ public class IssueEntity {
 
     private final List<IssueFieldEntity> fields = new ArrayList<>();
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,12 +1,9 @@
 package fr.iut.uca.entity.issues;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
-
 import java.time.LocalDate;
 
 public class CommentEntity {
 
-    @BsonProperty(value = "createdAt")
     private LocalDate createdAt;
 
     private String author;

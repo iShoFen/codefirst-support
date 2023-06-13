@@ -22,10 +22,7 @@ public abstract class IssueExtensions {
     public static IssueEntity toEntity(Issue issue) {
         var entity = new IssueEntity();
 
-        if (issue.getId() != null) {
-            entity.setId(new ObjectId(issue.getId()));
-        }
-
+        entity.setId(issue.getId());
         entity.setTitle(issue.getTitle());
         entity.setAuthor(issue.getAuthor());
         entity.setCreatedAt(issue.getCreatedAt());
@@ -44,7 +41,7 @@ public abstract class IssueExtensions {
 
     public static Issue toModel(IssueEntity entity) {
         return new Issue(
-                entity.getId().toString(),
+                entity.getId(),
                 entity.getTitle(),
                 entity.getAuthor(),
                 entity.getCreatedAt(),
