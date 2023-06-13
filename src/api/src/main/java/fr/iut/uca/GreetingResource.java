@@ -8,6 +8,8 @@ import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
 import fr.iut.uca.repository.issues.IIssueRepository;
+import fr.iut.uca.repository.mongo.DatabaseClient;
+import fr.iut.uca.repository.mongo.surveys.FeedbackRepository;
 import fr.iut.uca.repository.mongo.surveys.SurveyRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -72,8 +74,8 @@ public class GreetingResource {
         }
     }
 
-    @Inject
-    DatabaseClient dbClient;
+//    @Inject
+//    DatabaseClient dbClient;
 
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
@@ -83,13 +85,17 @@ public class GreetingResource {
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueRepository issueRepository;
 
-    @GET
-    @Path("/test1")
-    public Response test1() {
-        MongoCollection<FeedbackEntity> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS, FeedbackEntity.class);
-        var documents = collection.find().projection(include("_id", "content", "created_at")).into(new ArrayList<>());
-        return Response.ok(documents).build();
-    }
+    @Inject
+    @RepositoryQualifier(RepositoryType.MONGO)
+    FeedbackRepository feedbackRepository;
+
+//    @GET
+//    @Path("/test1")
+//    public Response test1() {
+//        MongoCollection<FeedbackEntity> collection = dbClient.getCollection(DatabaseClient.CollectionName.FEEDBACKS, FeedbackEntity.class);
+//        var documents = collection.find().projection(include("_id", "content", "created_at")).into(new ArrayList<>());
+//        return Response.ok(documents).build();
+//    }
 
     @GET
     @Path("/test2")
@@ -106,6 +112,6 @@ public class GreetingResource {
     @GET
     @Path("/test4")
     public Response test3() {
-        return Response.ok(surveyRepository.getSurveyWithFeedbacks("64846962f660a9babbe122d9", 0, 2)).build();
+        return Response.ok(feedbackRepository.getSurveyWithFeedback("64846950f660a9babbe122bc")).build();
     }
 }

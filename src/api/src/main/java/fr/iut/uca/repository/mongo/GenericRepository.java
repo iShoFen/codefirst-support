@@ -4,7 +4,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-import fr.iut.uca.DatabaseClient;
 import fr.iut.uca.repository.IGenericRepository;
 import org.bson.Document;
 import org.bson.types.ObjectId;
