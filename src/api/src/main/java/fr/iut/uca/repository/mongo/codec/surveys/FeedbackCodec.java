@@ -72,7 +72,7 @@ public class FeedbackCodec implements Codec<FeedbackEntity> {
 
 
     private void encodeQuestionInfo(BsonWriter bsonWriter, QuestionInfoEntity questionInfoEntity) {
-        bsonWriter.writeStartDocument();
+        bsonWriter.writeStartDocument(QUESTION);
 
         bsonWriter.writeString(QuestionInfoExtensions.TITLE, questionInfoEntity.getTitle());
         bsonWriter.writeString(QuestionInfoExtensions.TYPE, questionInfoEntity.getType().name().toLowerCase());
@@ -81,7 +81,7 @@ public class FeedbackCodec implements Codec<FeedbackEntity> {
     }
 
     private void encodeAnswers(BsonWriter bsonWriter, List<String> answers) {
-        bsonWriter.writeStartArray();
+        bsonWriter.writeStartArray(ANSWERS);
 
         for (var answer : answers) {
             bsonWriter.writeString(answer);

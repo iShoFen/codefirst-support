@@ -22,8 +22,7 @@ public abstract class IssueCodecHelper {
     }
 
     public static void encodeCategory(BsonWriter bsonWriter, CategoryEntity categoryEntity) {
-        bsonWriter.writeName(IssueModelExtensions.CATEGORY);
-        bsonWriter.writeStartDocument();
+        bsonWriter.writeStartDocument(IssueModelExtensions.CATEGORY);
 
         bsonWriter.writeString(CategoryExtensions.NAME, categoryEntity.getName());
 

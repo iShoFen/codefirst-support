@@ -79,9 +79,7 @@ public class IssueModelCodec implements Codec<IssueModelEntity> {
     }
 
     private void encodeFields(BsonWriter bsonWriter, List<IssueModelFieldEntity> issueModelFieldEntities) {
-        bsonWriter.writeName(IssueModelExtensions.FIELDS);
-
-        bsonWriter.writeStartArray();
+        bsonWriter.writeStartArray(IssueModelExtensions.FIELDS);
         for (var field : issueModelFieldEntities) {
             bsonWriter.writeStartDocument();
 

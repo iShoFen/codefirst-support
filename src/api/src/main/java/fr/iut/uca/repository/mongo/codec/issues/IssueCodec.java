@@ -28,13 +28,13 @@ public class IssueCodec implements Codec<IssueEntity> {
 
         issueEntity.setId(bsonReader.readObjectId(ID).toString());
         issueEntity.setTitle(bsonReader.readString(TITLE));
+        issueEntity.setModel(decodeIssueModelInfo(bsonReader));
+        issueEntity.setFields(decodeFields(bsonReader));
         issueEntity.setAuthor(bsonReader.readString(AUTHOR));
         issueEntity.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CREATED_AT))));
         issueEntity.setStatus(IssueStatusEntity.valueOf(bsonReader.readString(STATUS).toUpperCase()));
         issueEntity.setCategory(IssueCodecHelper.decodeCategory(bsonReader));
-        issueEntity.setModel(decodeIssueModelInfo(bsonReader));
         issueEntity.setComments(decodeComment(bsonReader));
-        issueEntity.setFields(decodeFields(bsonReader));
 
         bsonReader.readEndDocument();
 
@@ -49,13 +49,13 @@ public class IssueCodec implements Codec<IssueEntity> {
             bsonWriter.writeObjectId(ID, new ObjectId(issueEntity.getId()));
 
         bsonWriter.writeString(TITLE, issueEntity.getTitle());
+        encodeIssueModelInfo(bsonWriter, issueEntity.getModel());
+        encodeFields(bsonWriter, issueEntity.getFields());
         bsonWriter.writeString(AUTHOR, issueEntity.getAuthor());
         bsonWriter.writeDateTime(CREATED_AT, issueEntity.getCreatedAt().toEpochDay());
         bsonWriter.writeString(STATUS, issueEntity.getStatus().name().toLowerCase());
         IssueCodecHelper.encodeCategory(bsonWriter, issueEntity.getCategory());
-        encodeIssueModelInfo(bsonWriter, issueEntity.getModel());
         encodeComments(bsonWriter, issueEntity.getComments());
-        encodeFields(bsonWriter, issueEntity.getFields());
 
         bsonWriter.writeEndDocument();
     }
@@ -128,7 +128,7 @@ public class IssueCodec implements Codec<IssueEntity> {
     }
 
     private void encodeIssueModelInfo(BsonWriter bsonWriter, IssueModelInfoEntity issueModelInfo) {
-        bsonWriter.writeStartDocument();
+        bsonWriter.writeStartDocument(MODEL);
 
         bsonWriter.writeString(IssueModelInfoExtensions.NAME, issueModelInfo.getName());
         bsonWriter.writeString(IssueModelInfoExtensions.SHORT_DESCRIPTION, issueModelInfo.getShortDescription());
@@ -138,7 +138,7 @@ public class IssueCodec implements Codec<IssueEntity> {
     }
 
     private void encodeComments(BsonWriter bsonWriter, List<CommentEntity> comments) {
-        bsonWriter.writeStartArray();
+        bsonWriter.writeStartArray(COMMENTS);
 
         for (var comment : comments) {
             bsonWriter.writeStartDocument();
@@ -154,7 +154,7 @@ public class IssueCodec implements Codec<IssueEntity> {
     }
 
     private void encodeFields(BsonWriter bsonWriter, List<IssueFieldEntity> issueFieldEntities) {
-        bsonWriter.writeStartArray();
+        bsonWriter.writeStartArray(FIELDS);
 
         for (var field : issueFieldEntities) {
             bsonWriter.writeStartDocument();
