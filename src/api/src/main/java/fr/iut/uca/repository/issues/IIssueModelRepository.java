@@ -1,5 +1,6 @@
 package fr.iut.uca.repository.issues;
 
+import fr.iut.uca.entity.issues.CategoryEntity;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.repository.IGenericRepository;
 
@@ -19,6 +20,12 @@ public interface IIssueModelRepository extends IGenericRepository<IssueModelEnti
      * @return List of issue models matching the name filter
      */
     List<IssueModelEntity> getIssueModelsByNameContaining(String nameFilter, int index, int count);
+
+    /**
+     * Get a list of all the categories
+     * @return List of all the categories
+     */
+    List<CategoryEntity> getCategories();
 }
 
 

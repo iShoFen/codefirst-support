@@ -33,7 +33,7 @@ public class IssueCodec implements Codec<IssueEntity> {
         issueEntity.setAuthor(bsonReader.readString(AUTHOR));
         issueEntity.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CREATED_AT))));
         issueEntity.setStatus(IssueStatusEntity.valueOf(bsonReader.readString(STATUS).toUpperCase()));
-        issueEntity.setCategory(IssueCodecHelper.decodeCategory(bsonReader));
+        issueEntity.setCategory(new CategoryCodec().decode(bsonReader, decoderContext));
         issueEntity.setComments(decodeComment(bsonReader));
 
         bsonReader.readEndDocument();
@@ -54,7 +54,7 @@ public class IssueCodec implements Codec<IssueEntity> {
         bsonWriter.writeString(AUTHOR, issueEntity.getAuthor());
         bsonWriter.writeDateTime(CREATED_AT, issueEntity.getCreatedAt().toEpochDay());
         bsonWriter.writeString(STATUS, issueEntity.getStatus().name().toLowerCase());
-        IssueCodecHelper.encodeCategory(bsonWriter, issueEntity.getCategory());
+        new CategoryCodec().encode(bsonWriter, issueEntity.getCategory(), encoderContext);
         encodeComments(bsonWriter, issueEntity.getComments());
 
         bsonWriter.writeEndDocument();
@@ -89,8 +89,8 @@ public class IssueCodec implements Codec<IssueEntity> {
 
             bsonReader.readStartDocument();
 
-            comment.setAuthor(bsonReader.readString(CommentExtensions.AUTHOR));
             comment.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CommentExtensions.CREATED_AT))));
+            comment.setAuthor(bsonReader.readString(CommentExtensions.AUTHOR));
             comment.setContent(bsonReader.readString(CommentExtensions.CONTENT));
 
             bsonReader.readEndDocument();

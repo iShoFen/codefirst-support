@@ -25,7 +25,7 @@ public class IssueModelCodec implements Codec<IssueModelEntity> {
         issueModelEntity.setName(bsonReader.readString(IssueModelExtensions.NAME));
         issueModelEntity.setShortDescription(bsonReader.readString(IssueModelExtensions.SHORT_DESCRIPTION));
         issueModelEntity.setDescription(bsonReader.readString(IssueModelExtensions.DESCRIPTION));
-        issueModelEntity.setCategory(IssueCodecHelper.decodeCategory(bsonReader));
+        issueModelEntity.setCategory(new CategoryCodec().decode(bsonReader, decoderContext));
         issueModelEntity.setFields(decodeFields(bsonReader));
 
         bsonReader.readEndDocument();
@@ -43,7 +43,7 @@ public class IssueModelCodec implements Codec<IssueModelEntity> {
         bsonWriter.writeString(IssueModelExtensions.NAME, issueModelEntity.getName());
         bsonWriter.writeString(IssueModelExtensions.SHORT_DESCRIPTION, issueModelEntity.getShortDescription());
         bsonWriter.writeString(IssueModelExtensions.DESCRIPTION, issueModelEntity.getDescription());
-        IssueCodecHelper.encodeCategory(bsonWriter, issueModelEntity.getCategory());
+        new CategoryCodec().encode(bsonWriter, issueModelEntity.getCategory(), encoderContext);
         encodeFields(bsonWriter, issueModelEntity.getFields());
 
         bsonWriter.writeEndDocument();
@@ -53,7 +53,6 @@ public class IssueModelCodec implements Codec<IssueModelEntity> {
     public Class<IssueModelEntity> getEncoderClass() {
         return IssueModelEntity.class;
     }
-
 
     private List<IssueModelFieldEntity> decodeFields(BsonReader bsonReader) {
         List<IssueModelFieldEntity> fields = new ArrayList<>();

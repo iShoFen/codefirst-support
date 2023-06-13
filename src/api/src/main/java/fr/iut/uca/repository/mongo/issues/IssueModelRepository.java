@@ -1,6 +1,7 @@
 package fr.iut.uca.repository.mongo.issues;
 
 import com.mongodb.client.model.Filters;
+import fr.iut.uca.entity.issues.CategoryEntity;
 import fr.iut.uca.repository.mongo.DatabaseClient;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.qualifier.RepositoryQualifier;
@@ -13,8 +14,7 @@ import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.iut.uca.extension.issues.IssueModelExtensions.ID;
-import static fr.iut.uca.extension.issues.IssueModelExtensions.NAME;
+import static fr.iut.uca.extension.issues.IssueModelExtensions.*;
 
 /**
  * Repository for issue models.
@@ -41,5 +41,10 @@ public class IssueModelRepository extends GenericRepository<IssueModelEntity> im
     public List<IssueModelEntity> getIssueModelsByNameContaining(String nameFilter, int index, int count) {
         var filter = Filters.regex(NAME, nameFilter);
         return collection.find(IssueModelEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
+    }
+
+    @Override
+    public List<CategoryEntity> getCategories() {
+        return collection.distinct(CATEGORY, CategoryEntity.class).into(new ArrayList<>());
     }
 }
