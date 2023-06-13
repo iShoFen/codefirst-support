@@ -83,11 +83,11 @@ issue }o--|{ issue_field : contains
 
 model_info ||--|{ category : contains
 
-issue_model }o--{ model_field : contains
+issue_model }o--|{ model_field : contains
 issue_model ||--|{ category : contains
 
 
-survey }o--{ question : contains
+survey }o--|{ question : contains
 survey }o--|| feedback : contains
 
 feedback ||--|{ question_info : contains
