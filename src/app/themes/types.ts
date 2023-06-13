@@ -4,7 +4,9 @@ export type ThemeColors = {
   tertiary: string
   text: string
   textVariant: string
-  // background: string
+  background: string
+  h1: string
+  h2: string
 }
 
 export type GlobalColors = {
@@ -15,3 +17,5 @@ export type GlobalColors = {
   warning: string
   danger: string
 }
+
+export type CSColors = GlobalColors & ThemeColors

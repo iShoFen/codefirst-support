@@ -5,8 +5,8 @@ import {Category} from "../model/issues/Category";
 import {IssueModelInfo} from "../model/issues/IssueModelInfo";
 import {Comment} from "../model/issues/Comment";
 import CommentItem from "../components/issues/comments/CommentItem";
-import CategoryCapsule from "../components/commons/CategoryCapsule";
 import {IssueField} from "../model/issues/IssueField";
+import CSCapsule from "../components/commons/CSCapsule";
 
 const issue = new Issue("", "NAN for language Percentage #2735", "CEbbinghaus",
   new Date(), IssueStatus.OPENED, new Category("category"),
@@ -44,8 +44,8 @@ export default function IssueItemScreen() {
             </View>
 
             <View style={styles.capsules}>
-              <CategoryCapsule category={issue.category}/>
-              <CategoryCapsule category={issue.category}/>
+              <CSCapsule text={issue.category.name} />
+              <CSCapsule text={issue.category.name} />
             </View>
           </View>
 

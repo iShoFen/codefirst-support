@@ -6,16 +6,18 @@ import StackIssueNavigation from "./StackIssueNavigation";
 import {BottomBarParamList} from "./types/ParamList";
 import HomeAddScreen from "../screens/HomeAddScreen";
 import {useColors} from "../themes/hooks/useColors";
+import TestScreen from "../screens/TestScreen";
+import {useNavigationTheme} from "../themes/hooks";
 
 
 export default function BottomBarNavigation() {
   const BottomTabNavigator = createBottomTabNavigator<BottomBarParamList>()
   const colors = useColors()
-
+  const navigationTheme = useNavigationTheme()
 
   return (
-    <NavigationContainer>
-      <BottomTabNavigator.Navigator initialRouteName="Home"
+    <NavigationContainer theme={navigationTheme}>
+      <BottomTabNavigator.Navigator initialRouteName="Test"
                                     screenOptions={{
                                       headerShown: false,
                                       tabBarActiveTintColor: colors.primary
@@ -46,6 +48,15 @@ export default function BottomBarNavigation() {
               <MaterialCommunityIcons name="cog" color={color} size={size}/>
             ),
             tabBarLabel: 'Paramètres'
+          }}/>
+        <BottomTabNavigator.Screen
+          name="Test"
+          component={TestScreen}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <MaterialCommunityIcons name="test-tube" color={color} size={size}/>
+            ),
+            tabBarLabel: 'Test',
           }}/>
       </BottomTabNavigator.Navigator>
     </NavigationContainer>

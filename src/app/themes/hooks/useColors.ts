@@ -1,14 +1,12 @@
 import {useColorScheme} from "react-native";
 import {darkColors, lightColors} from "../colors";
-import {GlobalColors, ThemeColors} from "../types";
+import {CSColors, ThemeColors} from "../types";
 
-
-type Colors = GlobalColors & ThemeColors
-
-export function useColors(): Colors {
+export function useColors(): CSColors {
   const theme = useColorScheme()
 
-  const colors: ThemeColors = theme == "dark" ? darkColors : lightColors
+  // const colors: ThemeColors = theme == "dark" ? darkColors : lightColors
+  const colors: ThemeColors = darkColors
 
   return {
     white: '#ffffff',

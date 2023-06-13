@@ -1,31 +1,41 @@
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {Issue} from "../../model/issues/Issue";
 import IssueStatusIcon from "./IssueStatusIcon";
-import CategoryCapsule from "../commons/CategoryCapsule";
 import CommentCounter from "./comments/CommentCounter";
+import CSText from "../commons/CSText";
+import CSCapsule from "../commons/CSCapsule";
+import {useColors} from "../../themes/hooks";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 type IssueListItemProps = {
   issue: Issue
 }
 
 export default function IssueListItem(props: IssueListItemProps) {
+  const colors = useColors()
+
   const {
     issue
   } = props
 
-  return (<View style={styles.container}>
-    <IssueStatusIcon status={issue.status} style={styles.icon} />
+  return (<View style={[styles.container, {
+    backgroundColor: colors.tertiary
+  }]}>
+    <IssueStatusIcon status={issue.status} style={styles.icon}/>
     <View style={styles.rightPane}>
-      <View style={styles.issueHeader}>
-        <Text style={styles.issueTitle}>{issue.title}</Text>
-        <Text style={styles.issueDate}>{issue.createdAt.toLocaleDateString()}</Text>
+      <View>
+        <View style={styles.issueHeader}>
+          <CSText text={`${issue.title} - ${issue.createdAt.toLocaleDateString()}`}/>
+          <TouchableOpacity>
+            <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.text}/>
+          </TouchableOpacity>
+        </View>
+        <CSText text={issue.author} type="small"/>
       </View>
-      <Text>{issue.author}</Text>
       <View style={styles.issueFooter}>
-        <CategoryCapsule category={issue.category} />
-        <CommentCounter value={issue.comments.length} />
+        <CSCapsule text={issue.category.name}/>
+        <CommentCounter value={issue.comments.length}/>
       </View>
-
     </View>
   </View>)
 }
@@ -33,18 +43,16 @@ export default function IssueListItem(props: IssueListItemProps) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    gap: 6,
-    borderRadius: 10,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5
+    gap: 8,
+    borderRadius: 8,
+    padding: 8
   },
   icon: {
     alignSelf: 'center'
   },
   rightPane: {
     flex: 1,
+    gap: 8,
     flexDirection: 'column',
   },
   issueHeader: {

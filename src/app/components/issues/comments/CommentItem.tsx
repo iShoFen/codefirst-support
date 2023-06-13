@@ -1,6 +1,10 @@
-import {StyleSheet, Text, View, ViewStyle} from "react-native";
+import {StyleSheet, TouchableOpacity, View, ViewStyle} from "react-native";
 import {Comment} from "../../../model/issues/Comment";
 import React from "react";
+import {useColors} from "../../../themes/hooks/useColors";
+import CSDivider from "../../commons/CSDivider";
+import CSText from "../../commons/CSText";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 type CommentItemProps = {
   comment: Comment
@@ -9,42 +13,48 @@ type CommentItemProps = {
 
 export default function CommentItem(props: CommentItemProps) {
 
+  const colors = useColors()
+
   const {
     comment,
     style
   } = props
 
-  return (<View style={[styles.container, style]}>
+  return (<View style={[styles.container, style, {
+    backgroundColor: colors.tertiary
+  }]}>
     <View style={styles.header}>
-      <Text style={styles.author}>{comment.author}</Text>
-      <Text>-</Text>
-      <Text style={styles.createdAt}>{comment.createdAt.toLocaleDateString()}</Text>
+      <View style={styles.headerText}>
+        <CSText text={comment.author} type="bold"/>
+        <CSText text="-" type="small"/>
+        <CSText text={comment.createdAt.toLocaleDateString()} type="small"/>
+      </View>
+      <TouchableOpacity style={{
+        alignSelf: 'flex-end'
+      }}>
+        <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.text}/>
+      </TouchableOpacity>
     </View>
-    <View style={{height: 1}} />
-    <Text style={styles.content}>{comment.content}</Text>
+    <CSDivider/>
+    <CSText text={comment.content} type="small"/>
   </View>)
 }
 
 const styles = StyleSheet.create({
   container: {
     gap: 4,
-    padding: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderColor: 'lightgray'
+    borderRadius: 8
   },
   header: {
     flexDirection: 'row',
-    gap: 4,
-    alignItems: 'center'
+    justifyContent: 'space-between',
   },
-  author: {
-    fontWeight: 'bold',
-    fontSize: 18
-  },
-  createdAt: {
-  },
-  content: {
-    fontSize: 16
+  headerText: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 4
   }
 })

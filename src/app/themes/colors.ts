@@ -5,7 +5,10 @@ const lightColors: ThemeColors = {
   secondary: '#021D1E',
   tertiary: '#023C40',
   text: '#313131',
-  textVariant: '#979C9E'
+  textVariant: '#979C9E',
+  background: '#F0EFF4',
+  h1: '#021D1E',
+  h2: '#023C40'
 }
 
 const darkColors: ThemeColors = {
@@ -13,7 +16,10 @@ const darkColors: ThemeColors = {
   secondary: '#021D1E',
   tertiary: '#023C40',
   text: '#F0EFF4',
-  textVariant: '#979C9E'
+  textVariant: '#979C9E',
+  background: '#021D1E',
+  h1: '#F0EFF4',
+  h2: '#F0EFF4'
 }
 
 export {lightColors, darkColors}
