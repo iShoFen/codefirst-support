@@ -2,6 +2,7 @@ package fr.iut.uca.repository.issues;
 
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.entity.issues.IssueStatusEntity;
+import fr.iut.uca.entity.issues.IssueWithStatusEntity;
 import fr.iut.uca.repository.IGenericRepository;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public interface IIssueRepository extends IGenericRepository<IssueEntity> {
      * Get a list of pair of issue status and count of issues by status
      * @return  List of a pair of issue status and count of issues by status
      */
-    List<SimpleEntry<IssueStatusEntity, Long>> getIssuesCountByStatus();
+    IssueWithStatusEntity getIssuesCountByStatus();
 
     /**
      * Get a list of issue models by category

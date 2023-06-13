@@ -5,6 +5,7 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
+import fr.iut.uca.entity.issues.IssueWithStatusEntity;
 import fr.iut.uca.repository.mongo.DatabaseClient;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.entity.issues.IssueStatusEntity;
@@ -47,7 +48,7 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
     }
 
     @Override
-    public List<SimpleEntry<IssueStatusEntity, Long>> getIssuesCountByStatus() {
+    public IssueWithStatusEntity getIssuesCountByStatus() {
         String countParam = "count";
 
         Bson groupStage = Aggregates.group("$" + STATUS, Accumulators.sum(countParam, 1));
@@ -63,8 +64,10 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
             issuesCountByStatus.add(new SimpleEntry<>(status, count));
         });
 
+        var issueWithStatusEntity = new IssueWithStatusEntity();
+        issueWithStatusEntity.setIssuesCountByStatus(issuesCountByStatus);
 
-        return issuesCountByStatus;
+        return issueWithStatusEntity;
     }
 
     @Override
