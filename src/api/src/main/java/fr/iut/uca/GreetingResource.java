@@ -100,7 +100,7 @@ public class GreetingResource {
     @GET
     @Path("/test2")
     public Response test() {
-        return Response.ok(issueRepository.getIssuesCountByStatus()).build();
+        return Response.ok(issueRepository.getItems(0,5)).build();
     }
 
     @GET

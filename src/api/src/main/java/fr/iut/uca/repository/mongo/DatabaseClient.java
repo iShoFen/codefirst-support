@@ -6,10 +6,12 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import fr.iut.uca.entity.issues.CategoryEntity;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.entity.surveys.SurveyEntity;
+import fr.iut.uca.repository.mongo.codec.issues.CategoryCodec;
 import fr.iut.uca.repository.mongo.codec.issues.IssueCodec;
 import fr.iut.uca.repository.mongo.codec.issues.IssueModelCodec;
 import fr.iut.uca.repository.mongo.codec.surveys.FeedbackCodec;
@@ -49,14 +51,15 @@ public class DatabaseClient {
     private MongoClient initMongoClient() {
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
 
+        Codec<CategoryEntity> categoryCodec = new CategoryCodec();
         Codec<IssueEntity> issueCodec = new IssueCodec();
         Codec<IssueModelEntity> issueModelCodec = new IssueModelCodec();
         Codec<SurveyEntity> surveyCodec = new SurveyCodec();
         Codec<FeedbackEntity> feedbackCodec = new FeedbackCodec();
 
-        CodecRegistry pojoCodecRegistry = CodecRegistries.fromCodecs(issueCodec, issueModelCodec, surveyCodec, feedbackCodec);
-
+        CodecRegistry pojoCodecRegistry = CodecRegistries.fromCodecs(categoryCodec, issueCodec, issueModelCodec, surveyCodec, feedbackCodec);
         CodecRegistry codecRegistry = CodecRegistries.fromRegistries(defaultCodecRegistry, pojoCodecRegistry);
+
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString("mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000"))
                 .codecRegistry(codecRegistry)
