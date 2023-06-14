@@ -19,7 +19,7 @@ export default function IssueListItem(props: IssueListItemProps) {
   } = props
 
   return (<View style={[styles.container, {
-    backgroundColor: colors.tertiary
+    backgroundColor: colors.backgroundVariant
   }]}>
     <IssueStatusIcon status={issue.status} style={styles.icon}/>
     <View style={styles.rightPane}>

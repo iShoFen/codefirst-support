@@ -1,10 +1,9 @@
-import {StyleSheet, Text, View, ViewStyle} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {useColors} from "../../../themes/hooks";
 
 type CommentCounterProps = {
   value: number
-  style?: ViewStyle
 }
 
 export default function CommentCounter(props: CommentCounterProps) {

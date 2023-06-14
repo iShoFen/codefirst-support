@@ -8,6 +8,7 @@ type CSTextProps = {
   text: string
   style?: TextStyle
   type?: 'h1' | 'h2' | 'h3' | 'normal' | 'bold' | 'small'
+  color?: string
 }
 
 export default function CSText(props: CSTextProps) {
@@ -16,22 +17,23 @@ export default function CSText(props: CSTextProps) {
   const {
     text,
     style,
-    type = 'NORMAL'
+    type = 'NORMAL',
+    color
   } = props
 
   const customStyle: TextStyle = useMemo<TextStyle>(() => {
-    let color: string = colors.text
+    let textColor: string = colors.text
     let isBold: boolean = false
     let fontSize: number = 20
 
     switch (type) {
       case 'h1':
-        color = colors.h1
+        textColor = colors.h1
         fontSize = 35
         isBold = true
         break
       case 'h2':
-        color = colors.h2
+        textColor = colors.h2
         fontSize = 30
         isBold = true
         break
@@ -44,7 +46,7 @@ export default function CSText(props: CSTextProps) {
     }
 
     return {
-      color: color,
+      color: color ?? textColor,
       fontWeight: isBold ? 'bold' : 'normal',
       fontSize: fontSize
     }

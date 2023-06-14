@@ -21,7 +21,7 @@ export default function CommentItem(props: CommentItemProps) {
   } = props
 
   return (<View style={[styles.container, style, {
-    backgroundColor: colors.tertiary
+    backgroundColor: colors.backgroundVariant
   }]}>
     <View style={styles.header}>
       <View style={styles.headerText}>

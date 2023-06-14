@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit'
-import appReducer from './reducers/appReducer';
+import userReducer from "./reducers/userReducer";
+// import appReducer from './reducers/appReducer';
 
 // Reference here all your application reducers
 const reducer = {
-  appReducer: appReducer,
+  // appReducer: appReducer,
+  userReducer: userReducer
 }
 
 const store = configureStore({
