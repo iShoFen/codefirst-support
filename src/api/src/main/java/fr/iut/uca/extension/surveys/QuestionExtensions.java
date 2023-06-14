@@ -1,5 +1,6 @@
 package fr.iut.uca.extension.surveys;
 
+import fr.iut.uca.dto.surveys.QuestionDTO;
 import fr.iut.uca.entity.surveys.QuestionEntity;
 import fr.iut.uca.entity.surveys.QuestionTypeEntity;
 import fr.iut.uca.model.surveys.Question;
@@ -41,5 +42,18 @@ public abstract class QuestionExtensions {
 
     public static List<Question> toModels(List<QuestionEntity> questionEntities) {
         return questionEntities.stream().map(QuestionExtensions::toModel).toList();
+    }
+
+    public static QuestionDTO toDTO(Question question) {
+        return new QuestionDTO(
+                question.getTitle(),
+                question.getDescription(),
+                QuestionTypeExtensions.toDTO(question.getType()),
+                question.getChoices()
+        );
+    }
+
+    public static List<QuestionDTO> toDTOs(List<Question> questions) {
+        return questions.stream().map(QuestionExtensions::toDTO).toList();
     }
 }

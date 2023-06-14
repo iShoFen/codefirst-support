@@ -1,5 +1,6 @@
 package fr.iut.uca.extension.surveys;
 
+import fr.iut.uca.dto.surveys.QuestionTypeDTO;
 import fr.iut.uca.entity.surveys.QuestionTypeEntity;
 import fr.iut.uca.model.surveys.QuestionType;
 
@@ -18,6 +19,14 @@ public abstract class QuestionTypeExtensions {
             return QuestionType.valueOf(questionTypeEntity.name());
         } catch (IllegalArgumentException e) {
             return QuestionType.NONE;
+        }
+    }
+
+    public static QuestionTypeDTO toDTO(QuestionType questionType) {
+        try {
+            return QuestionTypeDTO.valueOf(questionType.name());
+        } catch (IllegalArgumentException e) {
+            return QuestionTypeDTO.NONE;
         }
     }
 }

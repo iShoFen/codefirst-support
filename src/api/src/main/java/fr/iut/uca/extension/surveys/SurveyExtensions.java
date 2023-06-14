@@ -1,5 +1,6 @@
 package fr.iut.uca.extension.surveys;
 
+import fr.iut.uca.dto.surveys.survey.SurveyDTO;
 import fr.iut.uca.entity.surveys.SurveyEntity;
 import fr.iut.uca.model.surveys.Survey;
 import org.bson.types.ObjectId;
@@ -51,5 +52,20 @@ public abstract class SurveyExtensions {
 
     public static List<Survey> toModels(List<SurveyEntity> surveyEntities) {
         return surveyEntities.stream().map(SurveyExtensions::toModel).toList();
+    }
+
+    public static SurveyDTO toDTO(Survey survey) {
+        return new SurveyDTO(
+                survey.getId(),
+                survey.getCreatedAt(),
+                survey.getPublishedAt(),
+                survey.getEndAt(),
+                survey.getTitle(),
+                survey.getDescription()
+        );
+    }
+
+    public static List<SurveyDTO> toDTOs(List<Survey> surveys) {
+        return surveys.stream().map(SurveyExtensions::toDTO).toList();
     }
 }
