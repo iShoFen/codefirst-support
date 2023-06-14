@@ -50,11 +50,6 @@ public class FeedbackRepository extends GenericRepository<FeedbackEntity> implem
         Bson matchStage = Aggregates.match(Filters.eq(ID, new ObjectId(feedbackId)));
         Bson lookupStage = Aggregates.lookup(DatabaseClient.CollectionName.SURVEYS.name().toLowerCase(), SURVEY_ID, SurveyExtensions.ID, "survey");
         Bson unwindStage = Aggregates.unwind("$survey");
-//        Bson replaceRootStage = Aggregates.replaceRoot(Projections.fields(
-//                Projections.include("survey"),
-//                Projections.computed("feedback", "$$ROOT")
-//        ));
-
         Bson replaceRootStage = new Document("$replaceRoot",
                 new Document("newRoot",
                         new Document("$mergeObjects", Arrays.asList(

@@ -75,7 +75,7 @@ public abstract class GenericRepository<T> implements IGenericRepository<T> {
             return Optional.empty();
         }
 
-        return getItemById(Objects.requireNonNull(insertResult.getInsertedId()).toString());
+        return getItemById(Objects.requireNonNull(insertResult.getInsertedId()).asObjectId().getValue().toString());
     }
 
     @Override
@@ -87,7 +87,7 @@ public abstract class GenericRepository<T> implements IGenericRepository<T> {
             return Optional.empty();
         }
 
-        return getItemById(Objects.requireNonNull(updateResult.getUpsertedId()).toString());
+        return getItemById(Objects.requireNonNull(updateResult.getUpsertedId()).asObjectId().getValue().toString());
     }
 
     @Override
