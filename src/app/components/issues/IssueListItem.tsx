@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {StyleSheet, TouchableOpacity, View, ViewStyle} from "react-native";
 import {Issue} from "../../model/issues/Issue";
 import IssueStatusIcon from "./IssueStatusIcon";
 import CommentCounter from "./comments/CommentCounter";
@@ -9,23 +9,26 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 type IssueListItemProps = {
   issue: Issue
+  style?: ViewStyle
 }
 
 export default function IssueListItem(props: IssueListItemProps) {
   const colors = useColors()
 
   const {
-    issue
+    issue,
+    style
   } = props
 
   return (<View style={[styles.container, {
     backgroundColor: colors.backgroundVariant
-  }]}>
+  }, style]}>
     <IssueStatusIcon status={issue.status} style={styles.icon}/>
     <View style={styles.rightPane}>
       <View>
         <View style={styles.issueHeader}>
-          <CSText text={`${issue.title} - ${issue.createdAt.toLocaleDateString()}`}/>
+          <CSText text={`${issue.title} - ${issue.createdAt.toLocaleDateString()}`}
+                  style={{flex: 1}} numberOfLines={2}/>
           <TouchableOpacity>
             <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.text}/>
           </TouchableOpacity>
@@ -56,9 +59,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   issueHeader: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 4
   },
   issueFooter: {
     flexDirection: 'row',

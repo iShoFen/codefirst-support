@@ -12,7 +12,6 @@ import React, {useCallback, useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {HomeIssueNavigationProp, HomeSurveyNavigationProp,} from "../navigation/types/NavigationProp";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {getNounoursList} from "../redux/thunk/nounours";
 
 type SectionId = 'survey' | 'issue'
 type NavigationCallbackProps = {
@@ -30,14 +29,14 @@ export default function HomeScreen() {
   const issueNavigation = useNavigation<HomeIssueNavigationProp>()
   const surveyNavigation = useNavigation<HomeSurveyNavigationProp>()
 
-  const nounours = useAppSelector(state => state.appReducer.nounours)
+  // const nounours = useAppSelector(state => state.appReducer.nounours)
 
-  useEffect(() => {
-    const loadNounours = async () => {
-      await dispatch(getNounoursList())
-    }
-    loadNounours()
-  }, [dispatch])
+  // useEffect(() => {
+  //   const loadNounours = async () => {
+  //     await dispatch(getNounoursList())
+  //   }
+  //   loadNounours()
+  // }, [dispatch])
 
   const DATA: SectionItemData[] = [
     {

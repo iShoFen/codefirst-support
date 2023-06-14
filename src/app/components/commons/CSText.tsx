@@ -1,5 +1,4 @@
 import {Text, TextStyle} from "react-native";
-import {CSTextType} from "./types";
 import {useMemo} from "react";
 import {useColors} from "../../themes/hooks/useColors";
 
@@ -9,6 +8,7 @@ type CSTextProps = {
   style?: TextStyle
   type?: 'h1' | 'h2' | 'h3' | 'normal' | 'bold' | 'small'
   color?: string
+  numberOfLines?: number
 }
 
 export default function CSText(props: CSTextProps) {
@@ -18,7 +18,8 @@ export default function CSText(props: CSTextProps) {
     text,
     style,
     type = 'NORMAL',
-    color
+    color,
+    numberOfLines
   } = props
 
   const customStyle: TextStyle = useMemo<TextStyle>(() => {
@@ -52,7 +53,7 @@ export default function CSText(props: CSTextProps) {
     }
   }, [type, colors])
 
-  return (<Text style={[customStyle, style]}>
+  return (<Text style={[customStyle, style]} numberOfLines={numberOfLines}>
     {text}
   </Text>)
 }

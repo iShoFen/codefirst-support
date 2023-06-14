@@ -8,6 +8,7 @@ import HomeAddScreen from "../screens/HomeAddScreen";
 import {useColors} from "../themes/hooks/useColors";
 import TestScreen from "../screens/TestScreen";
 import {useNavigationTheme} from "../themes/hooks";
+import HomeIssueScreen from "../screens/issues/HomeIssueScreen";
 
 
 export default function BottomBarNavigation() {
@@ -51,7 +52,7 @@ export default function BottomBarNavigation() {
           }}/>
         <BottomTabNavigator.Screen
           name="Test"
-          component={TestScreen}
+          component={HomeIssueScreen}
           options={{
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons name="test-tube" color={color} size={size}/>

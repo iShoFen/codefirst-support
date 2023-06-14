@@ -1,14 +1,18 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
 import SearchBar from "../../components/commons/SearchBar";
+import {useAppSelector} from "../../redux/hooks";
+import IssueListItem from "../../components/issues/IssueListItem";
+import CSText from "../../components/commons/CSText";
 
 export default function HomeIssueScreen() {
+  const issues = useAppSelector(state => state.issueReducer.issues)
 
   return (<SafeAreaView style={{flex: 1}}>
     <ScrollView contentContainerStyle={{flex: 1}}>
       <View style={styles.container}>
-        <Text style={styles.title}>Tickets</Text>
+        <CSText text="Tickets" type="h1" />
 
-        <SearchBar style={{margin: 10}}/>
+        <SearchBar/>
 
         <View style={styles.filters}>
           <TouchableOpacity style={styles.categoryButton}>
@@ -18,6 +22,22 @@ export default function HomeIssueScreen() {
             <Text>Catégorie</Text>
           </TouchableOpacity>
         </View>
+
+        <ScrollView horizontal={true} contentContainerStyle={{flex: 1}}>
+          <FlatList data={issues}
+                    keyExtractor={item => item.id}
+                    renderItem={({item, index}) => {
+                      const isFirst = index == 0
+                      const isLast = index == issues.length - 1
+                      const margin = 4
+                      const itemStyle: ViewStyle = {
+                        marginVertical: isFirst || isLast ? 0 : margin,
+                        marginTop: isLast ? margin : 0,
+                        marginBottom: isFirst ? margin : 0
+                      }
+                      return <IssueListItem style={itemStyle} issue={item}/>
+                    }}/>
+        </ScrollView>
       </View>
     </ScrollView>
   </SafeAreaView>)
@@ -26,10 +46,10 @@ export default function HomeIssueScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 8
   },
   title: {
     fontSize: 32,
-    padding: 10,
     fontWeight: 'bold'
   },
   categoryButton: {
