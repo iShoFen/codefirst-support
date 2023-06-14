@@ -1,5 +1,8 @@
 package fr.iut.uca.controller;
 
+import fr.iut.uca.dto.issues.issuemodel.IssueModelGetDTO;
+import fr.iut.uca.dto.issues.issuemodel.IssueModelInsertDTO;
+import fr.iut.uca.dto.issues.issuemodel.IssueModelUpdateDTO;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
@@ -13,20 +16,20 @@ public class IssueModelController {
 
     @GET
     @Path("/{id}")
-    public Response getOne(@PathParam("id") int id) {
+    public Response getOne(@PathParam("id") int id, IssueModelGetDTO issueModelGetDTO) {
         System.out.println("/issues/models/{id}: getOne(" + id + ")");
         return Response.ok().build();
     }
 
     @POST
-    public Response create() {
+    public Response create(IssueModelInsertDTO issueModelInsertDTO) {
         System.out.println("/issues/models: getOne");
         return Response.ok().build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") int id) {
+    public Response update(@PathParam("id") int id, IssueModelUpdateDTO issueModelUpdateDTO) {
         System.out.println("/issues/models/{id}: update");
         return Response.ok().build();
     }

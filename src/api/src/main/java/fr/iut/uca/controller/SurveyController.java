@@ -1,15 +1,47 @@
 package fr.iut.uca.controller;
 
+import fr.iut.uca.dto.OperatorDTO;
+import fr.iut.uca.dto.surveys.survey.SurveyDTO;
+import fr.iut.uca.dto.surveys.survey.SurveyGetDTO;
+import fr.iut.uca.dto.surveys.survey.SurveyUpdateDTO;
+
+import fr.iut.uca.model.surveys.Survey;
+import fr.iut.uca.service.SurveyService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+
+import java.util.Date;
+import java.util.List;
+
+import static fr.iut.uca.extension.surveys.SurveyExtensions.toDTOs;
+
 
 @Path("/surveys")
 public class SurveyController {
 
+    @Inject
+    SurveyService surveyService;
+
     @GET
-    public Response getAll() {
-        System.out.println("/surveys: getAll");
-        return Response.ok().build();
+    public Response getAll(@QueryParam("index") int index,
+                           @QueryParam("count") int count,
+                           @QueryParam("createdAt") Date createdAt,
+                           @QueryParam("publishedAt") Date publishedAt,
+                           @QueryParam("endAt") Date endAt,
+                           @QueryParam("endDate") Date endDate,
+                           @QueryParam("operator") OperatorDTO operator) {
+        List<SurveyDTO> response;
+        try {
+            List<Survey> result = surveyService.getAll(index, count, createdAt, publishedAt, endAt, endDate, operator);
+            response = toDTOs(result);
+
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+        return Response.ok(response).build();
     }
 
     @GET
@@ -20,14 +52,14 @@ public class SurveyController {
     }
 
     @POST
-    public Response create() {
+    public Response create(SurveyGetDTO surveyGetDTO) {
         System.out.println("/surveys: create");
         return Response.ok().build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") int id) {
+    public Response update(@PathParam("id") int id, SurveyUpdateDTO surveyUpdateDTO) {
         System.out.println("/surveys/{id}: update(" + id + ")");
         return Response.ok().build();
     }
