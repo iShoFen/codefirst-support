@@ -15,7 +15,7 @@ export type HomeParamList = {
 
 type FeatureParamList<T> = {
   List: undefined
-  Item: {item: T}
+  Item: {id: string, title: string}
 }
 
 export type IssueParamList = FeatureParamList<Issue>

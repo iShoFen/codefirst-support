@@ -4,15 +4,16 @@ import {Category} from "../../model/issues/Category";
 import {IssueModelInfo} from "../../model/issues/IssueModelInfo";
 import {Comment} from "../../model/issues/Comment";
 import {IssueField} from "../../model/issues/IssueField";
-import {SET_ISSUES} from "../constants";
+import {SET_ISSUES, SET_SELECTED_ISSUE} from "../constants";
 
 type IssueReducerState = {
   issues: Issue[]
+  selectedIssue?: Issue
 }
 
 const initialState: IssueReducerState = {
   issues: [
-    new Issue("1", "NAN for language Percentage #2735", "CEbbinghaus",
+    new Issue("1", "NAN for language", "CEbbinghaus",
       new Date(), IssueStatus.OPENED, new Category("category"),
       new IssueModelInfo("", "",
         "Lorem ipsum odor amet, consectetuer adipiscing elit. Pellentesque dignissim eget sagittis phasellus in pellentesque egestas. Mi pulvinar finibus aliquet phasellus iaculis dis etiam. Nunc penatibus class tempus lectus nisi placerat quisque. Eros diam conubia quisque torquent taciti netus platea dictum diam. Enim efficitur consequat semper nunc dis quis ipsum."),
@@ -27,7 +28,7 @@ const initialState: IssueReducerState = {
         new IssueField("Describe alternatives you've considered", "", true, "I haven't found anything else that will do this."),
         new IssueField("Additional context", "", true, "I could see this being a really big deal in the Microsoft .NET community."),
       ]),
-    new Issue("2", "NAN for language Percentage #2735", "CEbbinghaus",
+    new Issue("2", "NAN for language Percentage #2735", "Titi",
       new Date(), IssueStatus.OPENED, new Category("category"),
       new IssueModelInfo("", "",
         "Lorem ipsum odor amet, consectetuer adipiscing elit. Pellentesque dignissim eget sagittis phasellus in pellentesque egestas. Mi pulvinar finibus aliquet phasellus iaculis dis etiam. Nunc penatibus class tempus lectus nisi placerat quisque. Eros diam conubia quisque torquent taciti netus platea dictum diam. Enim efficitur consequat semper nunc dis quis ipsum."),
@@ -42,7 +43,7 @@ const initialState: IssueReducerState = {
         new IssueField("Describe alternatives you've considered", "", true, "I haven't found anything else that will do this."),
         new IssueField("Additional context", "", true, "I could see this being a really big deal in the Microsoft .NET community."),
       ]),
-    new Issue("3", "NAN for language Percentage #2735", "CEbbinghaus",
+    new Issue("3", "language Percentage #27", "Toto",
       new Date(), IssueStatus.OPENED, new Category("category"),
       new IssueModelInfo("", "",
         "Lorem ipsum odor amet, consectetuer adipiscing elit. Pellentesque dignissim eget sagittis phasellus in pellentesque egestas. Mi pulvinar finibus aliquet phasellus iaculis dis etiam. Nunc penatibus class tempus lectus nisi placerat quisque. Eros diam conubia quisque torquent taciti netus platea dictum diam. Enim efficitur consequat semper nunc dis quis ipsum."),
@@ -60,12 +61,18 @@ const initialState: IssueReducerState = {
   ]
 }
 
+//@ts-ignore
 const issueReducer = (state: IssueReducerState = initialState, action): IssueReducerState => {
   switch (action.type) {
     case SET_ISSUES:
       return {
         ...state,
         issues: action.payload
+      }
+    case SET_SELECTED_ISSUE:
+      return {
+        ...state,
+        selectedIssue: action.payload
       }
     default:
       return state

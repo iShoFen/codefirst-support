@@ -1,33 +1,25 @@
-import {
-  Button,
-  DefaultSectionT, SafeAreaView,
-  SectionList,
-  SectionListData,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
-import React, {useCallback, useEffect} from "react";
+import {FlatList, SafeAreaView, StyleSheet, TouchableOpacity, View, ViewStyle} from "react-native";
+import React, {useCallback} from "react";
 import {useNavigation} from "@react-navigation/native";
-import {HomeIssueNavigationProp, HomeSurveyNavigationProp,} from "../navigation/types/NavigationProp";
+import {IssueStackNavigationProp, SurveyStackNavigationProp,} from "../navigation/types/NavigationProp";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-
-type SectionId = 'survey' | 'issue'
-type NavigationCallbackProps = {
-  sectionId: SectionId,
-  item: number
-}
-type SectionItemBase = DefaultSectionT & {
-  id: SectionId
-}
-type SectionItemData = SectionListData<string, SectionItemBase>
-
+import {Survey} from "../model/surveys/Survey";
+import {Issue} from "../model/issues/Issue";
+import IssueListItem from "../components/issues/IssueListItem";
+import CSText from "../components/commons/CSText";
+import {setSelectedIssue} from "../redux/actions/issueAction";
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch()
-  const issueNavigation = useNavigation<HomeIssueNavigationProp>()
-  const surveyNavigation = useNavigation<HomeSurveyNavigationProp>()
+  const issueNavigation = useNavigation<IssueStackNavigationProp>()
+  const surveyNavigation = useNavigation<SurveyStackNavigationProp>()
+
+  const issues = useAppSelector(state => state.issueReducer.issues)
+  const surveys: Survey[] = [
+    new Survey("", "Questionnaire 1", new Date(), new Date(), new Date(), "", []),
+    new Survey("", "Questionnaire 2", new Date(), new Date(), new Date(), "", []),
+    new Survey("", "Questionnaire 3", new Date(), new Date(), new Date(), "", []),
+  ]
 
   // const nounours = useAppSelector(state => state.appReducer.nounours)
 
@@ -38,50 +30,31 @@ export default function HomeScreen() {
   //   loadNounours()
   // }, [dispatch])
 
-  const DATA: SectionItemData[] = [
-    {
-      title: 'Tickets',
-      id: 'issue',
-      data: ['Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto', 'Pizza', 'Burger', 'Risotto'],
-    },
-    {
-      title: 'Questionnaires',
-      id: 'survey',
-      data: ['French Fries', 'Onion Rings', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps', 'Fried Shrimps','French Fries', 'Onion Rings', 'Fried Shrimps'],
-      renderItem: ({item}) => {
-        return (<View><Text style={{color: 'red'}}>{item}</Text></View>)
-      }
-    }
-  ]
-
-  const handleItemPress = useCallback(({sectionId}: NavigationCallbackProps) => {
-    switch (sectionId) {
-      case "survey":
-        // surveyNavigation.navigate('Item', {item: ''})
-        break
-      case "issue":
-        // issueNavigation.navigate('Item', {item: ''})
-        break
-    }
+  const handleItemPress = useCallback<(item: Issue) => void>((item) => {
+    dispatch(setSelectedIssue(item))
+    issueNavigation.navigate('Item', {id: item.id, title: item.title})
   }, [])
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-        <Text style={styles.titleHeader}>Codefirst Support</Text>
+        <CSText text="Codefirst Support" type="h1"/>
 
-        <SectionList sections={DATA}
-                     stickySectionHeadersEnabled={false}
-                     renderSectionHeader={({section}) => (<Text style={{fontSize: 40}}>{section.title}</Text>)}
-                     renderItem={({item, section}) => (<View>
-                       <TouchableOpacity onPress={() => handleItemPress({
-                         sectionId: section.id,
-                         item: item.length
-                       })}>
-                         <Text>{item}</Text>
-                       </TouchableOpacity>
-                     </View>)}
-        />
+        <CSText text="Tickets" type="h2" style={styles.issueHeader}/>
+        <FlatList data={issues}
+                  renderItem={({item, index}) => {
+                    const isFirst = index == 0
+                    const isLast = index == issues.length - 1
+                    const margin = 4
+                    const itemStyle: ViewStyle = {
+                      marginVertical: isFirst || isLast ? 0 : margin,
+                      marginTop: isLast ? margin : 0,
+                      marginBottom: isFirst ? margin : 0
+                    }
+                    return <TouchableOpacity onPress={() => handleItemPress(item)}>
+                      <IssueListItem style={itemStyle} issue={item}/>
+                    </TouchableOpacity>
+                  }}/>
       </View>
     </SafeAreaView>
   )
@@ -92,6 +65,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     paddingBottom: 0
+  },
+  issueHeader: {
+    marginTop: 8
   },
   titleHeader: {
     marginBottom: 16,
