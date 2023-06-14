@@ -4,6 +4,10 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import fr.iut.uca.entity.issues.CategoryEntity;
+import fr.iut.uca.entity.issues.IssueEntity;
+import fr.iut.uca.entity.issues.IssueModelInfoEntity;
+import fr.iut.uca.entity.issues.IssueStatusEntity;
 import fr.iut.uca.entity.surveys.FeedbackEntity;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
@@ -13,13 +17,16 @@ import fr.iut.uca.repository.mongo.surveys.FeedbackRepository;
 import fr.iut.uca.repository.mongo.surveys.SurveyRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.bson.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.include;
@@ -97,10 +104,27 @@ public class GreetingResource {
 //        return Response.ok(documents).build();
 //    }
 
-    @GET
+    @POST
     @Path("/test2")
     public Response test() {
-        return Response.ok(issueRepository.getItems(0,5)).build();
+        var issueEntity = new IssueEntity();
+        issueEntity.setTitle("test");
+        issueEntity.setAuthor("samuel");
+        var categoryEntity = new CategoryEntity();
+        categoryEntity.setName("test");
+        issueEntity.setCategory(categoryEntity);
+        issueEntity.setComments(new ArrayList<>());
+        issueEntity.setFields(new ArrayList<>());
+        issueEntity.setCreatedAt(LocalDate.now());
+        issueEntity.setStatus(IssueStatusEntity.OPEN);
+        var model = new IssueModelInfoEntity();
+        model.setName("test");
+        model.setDescription("test");
+        model.setShortDescription("test");
+        issueEntity.setModel(model);
+
+
+        return Response.ok(issueRepository.addItem(issueEntity)).build();
     }
 
     @GET
