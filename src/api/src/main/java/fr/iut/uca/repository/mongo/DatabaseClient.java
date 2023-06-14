@@ -16,6 +16,7 @@ import fr.iut.uca.repository.mongo.codec.issues.IssueCodec;
 import fr.iut.uca.repository.mongo.codec.issues.IssueModelCodec;
 import fr.iut.uca.repository.mongo.codec.surveys.FeedbackCodec;
 import fr.iut.uca.repository.mongo.codec.surveys.SurveyCodec;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecRegistries;
@@ -41,14 +42,10 @@ public class DatabaseClient {
     @ConfigProperty(name = "quarkus.mongodb.connection-string")
     String connectionString;
 
-    private final MongoClient client;
+    private MongoClient client;
 
-
-    public DatabaseClient() {
-        client = initMongoClient();
-    }
-
-    private MongoClient initMongoClient() {
+    @PostConstruct
+    void initMongoClient() {
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
 
         Codec<CategoryEntity> categoryCodec = new CategoryCodec();
@@ -61,11 +58,11 @@ public class DatabaseClient {
         CodecRegistry codecRegistry = CodecRegistries.fromRegistries(defaultCodecRegistry, pojoCodecRegistry);
 
         MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString("mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000"))
+                .applyConnectionString(new ConnectionString(connectionString))
                 .codecRegistry(codecRegistry)
                 .build();
 
-        return MongoClients.create(settings);
+        client = MongoClients.create(settings);
     }
 
     private MongoDatabase database() {
