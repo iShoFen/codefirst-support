@@ -83,6 +83,7 @@ public class IssueService {
         entity.setAuthor(author);
         entity.setCreatedAt(createdAt);
         entity.setModel(issueModelEntity);
+        entity.setStatus(IssueStatusEntity.OPEN);
         entity.setFields(issueFieldEntities);
 
         Optional<IssueEntity> result = issueRepository.addItem(entity);
