@@ -4,15 +4,10 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import fr.iut.uca.entity.issues.CategoryEntity;
-import fr.iut.uca.entity.issues.IssueEntity;
-import fr.iut.uca.entity.issues.IssueModelInfoEntity;
-import fr.iut.uca.entity.issues.IssueStatusEntity;
-import fr.iut.uca.entity.surveys.FeedbackEntity;
+import fr.iut.uca.entity.issues.*;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
 import fr.iut.uca.repository.issues.IIssueRepository;
-import fr.iut.uca.repository.mongo.DatabaseClient;
 import fr.iut.uca.repository.mongo.surveys.FeedbackRepository;
 import fr.iut.uca.repository.mongo.surveys.SurveyRepository;
 import jakarta.inject.Inject;
@@ -26,7 +21,6 @@ import org.bson.Document;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.include;
@@ -117,7 +111,7 @@ public class GreetingResource {
         issueEntity.setFields(new ArrayList<>());
         issueEntity.setCreatedAt(LocalDate.now());
         issueEntity.setStatus(IssueStatusEntity.OPEN);
-        var model = new IssueModelInfoEntity();
+        var model = new IssueModelEntity();
         model.setName("test");
         model.setDescription("test");
         model.setShortDescription("test");

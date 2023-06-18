@@ -16,9 +16,7 @@ public class IssueEntity {
 
     private IssueStatusEntity status;
 
-    private CategoryEntity category;
-
-    private IssueModelInfoEntity model;
+    private IssueModelEntity model;
 
     private final List<CommentEntity> comments = new ArrayList<>();
 
@@ -64,19 +62,11 @@ public class IssueEntity {
         this.status = status;
     }
 
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
-
-    public IssueModelInfoEntity getModel() {
+    public IssueModelEntity getModel() {
         return model;
     }
 
-    public void setModel(IssueModelInfoEntity model) {
+    public void setModel(IssueModelEntity model) {
         this.model = model;
     }
 

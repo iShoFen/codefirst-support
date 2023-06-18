@@ -3,9 +3,15 @@ package fr.iut.uca.entity.issues;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IssueModelEntity extends IssueModelInfoEntity {
+public class IssueModelEntity {
 
     private String id;
+
+    private String name;
+
+    private String shortDescription;
+
+    private String description;
 
     private CategoryEntity category;
 
@@ -17,6 +23,30 @@ public class IssueModelEntity extends IssueModelInfoEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public CategoryEntity getCategory() {

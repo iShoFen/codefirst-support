@@ -17,15 +17,13 @@ public class Issue {
 
     private IssueStatus status;
 
-    private Category category;
-
-    private IssueModelInfo model;
+    private final IssueModel model;
 
     private final List<Comment> comments = new ArrayList<>();
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(String id, String title, String author, LocalDate createdAt, IssueStatus status, Category category, IssueModelInfo model, List<IssueField> fields, List<Comment> comments) {
+    public Issue(String id, String title, String author, LocalDate createdAt, IssueStatus status, IssueModel model, List<IssueField> fields, List<Comment> comments) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("The id cannot be null or blank.");
         }
@@ -38,11 +36,15 @@ public class Issue {
 
         this.createdAt = createdAt;
 
+        if (model == null) {
+            throw new IllegalArgumentException("The model cannot be null");
+        }
+
+        this.model = model;
+
         setTitle(title);
         setAuthor(author);
         setStatus(status);
-        setCategory(category);
-        setModel(model);
         fields.forEach(this::addField);
         comments.forEach(this::addComment);
     }
@@ -88,26 +90,8 @@ public class Issue {
         this.status = status;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        if (category == null) {
-            throw new IllegalArgumentException("The category cannot be null");
-        }
-        this.category = category;
-    }
-
-    public IssueModelInfo getModel() {
+    public IssueModel getModel() {
         return model;
-    }
-
-    public void setModel(IssueModelInfo model) {
-        if (model == null) {
-            throw new IllegalArgumentException("The model cannot be null");
-        }
-        this.model = model;
     }
 
     public List<Comment> getComments() {

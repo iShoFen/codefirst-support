@@ -5,13 +5,13 @@ import fr.iut.uca.model.issues.IssueModelField;
 
 import java.util.List;
 
-public abstract class IssueModelFiledExtensions {
+public abstract class IssueModelFieldExtensions {
 
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     public static final String REQUIRED = "required";
 
-    private IssueModelFiledExtensions() { }
+    private IssueModelFieldExtensions() { }
 
     public static IssueModelFieldEntity toEntity(IssueModelField issueModelField) {
         IssueModelFieldEntity issueModelFieldEntity = new IssueModelFieldEntity();
@@ -24,7 +24,7 @@ public abstract class IssueModelFiledExtensions {
     }
 
     public static List<IssueModelFieldEntity> toEntities(List<IssueModelField> issueModelFields) {
-        return issueModelFields.stream().map(IssueModelFiledExtensions::toEntity).toList();
+        return issueModelFields.stream().map(IssueModelFieldExtensions::toEntity).toList();
     }
 
     public static IssueModelField toModel(IssueModelFieldEntity issueModelFieldEntity) {
@@ -36,6 +36,6 @@ public abstract class IssueModelFiledExtensions {
     }
 
     public static List<IssueModelField> toModels(List<IssueModelFieldEntity> issueModelFieldEntities) {
-        return issueModelFieldEntities.stream().map(IssueModelFiledExtensions::toModel).toList();
+        return issueModelFieldEntities.stream().map(IssueModelFieldExtensions::toModel).toList();
     }
 }

@@ -1,8 +1,8 @@
 package fr.iut.uca.extension.issues;
 
+import fr.iut.uca.dto.issues.issuemodel.IssueModelDTO;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.model.issues.IssueModel;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -14,7 +14,8 @@ public abstract class IssueModelExtensions {
     public static final String CATEGORY = "category";
     public static final String FIELDS = "fields";
 
-    private IssueModelExtensions() { }
+    private IssueModelExtensions() {
+    }
 
     public static IssueModelEntity toEntity(IssueModel issueModel) {
         IssueModelEntity issueModelEntity = new IssueModelEntity();
@@ -24,7 +25,7 @@ public abstract class IssueModelExtensions {
         issueModelEntity.setShortDescription(issueModel.getShortDescription());
         issueModelEntity.setDescription(issueModel.getDescription());
         issueModelEntity.setCategory(CategoryExtensions.toEntity(issueModel.getCategory()));
-        issueModelEntity.setFields(IssueModelFiledExtensions.toEntities(issueModel.getFields()));
+        issueModelEntity.setFields(IssueModelFieldExtensions.toEntities(issueModel.getFields()));
 
         return issueModelEntity;
     }
@@ -40,11 +41,20 @@ public abstract class IssueModelExtensions {
                 issueModelEntity.getShortDescription(),
                 issueModelEntity.getDescription(),
                 CategoryExtensions.toModel(issueModelEntity.getCategory()),
-                IssueModelFiledExtensions.toModels(issueModelEntity.getFields())
+                IssueModelFieldExtensions.toModels(issueModelEntity.getFields())
         );
     }
 
     public static List<IssueModel> toModels(List<IssueModelEntity> issueModelEntities) {
         return issueModelEntities.stream().map(IssueModelExtensions::toModel).toList();
+    }
+
+    public static IssueModelDTO issueModelToDTO(IssueModel model) {
+        return new IssueModelDTO(
+                model.getId(),
+                model.getName(),
+                model.getShortDescription(),
+                model.getDescription()
+        );
     }
 }

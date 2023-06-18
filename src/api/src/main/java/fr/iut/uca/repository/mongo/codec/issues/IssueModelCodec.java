@@ -3,7 +3,7 @@ package fr.iut.uca.repository.mongo.codec.issues;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.entity.issues.IssueModelFieldEntity;
 import fr.iut.uca.extension.issues.IssueModelExtensions;
-import fr.iut.uca.extension.issues.IssueModelFiledExtensions;
+import fr.iut.uca.extension.issues.IssueModelFieldExtensions;
 import org.bson.BsonReader;
 import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
@@ -63,9 +63,9 @@ public class IssueModelCodec implements Codec<IssueModelEntity> {
 
             bsonReader.readStartDocument();
 
-            field.setTitle(bsonReader.readString(IssueModelFiledExtensions.TITLE));
-            field.setDescription(bsonReader.readString(IssueModelFiledExtensions.DESCRIPTION));
-            field.setRequired(bsonReader.readBoolean(IssueModelFiledExtensions.REQUIRED));
+            field.setTitle(bsonReader.readString(IssueModelFieldExtensions.TITLE));
+            field.setDescription(bsonReader.readString(IssueModelFieldExtensions.DESCRIPTION));
+            field.setRequired(bsonReader.readBoolean(IssueModelFieldExtensions.REQUIRED));
 
             bsonReader.readEndDocument();
 
@@ -82,9 +82,9 @@ public class IssueModelCodec implements Codec<IssueModelEntity> {
         for (var field : issueModelFieldEntities) {
             bsonWriter.writeStartDocument();
 
-            bsonWriter.writeString(IssueModelFiledExtensions.TITLE, field.getTitle());
-            bsonWriter.writeString(IssueModelFiledExtensions.DESCRIPTION, field.getDescription());
-            bsonWriter.writeBoolean(IssueModelFiledExtensions.REQUIRED, field.isRequired());
+            bsonWriter.writeString(IssueModelFieldExtensions.TITLE, field.getTitle());
+            bsonWriter.writeString(IssueModelFieldExtensions.DESCRIPTION, field.getDescription());
+            bsonWriter.writeBoolean(IssueModelFieldExtensions.REQUIRED, field.isRequired());
 
             bsonWriter.writeEndDocument();
         }

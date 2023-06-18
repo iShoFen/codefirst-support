@@ -2,9 +2,9 @@ package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.dto.issues.CommentDTO;
 import fr.iut.uca.dto.issues.IssueFieldDTO;
-import fr.iut.uca.dto.issues.IssueModelInfoDTO;
 import fr.iut.uca.dto.issues.issue.IssueDTO;
 import fr.iut.uca.dto.issues.issue.IssueDetailDTO;
+import fr.iut.uca.dto.issues.issuemodel.IssueModelDTO;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.model.issues.Issue;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static fr.iut.uca.extension.issues.CommentExtensions.commentsToDTOs;
 import static fr.iut.uca.extension.issues.IssueFieldExtensions.issueFieldsToDTOs;
-import static fr.iut.uca.extension.issues.IssueModelInfoExtensions.issueModelToDTO;
+import static fr.iut.uca.extension.issues.IssueModelExtensions.issueModelToDTO;
 import static fr.iut.uca.extension.issues.IssueStatusExtensions.statusToDTO;
 
 public abstract class IssueExtensions {
@@ -22,7 +22,6 @@ public abstract class IssueExtensions {
     public static final String AUTHOR = "author";
     public static final String CREATED_AT = "created_at";
     public static final String STATUS = "status";
-    public static final String CATEGORY = "category";
     public static final String MODEL = "model";
     public static final String COMMENTS = "comments";
     public static final String FIELDS = "fields";
@@ -38,8 +37,7 @@ public abstract class IssueExtensions {
         entity.setAuthor(issue.getAuthor());
         entity.setCreatedAt(issue.getCreatedAt());
         entity.setStatus(IssueStatusExtensions.toEntity(issue.getStatus()));
-        entity.setCategory(CategoryExtensions.toEntity(issue.getCategory()));
-        entity.setModel(IssueModelInfoExtensions.toEntity(issue.getModel()));
+        entity.setModel(IssueModelExtensions.toEntity(issue.getModel()));
         entity.setComments(CommentExtensions.toEntities(issue.getComments()));
         entity.setFields(IssueFieldExtensions.toEntities(issue.getFields()));
 
@@ -57,8 +55,7 @@ public abstract class IssueExtensions {
                 entity.getAuthor(),
                 entity.getCreatedAt(),
                 IssueStatusExtensions.toModel(entity.getStatus()),
-                CategoryExtensions.toModel(entity.getCategory()),
-                IssueModelInfoExtensions.toModel(entity.getModel()),
+                IssueModelExtensions.toModel(entity.getModel()),
                 IssueFieldExtensions.toModels(entity.getFields()),
                 CommentExtensions.toModels(entity.getComments())
         );
@@ -79,7 +76,7 @@ public abstract class IssueExtensions {
     }
 
     public static IssueDetailDTO issueToDetailDTO(Issue issue) {
-        IssueModelInfoDTO modelDTO = issueModelToDTO(issue.getModel());
+        IssueModelDTO modelDTO = issueModelToDTO(issue.getModel());
         List<IssueFieldDTO> fieldDTOS = issueFieldsToDTOs(issue.getFields());
         List<CommentDTO> commentDTOS = commentsToDTOs(issue.getComments());
 
