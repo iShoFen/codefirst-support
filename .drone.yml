@@ -7,9 +7,12 @@ trigger:
     - push
 
 steps:
+
   # Api
   - name: build-docker-codefirst-support-api
     image: plugins/docker
+    commands:
+      - src/api/mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
     settings:
       dockerfile: src/api/src/main/docker/Dockerfile.native-micro
       context: src/api/
@@ -24,7 +27,7 @@ steps:
   - name: deploy-container-mongodb
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
-        IMAGENAME: mongodb
+        IMAGENAME: mongo
         CONTAINERNAME: codefirst-support-mongodb
         COMMAND: create
         # OVERWRITE: false
