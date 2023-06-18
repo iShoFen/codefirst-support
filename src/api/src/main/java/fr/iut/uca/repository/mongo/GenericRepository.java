@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.mongodb.client.model.Filters.eq;
+
 
 /**
  * Generic repository for MongoDB.
@@ -61,9 +63,7 @@ public abstract class GenericRepository<T> implements IGenericRepository<T> {
 
     @Override
     public Optional<T> getItemById(String id) {
-        var filter = Filters.eq(typeId, new ObjectId(id));
-        T result = collection.find().filter(filter).first();
-
+        T result = collection.find(eq(typeId,new ObjectId(id))).first();
         return Optional.ofNullable(result);
     }
 
@@ -80,7 +80,7 @@ public abstract class GenericRepository<T> implements IGenericRepository<T> {
 
     @Override
     public Optional<T> updateItem(T item) {
-        var filter = Filters.eq(typeId, new ObjectId(item.toString()));
+        var filter = eq(typeId, new ObjectId(item.toString()));
         UpdateResult updateResult = collection.replaceOne(filter, item);
 
         if (updateResult.getModifiedCount() == 0) {
@@ -92,6 +92,6 @@ public abstract class GenericRepository<T> implements IGenericRepository<T> {
 
     @Override
     public boolean deleteItem(String id) {
-        return collection.deleteOne(new Document(typeId, id)).getDeletedCount() == 1;
+        return collection.deleteOne(eq(typeId, new ObjectId(id))).getDeletedCount() == 1;
     }
 }
