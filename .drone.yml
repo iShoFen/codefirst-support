@@ -20,6 +20,18 @@ steps:
       password:
         from_secret: SECRET_REGISTRY_PASSWORD
 
+    # database container deployment
+  - name: deploy-container-mongodb
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+        IMAGENAME: mongodb
+        CONTAINERNAME: codefirst-support-mongodb
+        COMMAND: create
+        # OVERWRITE: false
+        PRIVATE: true
+        ADMINS: samuelsirven
+    # depends_on: [ build-docker-codefirst-support-api ]
+
   - name: deploy-codefirst-support-api-container
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
