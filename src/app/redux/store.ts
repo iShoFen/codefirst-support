@@ -5,7 +5,7 @@ import issueReducer from "./reducers/issueReducer";
 const reducers = combineReducers({
   // appReducer: appReducer,
   userReducer: userReducer,
-  issueReducer: issueReducer
+  issueReducer: issueReducer,
 })
 
 const store = configureStore({

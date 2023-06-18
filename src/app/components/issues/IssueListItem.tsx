@@ -6,9 +6,10 @@ import CSText from "../commons/CSText";
 import CSCapsule from "../commons/CSCapsule";
 import {useColors} from "../../themes/hooks";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {IssueSummary} from "../../model/issues/IssueSummary";
 
 type IssueListItemProps = {
-  issue: Issue
+  issue: IssueSummary
   style?: ViewStyle
 }
 
@@ -37,7 +38,7 @@ export default function IssueListItem(props: IssueListItemProps) {
       </View>
       <View style={styles.issueFooter}>
         <CSCapsule text={issue.category.name}/>
-        <CommentCounter value={issue.comments.length}/>
+        {/*<CommentCounter value={issue.comments?.length ?? 0}/>*/}
       </View>
     </View>
   </View>)

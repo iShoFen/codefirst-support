@@ -1,47 +1,48 @@
 import {FlatList, SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
-import CommentItem from "../components/issues/comments/CommentItem";
-import CSCapsule from "../components/commons/CSCapsule";
+import CommentItem from "../../components/issues/comments/CommentItem";
+import CSCapsule from "../../components/commons/CSCapsule";
 import {useRoute} from "@react-navigation/native";
-import {IssueItemRouteProps} from "../navigation/types/RouteProps";
-import CSText from "../components/commons/CSText";
-import {useColors} from "../themes/hooks";
-import {useAppSelector} from "../redux/hooks";
-import {getIssue} from "../redux/thunk/issueThunk";
+import {IssueItemRouteProps} from "../../navigation/types/RouteProps";
+import CSText from "../../components/commons/CSText";
+import {useColors} from "../../themes/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {getIssue} from "../../redux/thunk/issueThunk";
 import {useEffect} from "react";
 
 export default function IssueItemScreen() {
   const route = useRoute<IssueItemRouteProps>()
+  const dispatch = useAppDispatch()
   const colors = useColors()
+  const issue = useAppSelector(state => state.issueReducer.selectedIssue)
 
   const {
     id,
     title
   } = route.params
 
-  const issue = useAppSelector(state => state.issueReducer.selectedIssue)
+  useEffect(() => {
+    const loadIssue = async () => {
+      await dispatch(getIssue(id))
+    }
+    loadIssue()
+  }, [dispatch, id]);
+
   if (!issue) {
     return <SafeAreaView style={{flex: 1}}>
       <CSText text="Impossible de récupérer le ticket car il n'existe pas" color="red" type="h1"/>
     </SafeAreaView>
   }
 
-  useEffect(() => {
-    return () => {
-      getIssue(id)
-    };
-  }, [id]);
-
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
-          <CSText text={title} type="h1"/>
 
           <View style={[styles.details, {
             backgroundColor: colors.backgroundVariant,
             borderRadius: 8
           }]}>
+            <CSText text={title} type="h1"/>
             <View style={styles.authorAndDate}>
               <CSText text={`Par ${issue.author}`}/>
               <CSText text={issue.createdAt.toLocaleDateString()}/>
@@ -70,7 +71,7 @@ export default function IssueItemScreen() {
             ))}
           </View>
 
-          <CSText text="Commentaires" type="h2"/>
+          <CSText text="Commentaires" type="h2" style={styles.commentHeader}/>
 
           <ScrollView horizontal contentContainerStyle={{flex: 1}}>
             <FlatList data={issue.comments}
@@ -89,11 +90,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 8
-  },
-  title: {
-    fontSize: 32,
-    padding: 10,
-    fontWeight: 'bold'
   },
   subtitle: {
     paddingVertical: 8,
@@ -120,5 +116,9 @@ const styles = StyleSheet.create({
   capsules: {
     flexDirection: 'row',
     gap: 8
+  },
+  commentHeader: {
+    marginTop: 16,
+    marginBottom: 8
   }
 })

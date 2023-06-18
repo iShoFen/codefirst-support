@@ -6,9 +6,7 @@ import StackIssueNavigation from "./StackIssueNavigation";
 import {BottomBarParamList} from "./types/ParamList";
 import HomeAddScreen from "../screens/HomeAddScreen";
 import {useColors} from "../themes/hooks/useColors";
-import TestScreen from "../screens/TestScreen";
 import {useNavigationTheme} from "../themes/hooks";
-import HomeIssueScreen from "../screens/issues/HomeIssueScreen";
 
 
 export default function BottomBarNavigation() {
@@ -18,7 +16,7 @@ export default function BottomBarNavigation() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <BottomTabNavigator.Navigator initialRouteName="Test"
+      <BottomTabNavigator.Navigator initialRouteName="Home"
                                     screenOptions={{
                                       headerShown: false,
                                       tabBarActiveTintColor: colors.primary
@@ -50,15 +48,15 @@ export default function BottomBarNavigation() {
             ),
             tabBarLabel: 'Paramètres'
           }}/>
-        <BottomTabNavigator.Screen
-          name="Test"
-          component={HomeIssueScreen}
-          options={{
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons name="test-tube" color={color} size={size}/>
-            ),
-            tabBarLabel: 'Test',
-          }}/>
+      {/*  <BottomTabNavigator.Screen*/}
+      {/*    name="Test"*/}
+      {/*    component={HomeIssueScreen}*/}
+      {/*    options={{*/}
+      {/*      tabBarIcon: ({color, size}) => (*/}
+      {/*        <MaterialCommunityIcons name="test-tube" color={color} size={size}/>*/}
+      {/*      ),*/}
+      {/*      tabBarLabel: 'Test',*/}
+      {/*    }}/>*/}
       </BottomTabNavigator.Navigator>
     </NavigationContainer>
   )

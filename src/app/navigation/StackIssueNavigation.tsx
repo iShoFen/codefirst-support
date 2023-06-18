@@ -1,15 +1,16 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
-import IssueItemScreen from "../screens/IssueItemScreen";
+import IssueItemScreen from "../screens/issues/IssueItemScreen";
 import {IssueParamList} from "./types/ParamList";
 import {useColors} from "../themes/hooks";
+import HomeIssueScreen from "../screens/issues/HomeIssueScreen";
 
 export default function StackIssueNavigation() {
   const Stack = createStackNavigator<IssueParamList>()
   const colors = useColors()
 
   return (
-    <Stack.Navigator initialRouteName="List" screenOptions={{
+    <Stack.Navigator initialRouteName="Home" screenOptions={{
       headerBackTitle: 'Retour',
       headerStyle: {
         backgroundColor: colors.background,
@@ -18,9 +19,13 @@ export default function StackIssueNavigation() {
         padding: 8,
       },
     }}>
-      <Stack.Screen name="List" component={HomeScreen}
+      <Stack.Screen name="Home" component={HomeScreen}
                     options={{
                       headerShown: false
+                    }}/>
+      <Stack.Screen name="List" component={HomeIssueScreen}
+                    options={{
+                      title: 'Tickets'
                     }}/>
       <Stack.Screen name="Item" component={IssueItemScreen}
                     options={({route}) => ({

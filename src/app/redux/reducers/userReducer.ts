@@ -7,7 +7,7 @@ type UserReducerState = {
 }
 
 const initialState: UserReducerState = {
-  theme: 'light'
+  theme: 'dark'
 }
 
 const userReducer = (state: UserReducerState = initialState, action: PayloadAction<ThemeMode>) => {

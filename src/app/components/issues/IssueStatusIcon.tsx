@@ -19,7 +19,7 @@ export default function IssueStatusIcon(props: IssueStatusIconProps) {
 
   const color = useMemo<string>(() => {
     switch (status) {
-      case IssueStatus.OPENED:
+      case IssueStatus.OPEN:
         return "green"
       case IssueStatus.CLOSED:
         return "gray"
