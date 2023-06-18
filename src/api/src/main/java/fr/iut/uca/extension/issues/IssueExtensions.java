@@ -4,7 +4,7 @@ import fr.iut.uca.dto.issues.CommentDTO;
 import fr.iut.uca.dto.issues.IssueFieldDTO;
 import fr.iut.uca.dto.issues.issue.IssueDTO;
 import fr.iut.uca.dto.issues.issue.IssueDetailDTO;
-import fr.iut.uca.dto.issues.issuemodel.IssueModelDTO;
+import fr.iut.uca.dto.issues.issuemodel.IssueModelShortDTO;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.model.issues.Issue;
 
@@ -14,7 +14,6 @@ import java.util.List;
 import static fr.iut.uca.extension.issues.CategoryExtensions.categoryToDTO;
 import static fr.iut.uca.extension.issues.CommentExtensions.commentsToDTOs;
 import static fr.iut.uca.extension.issues.IssueFieldExtensions.issueFieldsToDTOs;
-import static fr.iut.uca.extension.issues.IssueModelExtensions.issueModelToDTO;
 import static fr.iut.uca.extension.issues.IssueStatusExtensions.statusToDTO;
 
 public abstract class IssueExtensions {
@@ -78,7 +77,7 @@ public abstract class IssueExtensions {
     }
 
     public static IssueDetailDTO issueToDetailDTO(Issue issue) {
-        IssueModelDTO modelDTO = issueModelToDTO(issue.getModel());
+        IssueModelShortDTO modelDTO = IssueModelExtensions.issueModelToShortDTO(issue.getModel());
         List<IssueFieldDTO> fieldDTOS = issueFieldsToDTOs(issue.getFields());
         List<CommentDTO> commentDTOS = commentsToDTOs(issue.getComments());
 

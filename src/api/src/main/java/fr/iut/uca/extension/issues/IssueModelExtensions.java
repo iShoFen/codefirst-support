@@ -2,6 +2,7 @@ package fr.iut.uca.extension.issues;
 
 import fr.iut.uca.dto.issues.issuemodel.IssueModelDTO;
 import fr.iut.uca.dto.issues.issuemodel.IssueModelDetailDTO;
+import fr.iut.uca.dto.issues.issuemodel.IssueModelShortDTO;
 import fr.iut.uca.entity.issues.IssueModelEntity;
 import fr.iut.uca.model.issues.IssueModel;
 
@@ -69,6 +70,14 @@ public abstract class IssueModelExtensions {
                 model.getDescription(),
                 CategoryExtensions.categoryToDTO(model.getCategory()),
                 IssueModelFieldExtensions.issueModelFieldsToDTOs(model.getFields())
+        );
+    }
+
+    public static IssueModelShortDTO issueModelToShortDTO(IssueModel model) {
+        return new IssueModelShortDTO(
+                model.getName(),
+                model.getShortDescription(),
+                model.getDescription()
         );
     }
 

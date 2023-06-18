@@ -1,6 +1,7 @@
 package fr.iut.uca.repository.mongo.codec.issues;
 
 import fr.iut.uca.entity.issues.*;
+import fr.iut.uca.extension.DateExtensions;
 import fr.iut.uca.extension.issues.CommentExtensions;
 import fr.iut.uca.extension.issues.IssueFieldExtensions;
 import fr.iut.uca.extension.issues.IssueModelExtensions;
@@ -11,11 +12,11 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static fr.iut.uca.extension.DateExtensions.toLocalDate;
 import static fr.iut.uca.extension.issues.IssueExtensions.*;
 
 
@@ -31,7 +32,7 @@ public class IssueCodec implements Codec<IssueEntity> {
         issueEntity.setModel(decodeIssueModel(bsonReader));
         issueEntity.setFields(decodeFields(bsonReader));
         issueEntity.setAuthor(bsonReader.readString(AUTHOR));
-        issueEntity.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CREATED_AT))));
+        issueEntity.setCreatedAt(DateExtensions.toLocalDate(bsonReader.readDateTime(CREATED_AT)));
         issueEntity.setStatus(IssueStatusEntity.valueOf(bsonReader.readString(STATUS).toUpperCase()));
         issueEntity.getModel().setCategory(new CategoryCodec().decode(bsonReader, decoderContext));
         issueEntity.setComments(decodeComment(bsonReader));
@@ -52,7 +53,7 @@ public class IssueCodec implements Codec<IssueEntity> {
         encodeIssueModel(bsonWriter, issueEntity.getModel());
         encodeFields(bsonWriter, issueEntity.getFields());
         bsonWriter.writeString(AUTHOR, issueEntity.getAuthor());
-        bsonWriter.writeDateTime(CREATED_AT, issueEntity.getCreatedAt().toEpochDay());
+        bsonWriter.writeDateTime(CREATED_AT, DateExtensions.toTimestamp(issueEntity.getCreatedAt()));
         bsonWriter.writeString(STATUS, issueEntity.getStatus().name().toLowerCase());
         new CategoryCodec().encode(bsonWriter, issueEntity.getModel().getCategory(), encoderContext);
         encodeComments(bsonWriter, issueEntity.getComments());
@@ -89,7 +90,7 @@ public class IssueCodec implements Codec<IssueEntity> {
 
             bsonReader.readStartDocument();
 
-            comment.setCreatedAt(toLocalDate(new Date(bsonReader.readDateTime(CommentExtensions.CREATED_AT))));
+            comment.setCreatedAt(DateExtensions.toLocalDate(bsonReader.readDateTime(CommentExtensions.CREATED_AT)));
             comment.setAuthor(bsonReader.readString(CommentExtensions.AUTHOR));
             comment.setContent(bsonReader.readString(CommentExtensions.CONTENT));
 
@@ -144,7 +145,7 @@ public class IssueCodec implements Codec<IssueEntity> {
             bsonWriter.writeStartDocument();
 
             bsonWriter.writeString(CommentExtensions.AUTHOR, comment.getAuthor());
-            bsonWriter.writeDateTime(CommentExtensions.CREATED_AT, comment.getCreatedAt().toEpochDay());
+            bsonWriter.writeDateTime(CommentExtensions.CREATED_AT, DateExtensions.toTimestamp(comment.getCreatedAt()));
             bsonWriter.writeString(CommentExtensions.CONTENT, comment.getContent());
 
             bsonWriter.writeEndDocument();
