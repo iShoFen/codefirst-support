@@ -11,6 +11,7 @@ import fr.iut.uca.model.issues.Issue;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.iut.uca.extension.issues.CategoryExtensions.categoryToDTO;
 import static fr.iut.uca.extension.issues.CommentExtensions.commentsToDTOs;
 import static fr.iut.uca.extension.issues.IssueFieldExtensions.issueFieldsToDTOs;
 import static fr.iut.uca.extension.issues.IssueModelExtensions.issueModelToDTO;
@@ -56,7 +57,7 @@ public abstract class IssueExtensions {
                 entity.getCreatedAt(),
                 IssueStatusExtensions.toModel(entity.getStatus()),
                 IssueModelExtensions.toModel(entity.getModel()),
-                IssueFieldExtensions.toModels(entity.getFields()),
+                IssueFieldExtensions.issueFieldEntitiesToModels(entity.getFields()),
                 CommentExtensions.toModels(entity.getComments())
         );
     }
@@ -71,6 +72,7 @@ public abstract class IssueExtensions {
                 issue.getTitle(),
                 issue.getAuthor(),
                 issue.getCreatedAt(),
+                categoryToDTO(issue.getModel().getCategory()),
                 statusToDTO(issue.getStatus())
         );
     }
@@ -85,6 +87,7 @@ public abstract class IssueExtensions {
                 issue.getTitle(),
                 issue.getAuthor(),
                 issue.getCreatedAt(),
+                categoryToDTO(issue.getModel().getCategory()),
                 statusToDTO(issue.getStatus()),
                 modelDTO,
                 fieldDTOS,
