@@ -41,7 +41,7 @@ public abstract class IssueModelExtensions {
                 issueModelEntity.getShortDescription(),
                 issueModelEntity.getDescription(),
                 CategoryExtensions.toModel(issueModelEntity.getCategory()),
-                IssueModelFieldExtensions.toModels(issueModelEntity.getFields())
+                IssueModelFieldExtensions.issueModelFieldsToModels(issueModelEntity.getFields())
         );
     }
 

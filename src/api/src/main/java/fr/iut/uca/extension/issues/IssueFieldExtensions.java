@@ -31,7 +31,7 @@ public abstract class IssueFieldExtensions {
         return issueFields.stream().map(IssueFieldExtensions::toEntity).toList();
     }
 
-    public static IssueField toModel(IssueFieldEntity issueFieldEntity) {
+    public static IssueField issueFieldEntityToModel(IssueFieldEntity issueFieldEntity) {
         return new IssueField(
                 issueFieldEntity.getTitle(),
                 issueFieldEntity.getDescription(),
@@ -40,8 +40,21 @@ public abstract class IssueFieldExtensions {
         );
     }
 
-    public static List<IssueField> toModels(List<IssueFieldEntity> issueFieldEntities) {
-        return issueFieldEntities.stream().map(IssueFieldExtensions::toModel).toList();
+    public static List<IssueField> issueFieldEntitiesToModels(List<IssueFieldEntity> issueFieldEntities) {
+        return issueFieldEntities.stream().map(IssueFieldExtensions::issueFieldEntityToModel).toList();
+    }
+
+    public static IssueField issueFieldDTOToModel(IssueFieldDTO issueFieldDTO) {
+        return new IssueField(
+                issueFieldDTO.title(),
+                issueFieldDTO.description(),
+                issueFieldDTO.required(),
+                issueFieldDTO.value()
+        );
+    }
+
+    public static List<IssueField> issueFieldDTOsToModels(List<IssueFieldDTO> issueFieldEntities) {
+        return issueFieldEntities.stream().map(IssueFieldExtensions::issueFieldDTOToModel).toList();
     }
 
     public static IssueFieldDTO issueFieldToDTO(IssueField field) {

@@ -10,5 +10,5 @@ public record IssueInsertDTO(String title,
                              String author,
                              LocalDate createdAt,
                              @JsonProperty("model") String modelId,
-                             List<IssueFieldDTO> fields) {
+                             List<IssueFieldInsertDTO> fields) {
 }

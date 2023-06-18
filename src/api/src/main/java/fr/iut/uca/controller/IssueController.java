@@ -1,16 +1,17 @@
 package fr.iut.uca.controller;
 
-import fr.iut.uca.dto.issues.issue.IssueDTO;
-import fr.iut.uca.dto.issues.issue.IssueDetailDTO;
-import fr.iut.uca.dto.issues.issue.IssueInsertDTO;
-import fr.iut.uca.dto.issues.issue.IssueUpdateDTO;
+import fr.iut.uca.dto.issues.issue.*;
+import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.model.issues.Issue;
 import fr.iut.uca.service.IssueService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static fr.iut.uca.extension.issues.IssueExtensions.issueToDetailDTO;
 import static fr.iut.uca.extension.issues.IssueExtensions.issuesToDTOs;
@@ -46,9 +47,20 @@ public class IssueController {
     }
 
     @POST
-    public Response create(IssueInsertDTO issueInsertDTO) {
-        System.out.println("/issues: create");
-        return Response.ok().build();
+    public Response create(@RequestBody(required = true) IssueInsertDTO issueInsertDTO) {
+        try {
+            // map the fields received to map
+            Map<String, String> fields = new HashMap<>();
+            for (IssueFieldInsertDTO field : issueInsertDTO.fields()) {
+                fields.put(field.title(), field.value());
+            }
+
+            Issue issue = issueService.create(issueInsertDTO.title(), issueInsertDTO.author(), issueInsertDTO.createdAt(), issueInsertDTO.modelId(), fields);
+            IssueDetailDTO issueDetailDTO = issueToDetailDTO(issue);
+            return Response.ok(issueDetailDTO).build();
+        } catch (IllegalArgumentException | InsertException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @PUT

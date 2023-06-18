@@ -104,9 +104,6 @@ public class GreetingResource {
         var issueEntity = new IssueEntity();
         issueEntity.setTitle("test");
         issueEntity.setAuthor("samuel");
-        var categoryEntity = new CategoryEntity();
-        categoryEntity.setName("test");
-        issueEntity.setCategory(categoryEntity);
         issueEntity.setComments(new ArrayList<>());
         issueEntity.setFields(new ArrayList<>());
         issueEntity.setCreatedAt(LocalDate.now());
