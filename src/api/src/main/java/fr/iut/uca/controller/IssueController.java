@@ -60,9 +60,14 @@ public class IssueController {
 
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam("id") int id) {
-        System.out.println("/issues/{id}: delete(" + id + ")");
-        return Response.ok().build();
+    public Response delete(@PathParam("id") String id) {
+        try {
+            issueService.delete(id);
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
     }
 
     @POST

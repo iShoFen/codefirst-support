@@ -42,4 +42,14 @@ public class IssueService {
 
         return issueToModel(entity.get());
     }
+
+    public void delete(String id)
+            throws NotFoundException {
+
+        boolean result = issueRepository.deleteItem(id);
+
+        if (!result) {
+            throw new NotFoundException("The issue was not found");
+        }
+    }
 }
