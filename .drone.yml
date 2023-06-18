@@ -1,0 +1,31 @@
+kind: pipeline
+type: docker
+name: default
+
+trigger:
+  event:
+    - push
+
+steps:
+  # Api
+  - name: build-docker-codefirst-support-api
+    image: plugins/docker
+    settings:
+      dockerfile: src/api/src/main/docker/Dockerfile.native-micro
+      context: src/api/
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/florent.marques/codefirst-support
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+
+  - name: deploy-codefirst-support-api-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/florent.marques/codefirst-support
+      CONTAINERNAME: codefirst-support-api
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: samuelsirven
+    depends_on: [ build-docker-codefirst-support-api ]
