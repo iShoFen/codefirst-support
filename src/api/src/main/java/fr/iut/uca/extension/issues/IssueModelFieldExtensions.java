@@ -4,6 +4,7 @@ import fr.iut.uca.dto.issues.IssueModelFieldDTO;
 import fr.iut.uca.entity.issues.IssueModelFieldEntity;
 import fr.iut.uca.model.issues.IssueModelField;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class IssueModelFieldExtensions {
@@ -12,7 +13,8 @@ public abstract class IssueModelFieldExtensions {
     public static final String DESCRIPTION = "description";
     public static final String REQUIRED = "required";
 
-    private IssueModelFieldExtensions() { }
+    private IssueModelFieldExtensions() {
+    }
 
     public static IssueModelFieldEntity toEntity(IssueModelField issueModelField) {
         IssueModelFieldEntity issueModelFieldEntity = new IssueModelFieldEntity();
@@ -48,7 +50,23 @@ public abstract class IssueModelFieldExtensions {
         );
     }
 
-    public static List<IssueModelField> issueModelFieldDTOsToModels(List<IssueModelFieldDTO> issueModelFieldDTOs) {
-        return issueModelFieldDTOs.stream().map(IssueModelFieldExtensions::issueModelFieldToModel).toList();
+    public static List<IssueModelField> issueModelFieldDTOsToModels(List<IssueModelFieldDTO> fields) {
+        List<IssueModelField> models = new ArrayList<>();
+        fields.forEach(dto -> models.add(issueModelFieldToModel(dto)));
+        return models;
+    }
+
+    public static IssueModelFieldDTO issueModelFieldToDTO(IssueModelField field) {
+        return new IssueModelFieldDTO(
+                field.getTitle(),
+                field.getDescription(),
+                field.isRequired()
+        );
+    }
+
+    public static List<IssueModelFieldDTO> issueModelFieldsToDTOs(List<IssueModelField> fields) {
+        List<IssueModelFieldDTO> dtos = new ArrayList<>();
+        fields.forEach(field -> dtos.add(issueModelFieldToDTO(field)));
+        return dtos;
     }
 }

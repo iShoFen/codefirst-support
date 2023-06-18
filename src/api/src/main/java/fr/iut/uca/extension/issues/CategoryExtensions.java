@@ -14,7 +14,7 @@ public abstract class CategoryExtensions {
     private CategoryExtensions() {
     }
 
-    public static CategoryEntity toEntity(Category category) {
+    public static CategoryEntity categoryToEntity(Category category) {
         CategoryEntity categoryEntity = new CategoryEntity();
 
         categoryEntity.setName(category.getName());
@@ -23,7 +23,7 @@ public abstract class CategoryExtensions {
     }
 
     public static List<CategoryEntity> toEntities(List<Category> categories) {
-        return categories.stream().map(CategoryExtensions::toEntity).toList();
+        return categories.stream().map(CategoryExtensions::categoryToEntity).toList();
     }
 
     public static Category toModel(CategoryEntity categoryEntity) {
@@ -44,5 +44,11 @@ public abstract class CategoryExtensions {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         categories.forEach(category -> categoryDTOS.add(categoryToDTO(category)));
         return categoryDTOS;
+    }
+
+    public static Category categoryDTOToModel(CategoryDTO category) {
+        return new Category(
+                category.name()
+        );
     }
 }

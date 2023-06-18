@@ -5,4 +5,4 @@ import fr.iut.uca.dto.issues.IssueModelFieldDTO;
 
 import java.util.List;
 
-public record IssueModelInsertDTO(String name, String shortDescription, String description, List<IssueModelFieldDTO> fields, List<CategoryDTO> categories) { }
+public record IssueModelInsertDTO(String name, String shortDescription, String description, CategoryDTO category, List<IssueModelFieldDTO> fields) { }

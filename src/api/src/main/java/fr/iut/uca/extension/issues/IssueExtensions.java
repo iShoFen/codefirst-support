@@ -56,7 +56,7 @@ public abstract class IssueExtensions {
                 entity.getAuthor(),
                 entity.getCreatedAt(),
                 IssueStatusExtensions.toModel(entity.getStatus()),
-                IssueModelExtensions.toModel(entity.getModel()),
+                IssueModelExtensions.issueModelEntityToModel(entity.getModel()),
                 IssueFieldExtensions.issueFieldEntitiesToModels(entity.getFields()),
                 CommentExtensions.toModels(entity.getComments())
         );
