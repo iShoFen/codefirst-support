@@ -1,10 +1,20 @@
 package fr.iut.uca.extension.issues;
 
+import fr.iut.uca.dto.issues.CommentDTO;
+import fr.iut.uca.dto.issues.IssueFieldDTO;
+import fr.iut.uca.dto.issues.IssueModelInfoDTO;
+import fr.iut.uca.dto.issues.issue.IssueDTO;
+import fr.iut.uca.dto.issues.issue.IssueDetailDTO;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.model.issues.Issue;
-import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static fr.iut.uca.extension.issues.CommentExtensions.commentsToDTOs;
+import static fr.iut.uca.extension.issues.IssueFieldExtensions.issueFieldsToDTOs;
+import static fr.iut.uca.extension.issues.IssueModelInfoExtensions.issueModelToDTO;
+import static fr.iut.uca.extension.issues.IssueStatusExtensions.statusToDTO;
 
 public abstract class IssueExtensions {
     public static final String ID = "_id";
@@ -17,7 +27,8 @@ public abstract class IssueExtensions {
     public static final String COMMENTS = "comments";
     public static final String FIELDS = "fields";
 
-    private IssueExtensions() { }
+    private IssueExtensions() {
+    }
 
     public static IssueEntity toEntity(Issue issue) {
         var entity = new IssueEntity();
@@ -39,7 +50,7 @@ public abstract class IssueExtensions {
         return issues.stream().map(IssueExtensions::toEntity).toList();
     }
 
-    public static Issue toModel(IssueEntity entity) {
+    public static Issue issueToModel(IssueEntity entity) {
         return new Issue(
                 entity.getId(),
                 entity.getTitle(),
@@ -53,8 +64,40 @@ public abstract class IssueExtensions {
         );
     }
 
-    public static List<Issue> toModels(List<IssueEntity> entities) {
-        return entities.stream().map(IssueExtensions::toModel).toList();
+    public static List<Issue> issuesToModels(List<IssueEntity> entities) {
+        return entities.stream().map(IssueExtensions::issueToModel).toList();
     }
 
+    public static IssueDTO issueToDTO(Issue issue) {
+        return new IssueDTO(
+                issue.getId(),
+                issue.getTitle(),
+                issue.getAuthor(),
+                issue.getCreatedAt(),
+                statusToDTO(issue.getStatus())
+        );
+    }
+
+    public static IssueDetailDTO issueToDetailDTO(Issue issue) {
+        IssueModelInfoDTO modelDTO = issueModelToDTO(issue.getModel());
+        List<IssueFieldDTO> fieldDTOS = issueFieldsToDTOs(issue.getFields());
+        List<CommentDTO> commentDTOS = commentsToDTOs(issue.getComments());
+
+        return new IssueDetailDTO(
+                issue.getId(),
+                issue.getTitle(),
+                issue.getAuthor(),
+                issue.getCreatedAt(),
+                statusToDTO(issue.getStatus()),
+                modelDTO,
+                fieldDTOS,
+                commentDTOS
+        );
+    }
+
+    public static List<IssueDTO> issuesToDTOs(List<Issue> issues) {
+        List<IssueDTO> dtos = new ArrayList<>();
+        issues.forEach(issue -> dtos.add(issueToDTO(issue)));
+        return dtos;
+    }
 }

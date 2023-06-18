@@ -1,5 +1,6 @@
 package fr.iut.uca.extension.issues;
 
+import fr.iut.uca.dto.issues.IssueStatusDTO;
 import fr.iut.uca.entity.issues.IssueStatusEntity;
 import fr.iut.uca.model.issues.IssueStatus;
 
@@ -20,6 +21,14 @@ public abstract class IssueStatusExtensions {
             return IssueStatus.valueOf(status.name());
         } catch (Exception e) {
             return IssueStatus.UNDEFINED;
+        }
+    }
+
+    public static IssueStatusDTO statusToDTO(IssueStatus status) {
+        try {
+            return IssueStatusDTO.valueOf(status.name());
+        } catch (Exception e) {
+            return IssueStatusDTO.UNDEFINED;
         }
     }
 }

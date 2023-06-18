@@ -1,8 +1,10 @@
 package fr.iut.uca.extension.issues;
 
+import fr.iut.uca.dto.issues.CommentDTO;
 import fr.iut.uca.entity.issues.CommentEntity;
 import fr.iut.uca.model.issues.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CommentExtensions {
@@ -10,7 +12,8 @@ public abstract class CommentExtensions {
     public static final String AUTHOR = "author";
     public static final String CONTENT = "content";
 
-    private CommentExtensions() { }
+    private CommentExtensions() {
+    }
 
     public static CommentEntity toEntity(Comment comment) {
         var commentEntity = new CommentEntity();
@@ -32,5 +35,19 @@ public abstract class CommentExtensions {
 
     public static List<Comment> toModels(List<CommentEntity> commentEntities) {
         return commentEntities.stream().map(CommentExtensions::toModel).toList();
+    }
+
+    public static CommentDTO commentToDTO(Comment comment) {
+        return new CommentDTO(
+                comment.getCreatedAt(),
+                comment.getAuthor(),
+                comment.getContent()
+        );
+    }
+
+    public static List<CommentDTO> commentsToDTOs(List<Comment> comments) {
+        List<CommentDTO> dtos = new ArrayList<>();
+        comments.forEach(comment -> dtos.add(commentToDTO(comment)));
+        return dtos;
     }
 }

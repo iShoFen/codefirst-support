@@ -1,5 +1,6 @@
 package fr.iut.uca.extension.issues;
 
+import fr.iut.uca.dto.issues.IssueModelInfoDTO;
 import fr.iut.uca.entity.issues.IssueModelInfoEntity;
 import fr.iut.uca.model.issues.IssueModelInfo;
 
@@ -37,5 +38,13 @@ public abstract class IssueModelInfoExtensions {
 
     public static List<IssueModelInfo> toModels(List<IssueModelInfoEntity> issueModelInfoEntities) {
         return issueModelInfoEntities.stream().map(IssueModelInfoExtensions::toModel).toList();
+    }
+
+    public static IssueModelInfoDTO issueModelToDTO(IssueModelInfo issueModelInfo) {
+        return new IssueModelInfoDTO(
+                issueModelInfo.getName(),
+                issueModelInfo.getShortDescription(),
+                issueModelInfo.getDescription()
+        );
     }
 }

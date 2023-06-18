@@ -24,7 +24,7 @@ public class Survey {
 
     private Feedback feedback;
 
-    public Survey(String id, String title,LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions, Feedback feedbacks) {
+    public Survey(String id, String title, LocalDate createdAt, LocalDate publishedAt, LocalDate endAt, String description, List<Question> questions, Feedback feedbacks) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("The id cannot be null or blank.");
         }
@@ -39,16 +39,16 @@ public class Survey {
         init(title, publishedAt, endAt, description, questions);
     }
 
-    public Survey(String title, LocalDate createdAt,LocalDate publishedAt,LocalDate endAt, String description, List<Question> questions) throws IllegalArgumentException {
-        this.id = null;
-
-        if (createdAt == null) {
-            throw new IllegalArgumentException("The creation date cannot be null.");
-        }
-
-        this.createdAt = createdAt;
-        init(title, publishedAt, endAt, description, questions);
-    }
+//    public Survey(String title, LocalDate createdAt, LocalDate publishedAt, LocalDate endAt, String description, List<Question> questions) throws IllegalArgumentException {
+//        this.id = null;
+//
+//        if (createdAt == null) {
+//            throw new IllegalArgumentException("The creation date cannot be null.");
+//        }
+//
+//        this.createdAt = createdAt;
+//        init(title, publishedAt, endAt, description, questions);
+//    }
 
     private void init(String title, LocalDate publishedAt, LocalDate endAt, String description, List<Question> questions) throws IllegalArgumentException {
         setTitle(title);
@@ -68,8 +68,8 @@ public class Survey {
 
     public void setTitle(String title) throws IllegalArgumentException {
         if (title == null || title.isBlank()) {
-                throw new IllegalArgumentException("The title cannot be null or blank.");
-            }
+            throw new IllegalArgumentException("The title cannot be null or blank.");
+        }
 
         this.title = title;
     }
