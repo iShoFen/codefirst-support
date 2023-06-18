@@ -12,7 +12,6 @@ class Issue {
   title: string
   author: string
   created_at: date
-  status: string
 }
 
 class IssueModel {
@@ -38,9 +37,16 @@ class IssueModelField {
   required: boolean
 }
 
+enum IssueStatus {
+  UNDEFINED
+  OPENED
+  CLOSED
+}
+
 Issue --> "fields *" IssueField
 Issue --> "comments *" Comment
 Issue --> "model 1" IssueModel
+Issue --> "status 1" IssueStatus
 
 IssueModel --> "category 1" Category
 IssueModel --> "fields *" IssueModelField
