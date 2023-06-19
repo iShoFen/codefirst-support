@@ -4,9 +4,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SettingsScreen from "../screens/SettingsScreen";
 import StackIssueNavigation from "./StackIssueNavigation";
 import {BottomBarParamList} from "./types/ParamList";
-import HomeAddScreen from "../screens/HomeAddScreen";
+import HomeCreateScreen from "../screens/HomeCreateScreen";
 import {useColors} from "../themes/hooks/useColors";
 import {useNavigationTheme} from "../themes/hooks";
+import StackCreateNavigation from "./StackCreateNavigation";
 
 
 export default function BottomBarNavigation() {
@@ -32,7 +33,7 @@ export default function BottomBarNavigation() {
           }}/>
         <BottomTabNavigator.Screen
           name="Add"
-          component={HomeAddScreen}
+          component={StackCreateNavigation}
           options={{
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons name="plus-circle" color={color} size={size}/>

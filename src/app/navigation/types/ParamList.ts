@@ -22,3 +22,9 @@ export type IssueParamList = FeatureParamList<Issue> & {
   HomeTickets: undefined
 }
 export type SurveyParamList = FeatureParamList<Survey>
+
+export type CreateParamList = {
+  HomeCreate: undefined
+  CreateIssue: undefined
+  CreateSurvey: undefined
+}
