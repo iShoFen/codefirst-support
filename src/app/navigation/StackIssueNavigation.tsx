@@ -10,7 +10,7 @@ export default function StackIssueNavigation() {
   const colors = useColors()
 
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{
+    <Stack.Navigator initialRouteName="HomeTickets" screenOptions={{
       headerBackTitle: 'Retour',
       headerStyle: {
         backgroundColor: colors.background,
@@ -19,7 +19,7 @@ export default function StackIssueNavigation() {
         padding: 8,
       },
     }}>
-      <Stack.Screen name="Home" component={HomeScreen}
+      <Stack.Screen name="HomeTickets" component={HomeScreen}
                     options={{
                       headerShown: false
                     }}/>

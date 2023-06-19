@@ -1,16 +1,14 @@
-import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import SearchBar from "../../components/commons/SearchBar";
-import {useAppSelector} from "../../redux/hooks";
-import IssueListItem from "../../components/issues/IssueListItem";
 import CSText from "../../components/commons/CSText";
+import IssueList from "../../components/issues/IssueList";
 
 export default function HomeIssueScreen() {
-  const issues = useAppSelector(state => state.issueReducer.issues)
 
   return (<SafeAreaView style={{flex: 1}}>
     <ScrollView contentContainerStyle={{flex: 1}}>
       <View style={styles.container}>
-        <CSText text="Tickets" type="h1" />
+        <CSText text="Tickets" type="h1"/>
 
         <SearchBar/>
 
@@ -24,19 +22,7 @@ export default function HomeIssueScreen() {
         </View>
 
         <ScrollView horizontal={true} contentContainerStyle={{flex: 1}}>
-          <FlatList data={issues}
-                    keyExtractor={item => item.id}
-                    renderItem={({item, index}) => {
-                      const isFirst = index == 0
-                      const isLast = index == issues.length - 1
-                      const margin = 4
-                      const itemStyle: ViewStyle = {
-                        marginVertical: isFirst || isLast ? 0 : margin,
-                        marginTop: isLast ? margin : 0,
-                        marginBottom: isFirst ? margin : 0
-                      }
-                      return <IssueListItem style={itemStyle} issue={item}/>
-                    }}/>
+          <IssueList/>
         </ScrollView>
       </View>
     </ScrollView>

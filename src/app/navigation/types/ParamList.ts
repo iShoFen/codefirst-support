@@ -14,10 +14,11 @@ export type HomeParamList = {
 }
 
 type FeatureParamList<T> = {
-  Home: undefined
   List: undefined
   Item: {id: string, title: string}
 }
 
-export type IssueParamList = FeatureParamList<Issue>
+export type IssueParamList = FeatureParamList<Issue> & {
+  HomeTickets: undefined
+}
 export type SurveyParamList = FeatureParamList<Survey>

@@ -44,8 +44,6 @@ export const getIssues = () => {
       const json = await promise.json()
       //@ts-ignore
       const issues = json.map((elt) => {
-
-
         const id = elt['id']
         const title = elt['title']
         const author = elt['author']
