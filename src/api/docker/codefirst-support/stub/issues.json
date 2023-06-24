@@ -1,6 +1,7 @@
 [
     {
         "_id": { "$oid": "6484695df660a9babbe122d0" },
+        "version": 1,
         "title": "Problème de connexion",
         "model": {
             "name": "User",
@@ -54,6 +55,7 @@
     },
     {
         "_id": { "$oid": "6484695df660a9babbe122d1" },
+        "version": 1,
         "title": "Erreur lors de la sauvegarde",
         "model": {
             "name": "Product",
@@ -100,6 +102,7 @@
     },
     {
         "_id": { "$oid": "6484695df660a9babbe122d2" },
+        "version": 1,
         "title": "Problème d'affichage des images",
         "model": {
             "name": "Article",
@@ -140,6 +143,7 @@
     },
     {
        "_id": { "$oid": "6484695df660a9babbe122d3" },
+        "version": 1,
         "title": "Erreur de calcul dans le panier",
         "model": {
             "name": "Panier",
@@ -187,6 +191,7 @@
     },
     {
         "_id": { "$oid": "6484695df660a9babbe122d4" },
+        "version": 1,
         "title": "Erreur de validation des formulaires",
         "model": {
             "name": "Formulaire",
@@ -240,6 +245,7 @@
     },
     {
         "_id": { "$oid": "6484695df660a9babbe122d5" },
+        "version": 1,
         "title": "Problème d'accès au serveur",
         "model": {
             "name": "Serveur",
