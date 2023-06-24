@@ -9,13 +9,14 @@ import {IssueModelInfo} from "../../model/issues/IssueModelInfo";
 import IssueForm from "../../components/issues/IssueForm";
 import {IssueField} from "../../model/issues/IssueField";
 import {useNavigation} from "@react-navigation/native";
-import {IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
+import {CreateStackNavigationProp, IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
 
 export default function CreateIssueScreen() {
   const [selectedIssueModelId, setSelectedIssueModelId] = useState<string>("")
   const [issueModels, setIssueModels] = useState<IssueModelInfo[]>()
   const [issueModel, setIssueModel] = useState<IssueModel>()
   const issueNavigation = useNavigation<IssueStackNavigationProp>()
+  const createNavigation = useNavigation<CreateStackNavigationProp>()
 
   const colors = useColors()
 
@@ -35,6 +36,7 @@ export default function CreateIssueScreen() {
       return
     }
 
+    createNavigation.goBack()
     issueNavigation.navigate('Item', {id: createdIssue.id, title: createdIssue.title})
   }, [issueModel])
 
