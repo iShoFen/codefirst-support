@@ -9,16 +9,18 @@ import {useColors} from "../themes/hooks/useColors";
 import {useNavigationTheme} from "../themes/hooks";
 import StackCreateNavigation from "./StackCreateNavigation";
 import {StatusBar} from "react-native";
+import {useThemeMode} from "../themes/hooks/useThemeMode";
 
 
 export default function BottomBarNavigation() {
   const BottomTabNavigator = createBottomTabNavigator<BottomBarParamList>()
   const colors = useColors()
+  const {dark} = useThemeMode()
   const navigationTheme = useNavigationTheme()
 
   return (
     <>
-      <StatusBar backgroundColor={colors.background} />
+      <StatusBar backgroundColor={colors.background} barStyle={dark ? "light-content": "dark-content"} />
       <NavigationContainer theme={navigationTheme}>
         <BottomTabNavigator.Navigator initialRouteName="Home"
                                       screenOptions={{
