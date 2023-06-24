@@ -5,25 +5,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class IssueModel {
+public class IssueModel extends IssueModelInfo {
 
     private final String id;
-
-    private String name;
-
-    private String shortDescription;
-
-    private String description;
 
     private Category category;
 
     private final List<IssueModelField> fields = new ArrayList<>();
 
     public IssueModel(String id, String name, String shortDescription, String description, Category category, List<IssueModelField> fields) {
+        super(name, shortDescription, description);
         this.id = id;
-        this.name = name;
-        this.shortDescription = shortDescription;
-        this.description = description;
         this.category = category;
         this.fields.addAll(fields);
     }
@@ -34,30 +26,6 @@ public class IssueModel {
 
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Category getCategory() {

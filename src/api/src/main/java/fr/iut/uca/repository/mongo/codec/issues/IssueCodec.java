@@ -5,6 +5,7 @@ import fr.iut.uca.extension.DateExtensions;
 import fr.iut.uca.extension.issues.CommentExtensions;
 import fr.iut.uca.extension.issues.IssueFieldExtensions;
 import fr.iut.uca.extension.issues.IssueModelExtensions;
+import fr.iut.uca.extension.issues.IssueModelInfoExtensions;
 import org.bson.BsonReader;
 import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
@@ -29,12 +30,12 @@ public class IssueCodec implements Codec<IssueEntity> {
 
         issueEntity.setId(bsonReader.readObjectId(ID).toString());
         issueEntity.setTitle(bsonReader.readString(TITLE));
-        issueEntity.setModel(decodeIssueModel(bsonReader));
+        issueEntity.setModel(decodeIssueModelInfo(bsonReader));
         issueEntity.setFields(decodeFields(bsonReader));
         issueEntity.setAuthor(bsonReader.readString(AUTHOR));
         issueEntity.setCreatedAt(DateExtensions.toLocalDate(bsonReader.readDateTime(CREATED_AT)));
         issueEntity.setStatus(IssueStatusEntity.valueOf(bsonReader.readString(STATUS).toUpperCase()));
-        issueEntity.getModel().setCategory(new CategoryCodec().decode(bsonReader, decoderContext));
+        issueEntity.setCategory(new CategoryCodec().decode(bsonReader, decoderContext));
         issueEntity.setComments(decodeComment(bsonReader));
 
         bsonReader.readEndDocument();
@@ -55,7 +56,7 @@ public class IssueCodec implements Codec<IssueEntity> {
         bsonWriter.writeString(AUTHOR, issueEntity.getAuthor());
         bsonWriter.writeDateTime(CREATED_AT, DateExtensions.toTimestamp(issueEntity.getCreatedAt()));
         bsonWriter.writeString(STATUS, issueEntity.getStatus().name().toLowerCase());
-        new CategoryCodec().encode(bsonWriter, issueEntity.getModel().getCategory(), encoderContext);
+        new CategoryCodec().encode(bsonWriter, issueEntity.getCategory(), encoderContext);
         encodeComments(bsonWriter, issueEntity.getComments());
 
         bsonWriter.writeEndDocument();
@@ -66,18 +67,18 @@ public class IssueCodec implements Codec<IssueEntity> {
         return IssueEntity.class;
     }
 
-    private IssueModelEntity decodeIssueModel(BsonReader bsonReader) {
-        var issueModel = new IssueModelEntity();
+    private IssueModelInfoEntity decodeIssueModelInfo(BsonReader bsonReader) {
+        var issueModelInfo = new IssueModelInfoEntity();
 
         bsonReader.readStartDocument();
 
-        issueModel.setName(bsonReader.readString(IssueModelExtensions.NAME));
-        issueModel.setShortDescription(bsonReader.readString(IssueModelExtensions.SHORT_DESCRIPTION));
-        issueModel.setDescription(bsonReader.readString(IssueModelExtensions.DESCRIPTION));
+        issueModelInfo.setName(bsonReader.readString(IssueModelInfoExtensions.NAME));
+        issueModelInfo.setShortDescription(bsonReader.readString(IssueModelInfoExtensions.SHORT_DESCRIPTION));
+        issueModelInfo.setDescription(bsonReader.readString(IssueModelInfoExtensions.DESCRIPTION));
 
         bsonReader.readEndDocument();
 
-        return issueModel;
+        return issueModelInfo;
     }
 
     private List<CommentEntity> decodeComment(BsonReader bsonReader) {
@@ -128,12 +129,12 @@ public class IssueCodec implements Codec<IssueEntity> {
         return fields;
     }
 
-    private void encodeIssueModel(BsonWriter bsonWriter, IssueModelEntity issueModel) {
+    private void encodeIssueModel(BsonWriter bsonWriter, IssueModelInfoEntity issueModel) {
         bsonWriter.writeStartDocument(MODEL);
 
-        bsonWriter.writeString(IssueModelExtensions.NAME, issueModel.getName());
-        bsonWriter.writeString(IssueModelExtensions.SHORT_DESCRIPTION, issueModel.getShortDescription());
-        bsonWriter.writeString(IssueModelExtensions.DESCRIPTION, issueModel.getDescription());
+        bsonWriter.writeString(IssueModelInfoExtensions.NAME, issueModel.getName());
+        bsonWriter.writeString(IssueModelInfoExtensions.SHORT_DESCRIPTION, issueModel.getShortDescription());
+        bsonWriter.writeString(IssueModelInfoExtensions.DESCRIPTION, issueModel.getDescription());
 
         bsonWriter.writeEndDocument();
     }

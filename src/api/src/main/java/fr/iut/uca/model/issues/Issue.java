@@ -17,13 +17,15 @@ public class Issue {
 
     private IssueStatus status;
 
-    private final IssueModel model;
+    private final IssueModelInfo model;
+
+    private final Category category;
 
     private final List<Comment> comments = new ArrayList<>();
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(String id, String title, String author, LocalDate createdAt, IssueStatus status, IssueModel model, List<IssueField> fields, List<Comment> comments) {
+    public Issue(String id, String title, String author, LocalDate createdAt, IssueStatus status, IssueModelInfo model, Category category, List<IssueField> fields, List<Comment> comments) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("The id cannot be null or blank.");
         }
@@ -45,6 +47,7 @@ public class Issue {
         setTitle(title);
         setAuthor(author);
         setStatus(status);
+        this.category = category;
         fields.forEach(this::addField);
         comments.forEach(this::addComment);
     }
@@ -90,8 +93,12 @@ public class Issue {
         this.status = status;
     }
 
-    public IssueModel getModel() {
+    public IssueModelInfo getModel() {
         return model;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public List<Comment> getComments() {

@@ -73,14 +73,6 @@ public abstract class IssueModelExtensions {
         );
     }
 
-    public static IssueModelInfoDTO issueModelToShortDTO(IssueModel model) {
-        return new IssueModelInfoDTO(
-                model.getName(),
-                model.getShortDescription(),
-                model.getDescription()
-        );
-    }
-
     public static List<IssueModelDTO> issueModelsToDTOs(List<IssueModel> issueModels) {
         List<IssueModelDTO> dtos = new ArrayList<>();
         issueModels.forEach(model -> dtos.add(issueModelToDTO(model)));

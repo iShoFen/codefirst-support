@@ -1,14 +1,10 @@
 package fr.iut.uca.extension.issues;
 
-import fr.iut.uca.dto.issues.CommentDTO;
-import fr.iut.uca.dto.issues.IssueFieldDTO;
 import fr.iut.uca.dto.issues.issue.IssueDTO;
 import fr.iut.uca.dto.issues.issue.IssueDetailDTO;
-import fr.iut.uca.dto.issues.issuemodel.IssueModelInfoDTO;
 import fr.iut.uca.entity.issues.IssueEntity;
 import fr.iut.uca.model.issues.Issue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static fr.iut.uca.extension.issues.CategoryExtensions.categoryToDTO;
@@ -37,7 +33,7 @@ public abstract class IssueExtensions {
         entity.setAuthor(issue.getAuthor());
         entity.setCreatedAt(issue.getCreatedAt());
         entity.setStatus(IssueStatusExtensions.toEntity(issue.getStatus()));
-        entity.setModel(IssueModelExtensions.toEntity(issue.getModel()));
+        entity.setModel(IssueModelInfoExtensions.issueModelInfoToEntity(issue.getModel()));
         entity.setComments(CommentExtensions.toEntities(issue.getComments()));
         entity.setFields(IssueFieldExtensions.toEntities(issue.getFields()));
 
@@ -55,7 +51,8 @@ public abstract class IssueExtensions {
                 entity.getAuthor(),
                 entity.getCreatedAt(),
                 IssueStatusExtensions.toModel(entity.getStatus()),
-                IssueModelExtensions.issueModelEntityToModel(entity.getModel()),
+                IssueModelInfoExtensions.issueModelInfoEntityToModel(entity.getModel()),
+                CategoryExtensions.toModel(entity.getCategory()),
                 IssueFieldExtensions.issueFieldEntitiesToModels(entity.getFields()),
                 CommentExtensions.toModels(entity.getComments())
         );
@@ -71,32 +68,30 @@ public abstract class IssueExtensions {
                 issue.getTitle(),
                 issue.getAuthor(),
                 issue.getCreatedAt(),
-                categoryToDTO(issue.getModel().getCategory()),
+                categoryToDTO(issue.getCategory()),
                 statusToDTO(issue.getStatus())
         );
     }
 
-    public static IssueDetailDTO issueToDetailDTO(Issue issue) {
-        IssueModelInfoDTO modelDTO = IssueModelExtensions.issueModelToShortDTO(issue.getModel());
-        List<IssueFieldDTO> fieldDTOS = issueFieldsToDTOs(issue.getFields());
-        List<CommentDTO> commentDTOS = commentsToDTOs(issue.getComments());
+    public static List<IssueDTO> issuesToDTOs(List<Issue> issues) {
+        return issues.stream().map(IssueExtensions::issueToDTO).toList();
+    }
 
+    public static IssueDetailDTO issueToDetailDTO(Issue issue) {
         return new IssueDetailDTO(
                 issue.getId(),
                 issue.getTitle(),
                 issue.getAuthor(),
                 issue.getCreatedAt(),
-                categoryToDTO(issue.getModel().getCategory()),
+                categoryToDTO(issue.getCategory()),
                 statusToDTO(issue.getStatus()),
-                modelDTO,
-                fieldDTOS,
-                commentDTOS
+                IssueModelInfoExtensions.issueModelInfoToDTO(issue.getModel()),
+                issueFieldsToDTOs(issue.getFields()),
+                commentsToDTOs(issue.getComments())
         );
     }
 
-    public static List<IssueDTO> issuesToDTOs(List<Issue> issues) {
-        List<IssueDTO> dtos = new ArrayList<>();
-        issues.forEach(issue -> dtos.add(issueToDTO(issue)));
-        return dtos;
+    public static List<IssueDetailDTO> issuesToDetailDTOs(List<Issue> issues) {
+        return issues.stream().map(IssueExtensions::issueToDetailDTO).toList();
     }
 }
