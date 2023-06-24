@@ -5,7 +5,7 @@ const BASE_URL = "http://172.31.80.1:8080/api/"
 
 const ISSUES_URL = BASE_URL + "issues"
 const ISSUE_MODELS_URL = BASE_URL + "issues/models"
-const COMMENTS_URL = BASE_URL + "issues/models"
+const COMMENTS_URL = BASE_URL + "issues/comments"
 const SURVEYS_URL = BASE_URL + "surveys"
 const FEEDBACKS_URL = BASE_URL + "feedbacks"
 

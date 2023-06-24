@@ -3,6 +3,7 @@ import {Category} from "./Category";
 import {IssueModelInfo} from "./IssueModelInfo";
 import {Comment} from "./Comment";
 import {IssueField} from "./IssueField";
+import {IssueModelShortInfo} from "./IssueModelShort";
 
 export class Issue {
   private _id: string
@@ -11,11 +12,11 @@ export class Issue {
   private _createdAt: Date
   private _status: IssueStatus
   private _category: Category
-  private _model: IssueModelInfo
+  private _model: IssueModelShortInfo
   private _comments: Comment[]
   private _fields: IssueField[]
 
-  constructor(id: string, title: string, author: string, createdAt: Date, status: IssueStatus, category: Category, model: IssueModelInfo, comments: Comment[], fields: IssueField[]) {
+  constructor(id: string, title: string, author: string, createdAt: Date, status: IssueStatus, category: Category, model: IssueModelShortInfo, comments: Comment[], fields: IssueField[]) {
     this._id = id;
     this._title = title;
     this._author = author;
@@ -75,11 +76,11 @@ export class Issue {
     this._category = value;
   }
 
-  get model(): IssueModelInfo {
+  get model(): IssueModelShortInfo {
     return this._model;
   }
 
-  set model(value: IssueModelInfo) {
+  set model(value: IssueModelShortInfo) {
     this._model = value;
   }
 

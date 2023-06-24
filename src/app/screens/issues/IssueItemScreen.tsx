@@ -19,7 +19,6 @@ export default function IssueItemScreen() {
 
   const {
     id,
-    title
   } = route.params
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export default function IssueItemScreen() {
             backgroundColor: colors.backgroundVariant,
             borderRadius: 8
           }]}>
-            <CSText text={title} type="h1"/>
+            <CSText text={issue.title} type="h1"/>
             <View style={styles.authorAndDate}>
               <CSText text={`Par ${issue.author}`}/>
               <CSText text={issue.createdAt.toLocaleDateString()}/>

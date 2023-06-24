@@ -4,6 +4,7 @@ import {useCallback} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {CreateStackNavigationProp} from "../navigation/types/NavigationProp";
 import {useColors} from "../themes/hooks";
+import CSButton from "../components/commons/CSButton";
 
 export default function HomeCreateScreen() {
   const navigation = useNavigation<CreateStackNavigationProp>()
@@ -12,32 +13,26 @@ export default function HomeCreateScreen() {
   const handleCreateIssue = useCallback(() => {
     navigation.navigate('CreateIssue')
   }, [])
+  const handleCreateSurvey = useCallback(() => {
+    navigation.navigate('CreateSurvey')
+  }, [])
 
   return (<SafeAreaView style={{flex: 1}}>
     <View style={styles.container}>
-      <CSText text="Création" type="h1" />
+      <CSText text="Création" type="h1"/>
 
-      <CSText text="Cette page permet de créer d'accéder à la création de tickets et de questionnaires." />
-      <CSText text="C'est à vous de jouer et contribuer à la plateforme Codefirst." />
+      <CSText text="Cette page permet de créer d'accéder à la création de tickets et de questionnaires."/>
+      <CSText text="C'est à vous de jouer et contribuer à la plateforme Codefirst."/>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {
-            backgroundColor: colors.primary
-          }]}
-          onPress={handleCreateIssue}>
-          <CSText text="Créer un ticket" style={{
-            color: colors.black
-          }}/>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, {
-            backgroundColor: colors.primary
-          }]}>
-          <CSText text="Créer un questionnaire" style={{
-            color: colors.black
-          }}/>
-        </TouchableOpacity>
+        <CSButton text="Créer un ticket"
+                  style={styles.button}
+                  icon="file-plus"
+                  onPress={handleCreateIssue}/>
+        <CSButton text="Créer un questionnaire"
+                  style={styles.button}
+                  icon="clipboard-plus"
+                  onPress={handleCreateSurvey}/>
       </View>
 
     </View>
@@ -56,8 +51,6 @@ const styles = StyleSheet.create({
     marginVertical: 16
   },
   button: {
-    padding: 8,
-    borderRadius: 8,
     alignSelf: 'center'
   }
 })

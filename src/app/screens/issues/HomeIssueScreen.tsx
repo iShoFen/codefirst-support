@@ -12,14 +12,14 @@ export default function HomeIssueScreen() {
 
         <SearchBar/>
 
-        <View style={styles.filters}>
-          <TouchableOpacity style={styles.categoryButton}>
-            <Text>Catégorie</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.categoryButton}>
-            <Text>Catégorie</Text>
-          </TouchableOpacity>
-        </View>
+        {/*<View style={styles.filters}>*/}
+        {/*  <TouchableOpacity style={styles.categoryButton}>*/}
+        {/*    <Text>Catégorie</Text>*/}
+        {/*  </TouchableOpacity>*/}
+        {/*  <TouchableOpacity style={styles.categoryButton}>*/}
+        {/*    <Text>Catégorie</Text>*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
         <ScrollView horizontal={true} contentContainerStyle={{flex: 1}}>
           <IssueList/>

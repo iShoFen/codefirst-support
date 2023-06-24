@@ -47,4 +47,4 @@ export const ISSUE_LIST = [
   )
 ]
 
-export const ISSUE_SELECTED = new Issue("", "", "", new Date(), IssueStatus.CLOSED, new Category(""), new IssueModelInfo("", "", ""), [], [])
+export const ISSUE_SELECTED = new Issue("", "", "", new Date(), IssueStatus.CLOSED, new Category(""), new IssueModelInfo("", "", "", ""), [], [])

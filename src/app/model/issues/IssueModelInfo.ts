@@ -1,35 +1,25 @@
-export class IssueModelInfo {
-  private _name: string
-  private _shortDescription: string
-  private _description: string
+import {Category} from "./Category";
+import {IssueModelShortInfo} from "./IssueModelShort";
 
-  constructor(name: string, shortDescription: string, description: string) {
-    this._name = name;
-    this._shortDescription = shortDescription;
-    this._description = description;
+export class IssueModelInfo extends IssueModelShortInfo{
+  private readonly _id: string
+  private _category: Category
+
+  constructor(id: string, name: string, shortDescription: string, description: string, category: Category) {
+    super(name, shortDescription, description)
+    this._id = id;
+    this._category = category;
   }
 
-  get name(): string {
-    return this._name;
+  get id(): string {
+    return this._id;
   }
 
-  set name(value: string) {
-    this._name = value;
+  get category(): Category {
+    return this._category;
   }
 
-  get shortDescription(): string {
-    return this._shortDescription;
-  }
-
-  set shortDescription(value: string) {
-    this._shortDescription = value;
-  }
-
-  get description(): string {
-    return this._description;
-  }
-
-  set description(value: string) {
-    this._description = value;
+  set category(value: Category) {
+    this._category = value;
   }
 }

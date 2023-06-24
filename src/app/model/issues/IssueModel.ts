@@ -1,32 +1,13 @@
 import {Category} from "./Category";
 import {IssueModelField} from "./IssueModelField";
+import {IssueModelInfo} from "./IssueModelInfo";
 
-export class IssueModel extends IssueModelField {
-  private _id: string
-  private _category: Category
+export class IssueModel extends IssueModelInfo {
   private _fields: IssueModelField[]
 
-  constructor(title: string, description: string, required: boolean, id: string, category: Category, fields: IssueModelField[]) {
-    super(title, description, required);
-    this._id = id;
-    this._category = category;
+  constructor(id: string, name: string, shortDescription: string, description: string, category: Category, fields: IssueModelField[]) {
+    super(id, name, shortDescription, description, category);
     this._fields = fields;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  set id(value: string) {
-    this._id = value;
-  }
-
-  get category(): Category {
-    return this._category;
-  }
-
-  set category(value: Category) {
-    this._category = value;
   }
 
   get fields(): IssueModelField[] {
