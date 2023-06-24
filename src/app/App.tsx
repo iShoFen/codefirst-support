@@ -1,21 +1,14 @@
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper'
 import BottomBarNavigation from "./navigation/BottomBarNavigation";
+import store, {persistor} from "./redux/store";
+import {Provider} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
 
 export default function App() {
   return (
-    <PaperProvider>
-      <BottomBarNavigation/>
-    </PaperProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BottomBarNavigation/>
+      </PersistGate>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
