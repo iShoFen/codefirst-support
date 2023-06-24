@@ -1,11 +1,10 @@
 import {
   Alert,
-  Button,
   FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  TouchableNativeFeedback, TouchableOpacity,
+  TouchableOpacity,
   View
 } from "react-native";
 import CommentItem from "../../components/issues/comments/CommentItem";
@@ -64,17 +63,17 @@ export default function IssueItemScreen() {
       }
     })
 
-  }, [navigation])
+  }, [navigation, handleDelete])
 
   useEffect(() => {
     const loadIssue = async () => {
       await dispatch(getIssue(id))
     }
-    loadIssue()
+    void loadIssue()
 
     return () => {
-      const resetIssue = async () => await dispatch(setSelectedIssue(undefined))
-      resetIssue()
+      const resetIssue = async () => dispatch(setSelectedIssue(undefined))
+      void resetIssue()
     }
   }, [dispatch, id]);
 
@@ -119,7 +118,7 @@ export default function IssueItemScreen() {
           }]}>
             {issue.fields.map((field, index) => (
               <View
-                key={index}
+                key={field.title + index}
                 style={{
                   padding: 8,
                   gap: 4

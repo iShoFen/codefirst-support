@@ -47,7 +47,7 @@ export default function CSButton(props: CSButtonProps) {
         }}/>}
       {icon && <MaterialCommunityIcons
         name={icon}
-        color={colors.backgroundVariant}
+        color={colors.black}
         size={iconSize}/>}
     </TouchableOpacity>
   )
