@@ -28,15 +28,19 @@ export default function IssueListItem(props: IssueListItemProps) {
       <View>
         <View style={styles.issueHeader}>
           <CSText text={`${issue.title} - ${issue.createdAt.toLocaleDateString()}`}
+                  testID="issue-title"
                   style={{flex: 1}} numberOfLines={2}/>
           <TouchableOpacity>
             <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.text}/>
           </TouchableOpacity>
         </View>
-        <CSText text={issue.author} type="small"/>
+        <CSText text={issue.author}
+                testID="issue-author"
+                type="small"/>
       </View>
       <View style={styles.issueFooter}>
-        <CSCapsule text={issue.category.name}/>
+        <CSCapsule text={issue.category.name}
+        testID="issue-category-name"/>
         {/*<CommentCounter value={issue.comments?.length ?? 0}/>*/}
       </View>
     </View>

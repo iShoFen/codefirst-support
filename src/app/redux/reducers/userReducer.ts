@@ -2,7 +2,7 @@ import {SET_THEME} from "../constants";
 import {PayloadAction} from "@reduxjs/toolkit";
 import {ThemeMode} from "../../themes/types";
 
-type UserReducerState = {
+export type UserReducerState = {
   theme: ThemeMode
 }
 

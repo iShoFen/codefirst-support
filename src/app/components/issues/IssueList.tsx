@@ -45,24 +45,26 @@ export default function IssueList(props: IssueListProps) {
   }, [filter, issues])
 
   return (
-    <FlatList data={filteredIssues}
-              style={styles.issues}
-              onRefresh={resfreshIssues}
-              refreshing={issueLoading}
-              ListEmptyComponent={<CSText text={issueLoading ? "Chargement des tickets" : "Aucun ticket"}/>}
-              renderItem={({item, index}) => {
-                const isFirst = index == 0
-                const isLast = index == issues.length - 1
-                const margin = styles.issueItem.marginVertical
-                const itemStyle: ViewStyle = {
-                  marginVertical: isFirst || isLast ? undefined : margin,
-                  marginTop: isLast ? margin : undefined,
-                  marginBottom: isFirst ? margin : undefined,
-                }
-                return <TouchableOpacity onPress={() => handleItemPress(item)}>
-                  <IssueListItem style={itemStyle} issue={item}/>
-                </TouchableOpacity>
-              }}/>
+    <FlatList
+      data={filteredIssues}
+      style={styles.issues}
+      onRefresh={resfreshIssues}
+      refreshing={issueLoading}
+      ListEmptyComponent={<CSText text={issueLoading ? "Chargement des tickets" : "Aucun ticket"}/>}
+      renderItem={({item, index}) => {
+        const isFirst = index == 0
+        const isLast = index == issues.length - 1
+        const margin = styles.issueItem.marginVertical
+        const itemStyle: ViewStyle = {
+          marginVertical: isFirst || isLast ? undefined : margin,
+          marginTop: isLast ? margin : undefined,
+          marginBottom: isFirst ? margin : undefined,
+        }
+        return <TouchableOpacity
+          onPress={() => handleItemPress(item)}>
+          <IssueListItem style={itemStyle} issue={item}/>
+        </TouchableOpacity>
+      }}/>
   )
 }
 

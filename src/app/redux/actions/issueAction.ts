@@ -11,7 +11,6 @@ export const setIssues = (issues: IssueSummary[]): PayloadAction<IssueSummary[]>
 }
 
 export const setSelectedIssue = (issue: Issue | undefined): PayloadAction<Issue | undefined> => {
-  console.debug('issueAction', `setSelectedIssue: ${issue}`)
   return {
     type: SET_SELECTED_ISSUE,
     payload: issue

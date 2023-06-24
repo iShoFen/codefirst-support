@@ -2,7 +2,7 @@ import {Issue} from "../../model/issues/Issue";
 import {SET_ISSUES, SET_SELECTED_ISSUE, SET_ISSUE_LOADING} from "../constants";
 import {IssueSummary} from "../../model/issues/IssueSummary";
 
-type IssueReducerState = {
+export type IssueReducerState = {
   issues: IssueSummary[]
   selectedIssue?: Issue
   loading: boolean

@@ -8,7 +8,8 @@ type CSTextProps = {
   style?: TextStyle
   type?: 'h1' | 'h2' | 'h3' | 'normal' | 'bold' | 'small'
   color?: string
-  numberOfLines?: number
+  numberOfLines?: number,
+  testID?: string
 }
 
 export default function CSText(props: CSTextProps) {
@@ -19,7 +20,8 @@ export default function CSText(props: CSTextProps) {
     style,
     type = 'NORMAL',
     color,
-    numberOfLines
+    numberOfLines,
+    testID
   } = props
 
   const customStyle: TextStyle = useMemo<TextStyle>(() => {
@@ -53,7 +55,7 @@ export default function CSText(props: CSTextProps) {
     }
   }, [type, colors])
 
-  return (<Text style={[customStyle, style]} numberOfLines={numberOfLines}>
+  return (<Text style={[customStyle, style]} numberOfLines={numberOfLines} testID={testID}>
     {text}
   </Text>)
 }

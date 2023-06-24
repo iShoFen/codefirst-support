@@ -5,6 +5,7 @@ type CSCapsuleProps = {
   text: string
   containerStyle?: ViewStyle
   textStyle?: TextStyle
+  testID?: string
 }
 
 export default function CSCapsule(props: CSCapsuleProps) {
@@ -12,11 +13,13 @@ export default function CSCapsule(props: CSCapsuleProps) {
   const {
     text,
     containerStyle,
-    textStyle
+    textStyle,
+    testID
   } = props
 
   return (<View style={[styles.container, containerStyle]}>
-    <Text style={[styles.text, textStyle]}>{text}</Text>
+    <Text style={[styles.text, textStyle]}
+    testID={testID}>{text}</Text>
   </View>)
 }
 
