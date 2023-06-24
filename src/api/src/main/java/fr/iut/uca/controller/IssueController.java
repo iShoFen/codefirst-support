@@ -65,7 +65,7 @@ public class IssueController {
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") int id, IssueUpdateDTO issueUpdateDTO) {
+    public Response update(@PathParam("id") String id, IssueUpdateDTO issueUpdateDTO) {
         System.out.println("/issues/{id}: update(" + id + ")");
         return Response.ok().build();
     }
@@ -84,7 +84,7 @@ public class IssueController {
 
     @POST
     @Path("/{id}/status")
-    public Response updateStatus(@PathParam("id") int id) {
+    public Response updateStatus(@PathParam("id") String id) {
         System.out.println("/issues/{id}/status: updateStatus(" + id + ")");
         return Response.ok().build();
     }

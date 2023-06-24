@@ -1,7 +1,9 @@
 package fr.iut.uca.controller;
 
+import fr.iut.uca.dto.issues.CommentDTO;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 @Path("/issues/{issue_id}/comments")
 public class CommentController {
@@ -9,7 +11,7 @@ public class CommentController {
     private String issueId;
 
     @POST
-    public Response create() {
+    public Response create(@RequestBody(required = true) CommentDTO commentDTO) {
         System.out.println("/issues/" + issueId + "/comments: create");
         return Response.ok().build();
     }

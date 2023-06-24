@@ -65,7 +65,7 @@ public class IssueModelController {
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") int id, IssueModelUpdateDTO issueModelUpdateDTO) {
+    public Response update(@PathParam("id") String id, IssueModelUpdateDTO issueModelUpdateDTO) {
         System.out.println("/issues/models/{id}: update");
         return Response.ok().build();
     }

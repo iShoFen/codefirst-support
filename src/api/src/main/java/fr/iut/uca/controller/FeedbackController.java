@@ -1,10 +1,10 @@
 package fr.iut.uca.controller;
 
-import fr.iut.uca.dto.surveys.feedback.FeedbackGetDTO;
 import fr.iut.uca.dto.surveys.feedback.FeedbackInsertDTO;
 import fr.iut.uca.dto.surveys.feedback.FeedbackUpdateDTO;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 @Path("/surveys/{survey_id}/feedbacks")
 public class FeedbackController {
@@ -12,7 +12,7 @@ public class FeedbackController {
     private String surveyId;
 
     @GET
-    public Response getAll(FeedbackGetDTO feedbackGetDTO) {
+    public Response getAll() {
         System.out.println("/surveys/" + surveyId + "/feedbacks: getAll");
         return Response.ok().build();
     }
@@ -25,7 +25,7 @@ public class FeedbackController {
     }
 
     @POST
-    public Response create(FeedbackInsertDTO feedbackInsertDTO) {
+    public Response create(@RequestBody(required = true) FeedbackInsertDTO feedbackInsertDTO) {
         System.out.println("/surveys/" + surveyId + "/feedbacks: create");
         return Response.ok().build();
     }
