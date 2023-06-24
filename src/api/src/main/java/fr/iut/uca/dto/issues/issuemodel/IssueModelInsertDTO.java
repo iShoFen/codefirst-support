@@ -1,8 +1,12 @@
 package fr.iut.uca.dto.issues.issuemodel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.iut.uca.dto.issues.CategoryDTO;
 import fr.iut.uca.dto.issues.IssueModelFieldDTO;
 
 import java.util.List;
 
-public record IssueModelInsertDTO(String name, String shortDescription, String description, CategoryDTO category, List<IssueModelFieldDTO> fields) { }
+public record IssueModelInsertDTO(String name,
+                                  @JsonProperty("short_description") String shortDescription,
+                                  String description,
+                                  CategoryDTO category, List<IssueModelFieldDTO> fields) { }
