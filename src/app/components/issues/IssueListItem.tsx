@@ -30,9 +30,9 @@ export default function IssueListItem(props: IssueListItemProps) {
           <CSText text={`${issue.title} - ${issue.createdAt.toLocaleDateString()}`}
                   testID="issue-title"
                   style={{flex: 1}} numberOfLines={2}/>
-          <TouchableOpacity>
-            <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.text}/>
-          </TouchableOpacity>
+          {/*<TouchableOpacity>*/}
+          {/*  <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.text}/>*/}
+          {/*</TouchableOpacity>*/}
         </View>
         <CSText text={issue.author}
                 testID="issue-author"

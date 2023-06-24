@@ -9,7 +9,7 @@ import {IssueField} from "../model/issues/IssueField";
 
 const fetchIssueModel = async (id: string): Promise<IssueModel> => {
   const url = `${ISSUE_MODELS_URL}/${id}`
-  console.log('api', `request: ${url}`)
+  console.debug('[GET] - ', url)
   const response = await fetch(url)
   const json = await response.json()
 
@@ -26,7 +26,7 @@ const fetchIssueModel = async (id: string): Promise<IssueModel> => {
 }
 
 const fetchIssueModels = async (): Promise<IssueModelInfo[]> => {
-  console.log('api', `request: ${ISSUE_MODELS_URL}`)
+  console.debug('[GET] - ', ISSUE_MODELS_URL)
   const response = await fetch(ISSUE_MODELS_URL)
   if (response.status !== 200) return []
   const json = await response.json()
@@ -46,13 +46,13 @@ const createIssue = async (title: string, author: string, model: IssueModel, fie
 
   const options: RequestInit = {
     body: JSON.stringify(body),
-    method: "POST",
+    method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
   }
 
-  console.log('api', `request: ${ISSUES_URL}`)
+  console.debug('[POST] - ', ISSUES_URL)
   const response = await fetch(ISSUES_URL, options)
   if(response.status !== 200) return
 
@@ -61,8 +61,20 @@ const createIssue = async (title: string, author: string, model: IssueModel, fie
   return mapIssue(json)
 }
 
+const deleteIssue = async (id: string): Promise<boolean> => {
+  const options: RequestInit = {
+    method: 'DELETE'
+  }
+
+  const url = `${ISSUES_URL}/${id}`
+  console.debug('[DELETE] - ', url)
+  const response = await fetch(url, options)
+  return response.status === 204
+}
+
 export {
   fetchIssueModel,
   fetchIssueModels,
-  createIssue
+  createIssue,
+  deleteIssue
 }

@@ -10,11 +10,14 @@ import IssueForm from "../../components/issues/IssueForm";
 import {IssueField} from "../../model/issues/IssueField";
 import {useNavigation} from "@react-navigation/native";
 import {CreateStackNavigationProp, IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
+import {getIssues} from "../../redux/thunk/issueThunk";
+import {useAppDispatch} from "../../redux/hooks";
 
 export default function CreateIssueScreen() {
   const [selectedIssueModelId, setSelectedIssueModelId] = useState<string>("")
   const [issueModels, setIssueModels] = useState<IssueModelInfo[]>()
   const [issueModel, setIssueModel] = useState<IssueModel>()
+  const dispatch = useAppDispatch()
   const issueNavigation = useNavigation<IssueStackNavigationProp>()
   const createNavigation = useNavigation<CreateStackNavigationProp>()
 
@@ -36,9 +39,10 @@ export default function CreateIssueScreen() {
       return
     }
 
+    void dispatch(getIssues())
     createNavigation.goBack()
     issueNavigation.navigate('Item', {id: createdIssue.id, title: createdIssue.title})
-  }, [issueModel])
+  }, [dispatch, issueModel])
 
   const handleIssueModelChange = useCallback((itemValue: string) => {
     setSelectedIssueModelId(itemValue)

@@ -1,16 +1,29 @@
-import {FlatList, SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
+import {
+  Alert,
+  Button,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableNativeFeedback, TouchableOpacity,
+  View
+} from "react-native";
 import CommentItem from "../../components/issues/comments/CommentItem";
 import CSCapsule from "../../components/commons/CSCapsule";
-import {useRoute} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import {IssueItemRouteProps} from "../../navigation/types/RouteProps";
 import CSText from "../../components/commons/CSText";
 import {useColors} from "../../themes/hooks";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {getIssue} from "../../redux/thunk/issueThunk";
-import {useEffect} from "react";
+import {getIssue, getIssues} from "../../redux/thunk/issueThunk";
+import {useCallback, useEffect} from "react";
 import {setSelectedIssue} from "../../redux/actions/issueAction";
+import {IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {deleteIssue} from "../../hooks/issues";
 
 export default function IssueItemScreen() {
+  const navigation = useNavigation<IssueStackNavigationProp>()
   const route = useRoute<IssueItemRouteProps>()
   const dispatch = useAppDispatch()
   const colors = useColors()
@@ -20,6 +33,38 @@ export default function IssueItemScreen() {
   const {
     id,
   } = route.params
+
+  const handleDelete = useCallback(() => {
+    const executeDelete = async () => {
+      const result = await deleteIssue(id)
+      if(result) {
+        void dispatch(getIssues())
+        navigation.goBack()
+      } else {
+        Alert.alert("Erreur", "Une erreur est survenue lors de la suppression du ticket")
+      }
+    }
+    void executeDelete()
+  }, [dispatch, id])
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+
+        return (<TouchableOpacity
+          onPress={handleDelete}
+          style={{
+          marginHorizontal: 8,
+          padding: 8
+        }}>
+          <MaterialCommunityIcons
+            name="delete"
+                                  color={colors.text} size={24} />
+        </TouchableOpacity>)
+      }
+    })
+
+  }, [navigation])
 
   useEffect(() => {
     const loadIssue = async () => {
