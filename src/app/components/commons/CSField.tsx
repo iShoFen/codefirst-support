@@ -8,6 +8,8 @@ type CSFieldProps = {
   placeholder?: string
   enabled?: boolean,
   multiLine?: boolean
+  onChange?: (text: string) => void
+  required?: boolean
 }
 
 export default function CSField(props: CSFieldProps) {
@@ -17,7 +19,9 @@ export default function CSField(props: CSFieldProps) {
     value,
     placeholder,
     enabled = true,
-    multiLine
+    multiLine,
+    onChange,
+    required
   } = props
 
   const colors = useColors()
@@ -28,11 +32,15 @@ export default function CSField(props: CSFieldProps) {
   }
 
   return (<View>
-    {label && <CSText text={label}/>}
+    <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+      {label && <CSText text={label}/>}
+      {required && <CSText text="Requis" type="small" color="red"/>}
+    </View>
     <TextInput editable={enabled}
                value={value}
                style={[styles.container, customStyles]}
                placeholder={placeholder}
+               onChangeText={onChange}
                multiline={multiLine}/>
   </View>)
 }
