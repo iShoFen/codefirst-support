@@ -6,6 +6,7 @@ import {getIssues} from "../../redux/thunk/issueThunk";
 import {IssueSummary} from "../../model/issues/IssueSummary";
 import {useNavigation} from "@react-navigation/native";
 import {IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
+import CSText from "../commons/CSText";
 
 type IssueListProps = {
   filter?: string
@@ -48,6 +49,7 @@ export default function IssueList(props: IssueListProps) {
               style={styles.issues}
               onRefresh={resfreshIssues}
               refreshing={issueLoading}
+              ListEmptyComponent={<CSText text={issueLoading ? "Chargement des tickets" : "Aucun ticket"}/>}
               renderItem={({item, index}) => {
                 const isFirst = index == 0
                 const isLast = index == issues.length - 1

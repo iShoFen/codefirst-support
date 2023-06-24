@@ -10,27 +10,35 @@ export default function StackIssueNavigation() {
   const colors = useColors()
 
   return (
-    <Stack.Navigator initialRouteName="HomeTickets" screenOptions={{
-      headerBackTitle: 'Retour',
-      headerStyle: {
-        backgroundColor: colors.background,
-      },
-      headerTitleContainerStyle: {
-        padding: 8,
-      },
-    }}>
-      <Stack.Screen name="HomeTickets" component={HomeScreen}
-                    options={{
-                      headerShown: false
-                    }}/>
-      <Stack.Screen name="List" component={HomeIssueScreen}
-                    options={{
-                      title: 'Tickets'
-                    }}/>
-      <Stack.Screen name="Item" component={IssueItemScreen}
-                    options={({route}) => ({
-                      title: route.params.title
-                    })}/>
+    <Stack.Navigator
+      initialRouteName="HomeTickets"
+      screenOptions={{
+        headerBackTitle: 'Retour',
+        headerStyle: {
+          backgroundColor: colors.background,
+        },
+        headerTitleContainerStyle: {
+          padding: 8,
+        },
+      }}>
+      <Stack.Screen
+        name="HomeTickets"
+        component={HomeScreen}
+        options={{
+          headerShown: false
+        }}/>
+      <Stack.Screen
+        name="List"
+        component={HomeIssueScreen}
+        options={{
+          title: 'Tickets'
+        }}/>
+      <Stack.Screen
+        name="Item"
+        component={IssueItemScreen}
+        options={({route}) => ({
+          title: route.params.title,
+        })}/>
     </Stack.Navigator>
   )
 }

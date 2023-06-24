@@ -57,7 +57,6 @@ export const getIssues = () => {
     } catch (error) {
       console.log('Error---------', error);
       // @ts-ignore
-      dispatch(setError(error.toString()))
     } finally {
       dispatch(setIssueLoading(false))
     }
@@ -67,6 +66,7 @@ export const getIssues = () => {
 export const getIssue = (id: string) => {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(setIssueLoading(true))
       const url = `${ISSUES_URL}/${id}`
       console.log('api', `request: ${url}`)
       const promise = await fetch(url)
@@ -86,6 +86,8 @@ export const getIssue = (id: string) => {
       dispatch(setSelectedIssue(issue))
     } catch (error) {
       console.log('Error---------', error);
+    } finally {
+      dispatch(setIssueLoading(false))
     }
   }
 }

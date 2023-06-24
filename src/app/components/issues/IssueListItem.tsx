@@ -1,7 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from "react-native";
-import {Issue} from "../../model/issues/Issue";
 import IssueStatusIcon from "./IssueStatusIcon";
-import CommentCounter from "./comments/CommentCounter";
 import CSText from "../commons/CSText";
 import CSCapsule from "../commons/CSCapsule";
 import {useColors} from "../../themes/hooks";
@@ -21,9 +19,10 @@ export default function IssueListItem(props: IssueListItemProps) {
     style
   } = props
 
-  return (<View style={[styles.container, {
-    backgroundColor: colors.backgroundVariant
-  }, style]}>
+  return (<View
+    style={[styles.container, {
+      backgroundColor: colors.backgroundVariant
+    }, style]}>
     <IssueStatusIcon status={issue.status} style={styles.icon}/>
     <View style={styles.rightPane}>
       <View>

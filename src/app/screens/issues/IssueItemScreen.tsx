@@ -8,12 +8,14 @@ import {useColors} from "../../themes/hooks";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {getIssue} from "../../redux/thunk/issueThunk";
 import {useEffect} from "react";
+import {setSelectedIssue} from "../../redux/actions/issueAction";
 
 export default function IssueItemScreen() {
   const route = useRoute<IssueItemRouteProps>()
   const dispatch = useAppDispatch()
   const colors = useColors()
   const issue = useAppSelector(state => state.issueReducer.selectedIssue)
+  const loading = useAppSelector(state => state.issueReducer.loading)
 
   const {
     id,
@@ -25,11 +27,24 @@ export default function IssueItemScreen() {
       await dispatch(getIssue(id))
     }
     loadIssue()
+
+    return () => {
+      const resetIssue = async () => await dispatch(setSelectedIssue(undefined))
+      resetIssue()
+    }
   }, [dispatch, id]);
 
-  if (!issue) {
+  if (loading) {
     return <SafeAreaView style={{flex: 1}}>
-      <CSText text="Impossible de récupérer le ticket car il n'existe pas" color="red" type="h1"/>
+      <View style={styles.container}>
+        <CSText text="Chargement..." type="bold"/>
+      </View>
+    </SafeAreaView>
+  } else if (!issue) {
+    return <SafeAreaView style={{flex: 1}}>
+      <View style={styles.container}>
+        <CSText text="Impossible de récupérer le ticket car il n'existe pas" color="red" type="h1"/>
+      </View>
     </SafeAreaView>
   }
 

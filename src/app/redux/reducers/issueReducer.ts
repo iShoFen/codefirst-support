@@ -1,7 +1,5 @@
 import {Issue} from "../../model/issues/Issue";
-import {IssueStatus} from "../../model/issues/IssueStatus";
-import {Category} from "../../model/issues/Category";
-import {SET_ISSUES, SET_SELECTED_ISSUE} from "../constants";
+import {SET_ISSUES, SET_SELECTED_ISSUE, SET_ISSUE_LOADING} from "../constants";
 import {IssueSummary} from "../../model/issues/IssueSummary";
 
 type IssueReducerState = {
@@ -11,48 +9,7 @@ type IssueReducerState = {
 }
 
 const initialState: IssueReducerState = {
-  issues: [
-    new IssueSummary(
-      "1",
-      "Problème de connexion",
-      "John Doe",
-      new Date(),
-      IssueStatus.OPEN,
-      new Category("bug")
-    ),
-    new IssueSummary(
-      "2",
-      "Ajouter une fonctionnalité de recherche",
-      "Jane Smith",
-      new Date(),
-      IssueStatus.OPEN,
-      new Category("feature")
-    ),
-    new IssueSummary(
-      "3",
-      "Erreur lors de la sauvegarde",
-      "Robert Johnson",
-      new Date(),
-      IssueStatus.CLOSED,
-      new Category("feature")
-    ),
-    new IssueSummary(
-      "4",
-      "Améliorer l'interface utilisateur",
-      "Emily Davis",
-      new Date(),
-      IssueStatus.OPEN,
-      new Category("bug")
-    ),
-    new IssueSummary(
-      "5",
-      "Affichage incorrect des données",
-      "Michael Wilson",
-      new Date(),
-      IssueStatus.CLOSED,
-      new Category("bug")
-    )
-  ],
+  issues: [],
   loading: false,
   selectedIssue: undefined
 };
@@ -69,6 +26,11 @@ const issueReducer = (state: IssueReducerState = initialState, action): IssueRed
       return {
         ...state,
         selectedIssue: action.payload
+      }
+    case SET_ISSUE_LOADING:
+      return {
+        ...state,
+        loading: action.payload
       }
     default:
       return state
