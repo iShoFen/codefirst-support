@@ -14,8 +14,13 @@ import fr.iut.uca.v1.model.issues.IssueModelField;
 import fr.iut.uca.v1.service.IssueModelService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import java.util.List;
 
@@ -26,12 +31,18 @@ public class IssueModelController {
     IssueModelService issueModelService;
 
     @GET
+    @Produces("application/json")
+    @Operation(summary = "Get all issue models with pagination and name filter")
+    @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDTO.class)))
+    @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response getAll(@QueryParam("index") int index,
-                           @QueryParam("count") int count) {
+                           @QueryParam("count") int count,
+                           @QueryParam("name") String name) {
         try {
-            List<IssueModel> issueModels = issueModelService.getAll(index, count);
-            List<IssueModelDTO> dtos = IssueModelExtensions.modelsToDTOS(issueModels);
-            return Response.ok(dtos).build();
+            List<IssueModel> issueModels = issueModelService.getAll(index, count, name);
+            List<IssueModelDTO> result = IssueModelExtensions.modelsToDTOs(issueModels);
+
+            return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -39,6 +50,10 @@ public class IssueModelController {
 
     @GET
     @Path("/{id}")
+    @Produces("application/json")
+    @Operation(summary = "Get one issue model by id")
+    @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDetailDTO.class)))
+    @APIResponse(responseCode = "404", description = "Not Found")
     public Response getOne(@PathParam("id") String id) {
         try {
             IssueModel issueModel = issueModelService.getOne(id);
@@ -50,28 +65,50 @@ public class IssueModelController {
     }
 
     @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Operation(summary = "Create a new issue model")
+    @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDetailDTO.class)))
+    @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
+    @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response create(@RequestBody(required = true) IssueModelInsertDTO issueModelInsertDTO) {
         try {
-            Category category = CategoryExtensions.categoryDTOToModel(issueModelInsertDTO.category());
-            List<IssueModelField> fields = IssueModelFieldExtensions.issueModelFieldDTOsToModels(issueModelInsertDTO.fields());
-            IssueModel issueModel = issueModelService.create(issueModelInsertDTO.name(), issueModelInsertDTO.shortDescription(), issueModelInsertDTO.description(), category, fields);
-
+            IssueModel issueModel = issueModelService.create(issueModelInsertDTO);
             IssueModelDetailDTO issueModelDTO = IssueModelExtensions.modelToDetailDTO(issueModel);
+
             return Response.ok(issueModelDTO).build();
-        } catch (IllegalArgumentException | InsertException e) {
+        } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (InsertException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
     @PUT
     @Path("/{id}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Operation(summary = "Update one issue model by id")
+    @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDetailDTO.class)))
+    @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
+    @APIResponse(responseCode = "404", description = "Not Found")
     public Response update(@PathParam("id") String id, IssueModelUpdateDTO issueModelUpdateDTO) {
-        System.out.println("/issues/models/{id}: update");
-        return Response.ok().build();
+        try {
+            IssueModel issueModel = issueModelService.update(id, issueModelUpdateDTO);
+            IssueModelDetailDTO issueModelDTO = IssueModelExtensions.modelToDetailDTO(issueModel);
+            return Response.ok(issueModelDTO).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (NotFoundException e) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @DELETE
     @Path("/{id}")
+    @Operation(summary = "Delete one issue model by id")
+    @APIResponse(responseCode = "204", description = "No Content")
+    @APIResponse(responseCode = "404", description = "Not Found")
     public Response delete(@PathParam("id") String id) {
         try {
             issueModelService.delete(id);

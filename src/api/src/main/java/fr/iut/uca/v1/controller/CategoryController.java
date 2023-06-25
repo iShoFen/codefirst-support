@@ -1,7 +1,6 @@
 package fr.iut.uca.v1.controller;
 
 import fr.iut.uca.v1.dto.issues.CategoryDTO;
-import fr.iut.uca.v1.dto.issues.issue.IssueDTO;
 import fr.iut.uca.v1.model.issues.Category;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

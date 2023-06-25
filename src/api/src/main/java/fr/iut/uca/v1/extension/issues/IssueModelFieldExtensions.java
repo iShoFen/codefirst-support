@@ -16,7 +16,7 @@ public abstract class IssueModelFieldExtensions {
     private IssueModelFieldExtensions() {
     }
 
-    public static IssueModelFieldEntity toEntity(IssueModelField issueModelField) {
+    public static IssueModelFieldEntity modelToEntity(IssueModelField issueModelField) {
         IssueModelFieldEntity issueModelFieldEntity = new IssueModelFieldEntity();
 
         issueModelFieldEntity.setTitle(issueModelField.getTitle());
@@ -26,11 +26,11 @@ public abstract class IssueModelFieldExtensions {
         return issueModelFieldEntity;
     }
 
-    public static List<IssueModelFieldEntity> toEntities(List<IssueModelField> issueModelFields) {
-        return issueModelFields.stream().map(IssueModelFieldExtensions::toEntity).toList();
+    public static List<IssueModelFieldEntity> modelsToEntities(List<IssueModelField> issueModelFields) {
+        return issueModelFields.stream().map(IssueModelFieldExtensions::modelToEntity).toList();
     }
 
-    public static IssueModelField issueModelFieldToModel(IssueModelFieldEntity issueModelFieldEntity) {
+    public static IssueModelField entityToModel(IssueModelFieldEntity issueModelFieldEntity) {
         return new IssueModelField(
                 issueModelFieldEntity.getTitle(),
                 issueModelFieldEntity.getDescription(),
@@ -38,25 +38,11 @@ public abstract class IssueModelFieldExtensions {
         );
     }
 
-    public static List<IssueModelField> issueModelFieldsToModels(List<IssueModelFieldEntity> issueModelFieldEntities) {
-        return issueModelFieldEntities.stream().map(IssueModelFieldExtensions::issueModelFieldToModel).toList();
+    public static List<IssueModelField> entitiesToModels(List<IssueModelFieldEntity> issueModelFieldEntities) {
+        return issueModelFieldEntities.stream().map(IssueModelFieldExtensions::entityToModel).toList();
     }
 
-    public static IssueModelField issueModelFieldToModel(IssueModelFieldDTO issueModelFieldDTO) {
-        return new IssueModelField(
-                issueModelFieldDTO.title(),
-                issueModelFieldDTO.description(),
-                issueModelFieldDTO.required()
-        );
-    }
-
-    public static List<IssueModelField> issueModelFieldDTOsToModels(List<IssueModelFieldDTO> fields) {
-        List<IssueModelField> models = new ArrayList<>();
-        fields.forEach(dto -> models.add(issueModelFieldToModel(dto)));
-        return models;
-    }
-
-    public static IssueModelFieldDTO issueModelFieldToDTO(IssueModelField field) {
+    public static IssueModelFieldDTO modelToDTO(IssueModelField field) {
         return new IssueModelFieldDTO(
                 field.getTitle(),
                 field.getDescription(),
@@ -64,9 +50,19 @@ public abstract class IssueModelFieldExtensions {
         );
     }
 
-    public static List<IssueModelFieldDTO> issueModelFieldsToDTOs(List<IssueModelField> fields) {
-        List<IssueModelFieldDTO> dtos = new ArrayList<>();
-        fields.forEach(field -> dtos.add(issueModelFieldToDTO(field)));
-        return dtos;
+    public static List<IssueModelFieldDTO> modelsToDTOs(List<IssueModelField> fields) {
+        return fields.stream().map(IssueModelFieldExtensions::modelToDTO).toList();
+    }
+
+    public static IssueModelField dtoToModel(IssueModelFieldDTO issueModelFieldDTO) {
+        return new IssueModelField(
+                issueModelFieldDTO.title(),
+                issueModelFieldDTO.description(),
+                issueModelFieldDTO.required()
+        );
+    }
+
+    public static List<IssueModelField> dtosToModels(List<IssueModelFieldDTO> fields) {
+        return fields.stream().map(IssueModelFieldExtensions::dtoToModel).toList();
     }
 }

@@ -1,8 +1,8 @@
 package fr.iut.uca.v1.service;
 
-import fr.iut.uca.v1.entity.issues.CategoryEntity;
+import fr.iut.uca.v1.dto.issues.issuemodel.IssueModelInsertDTO;
+import fr.iut.uca.v1.dto.issues.issuemodel.IssueModelUpdateDTO;
 import fr.iut.uca.v1.entity.issues.IssueModelEntity;
-import fr.iut.uca.v1.entity.issues.IssueModelFieldEntity;
 import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.v1.extension.issues.CategoryExtensions;
 import fr.iut.uca.v1.extension.issues.IssueModelExtensions;
@@ -27,15 +27,18 @@ public class IssueModelService {
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueModelRepository issueModelRepository;
 
-    public List<IssueModel> getAll(int index, int count) {
-        List<IssueModelEntity> entities = issueModelRepository.getItems(index, count);
+    public List<IssueModel> getAll(int index, int count, String name) throws IllegalArgumentException {
+        List<IssueModelEntity> entities;
+        if (name != null) {
+            entities = issueModelRepository.getIssueModelsByNameContaining(name,index, count);
+        } else {
+            entities = issueModelRepository.getItems(index, count);
+        }
 
         return IssueModelExtensions.entitiesToModels(entities);
     }
 
-    public IssueModel getOne(String id)
-            throws NotFoundException {
-
+    public IssueModel getOne(String id) throws NotFoundException {
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(id);
 
         if (optionalIssueModel.isEmpty()) {
@@ -45,23 +48,48 @@ public class IssueModelService {
         return IssueModelExtensions.entityToModel(optionalIssueModel.get());
     }
 
-    public IssueModel create(String name, String shortDescription, String description, Category category, List<IssueModelField> fields) throws InsertException {
-        IssueModelEntity entity = new IssueModelEntity();
+    public IssueModel create(IssueModelInsertDTO issueModelInsertDTO) throws InsertException, IllegalArgumentException {
 
-        entity.setName(name);
-        entity.setShortDescription(shortDescription);
-        entity.setDescription(description);
+        Category category = CategoryExtensions.categoryDTOToModel(issueModelInsertDTO.category());
+        List<IssueModelField> fields = IssueModelFieldExtensions.dtosToModels(issueModelInsertDTO.fields());
 
-        CategoryEntity categoryEntity = CategoryExtensions.categoryToEntity(category);
-        entity.setCategory(categoryEntity);
+        var issue = new IssueModel(
+            issueModelInsertDTO.name(),
+            issueModelInsertDTO.shortDescription(),
+            issueModelInsertDTO.description(),
+            category,
+            fields
+        );
 
-        List<IssueModelFieldEntity> fieldEntities = IssueModelFieldExtensions.toEntities(fields);
-        entity.setFields(fieldEntities);
-
-        Optional<IssueModelEntity> result = issueModelRepository.addItem(entity);
+        Optional<IssueModelEntity> result = issueModelRepository.addItem(IssueModelExtensions.modelToEntity(issue));
 
         if (result.isEmpty()) {
             throw new InsertException("An error occured while inserting the issue model");
+        }
+
+        return IssueModelExtensions.entityToModel(result.get());
+    }
+
+    public IssueModel update(String id, IssueModelUpdateDTO issueModelUpdateDTO) throws NotFoundException, IllegalArgumentException {
+
+        Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(id);
+
+        if (optionalIssueModel.isEmpty()) {
+            throw new NotFoundException("The issue model was not found");
+        }
+
+        IssueModel issueModel = IssueModelExtensions.entityToModel(optionalIssueModel.get());
+
+        issueModel.setName(issueModelUpdateDTO.name());
+        issueModel.setShortDescription(issueModelUpdateDTO.shortDescription());
+        issueModel.setDescription(issueModelUpdateDTO.description());
+        issueModel.setCategory(CategoryExtensions.categoryDTOToModel(issueModelUpdateDTO.category()));
+        issueModelUpdateDTO.fields().forEach(field -> issueModel.updateField(IssueModelFieldExtensions.dtoToModel(field)));
+
+        Optional<IssueModelEntity> result = issueModelRepository.updateItem(IssueModelExtensions.modelToEntity(issueModel));
+
+        if (result.isEmpty()) {
+            throw new NotFoundException("An error occured while updating the issue model");
         }
 
         return IssueModelExtensions.entityToModel(result.get());

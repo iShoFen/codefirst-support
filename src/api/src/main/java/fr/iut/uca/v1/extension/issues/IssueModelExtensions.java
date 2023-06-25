@@ -20,7 +20,7 @@ public abstract class IssueModelExtensions {
     private IssueModelExtensions() {
     }
 
-    public static IssueModelEntity toEntity(IssueModel issueModel) {
+    public static IssueModelEntity modelToEntity(IssueModel issueModel) {
         IssueModelEntity issueModelEntity = new IssueModelEntity();
 
         issueModelEntity.setId(issueModel.getId());
@@ -28,13 +28,13 @@ public abstract class IssueModelExtensions {
         issueModelEntity.setShortDescription(issueModel.getShortDescription());
         issueModelEntity.setDescription(issueModel.getDescription());
         issueModelEntity.setCategory(CategoryExtensions.categoryToEntity(issueModel.getCategory()));
-        issueModelEntity.setFields(IssueModelFieldExtensions.toEntities(issueModel.getFields()));
+        issueModelEntity.setFields(IssueModelFieldExtensions.modelsToEntities(issueModel.getFields()));
 
         return issueModelEntity;
     }
 
-    public static List<IssueModelEntity> toEntities(List<IssueModel> issueModels) {
-        return issueModels.stream().map(IssueModelExtensions::toEntity).toList();
+    public static List<IssueModelEntity> modelsToEntities(List<IssueModel> issueModels) {
+        return issueModels.stream().map(IssueModelExtensions::modelToEntity).toList();
     }
 
     public static IssueModel entityToModel(IssueModelEntity issueModelEntity) {
@@ -44,7 +44,7 @@ public abstract class IssueModelExtensions {
                 issueModelEntity.getShortDescription(),
                 issueModelEntity.getDescription(),
                 CategoryExtensions.toModel(issueModelEntity.getCategory()),
-                IssueModelFieldExtensions.issueModelFieldsToModels(issueModelEntity.getFields())
+                IssueModelFieldExtensions.entitiesToModels(issueModelEntity.getFields())
         );
     }
 
@@ -69,13 +69,11 @@ public abstract class IssueModelExtensions {
                 model.getShortDescription(),
                 model.getDescription(),
                 CategoryExtensions.categoryToDTO(model.getCategory()),
-                IssueModelFieldExtensions.issueModelFieldsToDTOs(model.getFields())
+                IssueModelFieldExtensions.modelsToDTOs(model.getFields())
         );
     }
 
-    public static List<IssueModelDTO> modelsToDTOS(List<IssueModel> issueModels) {
-        List<IssueModelDTO> dtos = new ArrayList<>();
-        issueModels.forEach(model -> dtos.add(modelToDTO(model)));
-        return dtos;
+    public static List<IssueModelDTO> modelsToDTOs(List<IssueModel> issueModels) {
+        return issueModels.stream().map(IssueModelExtensions::modelToDTO).toList();
     }
 }

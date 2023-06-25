@@ -9,6 +9,7 @@ import java.util.List;
 public record IssueModelUpdateDTO(String name,
                                   @JsonProperty("short_description") String shortDescription,
                                   String description,
-                                  CategoryDTO category, List<IssueModelFieldDTO> fields) {
+                                  CategoryDTO category,
+                                  List<IssueModelFieldDTO> fields) {
 
 }

@@ -54,6 +54,11 @@ public class IssueModel extends IssueModelInfo {
         return Collections.unmodifiableList(fields);
     }
 
+    public void updateField(IssueModelField field) {
+        this.fields.removeIf(f -> f.equals(field));
+        this.fields.add(field);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
