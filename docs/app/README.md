@@ -78,6 +78,12 @@ Installing Dependencies:
 $ yarn
 ```
 
+Create .env file and configure by adjusting value with your configuration
+
+```bash
+cp .env.example .env
+```
+
 Running the app:
 
 ```bash
