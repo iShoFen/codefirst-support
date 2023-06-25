@@ -21,6 +21,7 @@ import {IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {deleteIssue} from "../../hooks/issues";
 import IssueFieldList from "../../components/issues/fields/IssueFieldList";
+import IssueDetails from "../../components/issues/IssueDetails";
 
 export default function IssueItemScreen() {
   const navigation = useNavigation<IssueStackNavigationProp>()
@@ -37,7 +38,7 @@ export default function IssueItemScreen() {
   const handleDelete = useCallback(() => {
     const executeDelete = async () => {
       const result = await deleteIssue(id)
-      if(result) {
+      if (result) {
         void dispatch(getIssues())
         navigation.goBack()
       } else {
@@ -54,12 +55,12 @@ export default function IssueItemScreen() {
         return (<TouchableOpacity
           onPress={handleDelete}
           style={{
-          marginHorizontal: 8,
-          padding: 8
-        }}>
+            marginHorizontal: 8,
+            padding: 8
+          }}>
           <MaterialCommunityIcons
             name="delete"
-                                  color={colors.text} size={24} />
+            color={colors.text} size={24}/>
         </TouchableOpacity>)
       }
     })
@@ -93,40 +94,23 @@ export default function IssueItemScreen() {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.container}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <View style={styles.container}>
+        <IssueDetails issue={issue}/>
 
-          <View style={[styles.details, {
-            backgroundColor: colors.backgroundVariant,
-            borderRadius: 8
-          }]}>
-            <CSText text={issue.title} type="h1"/>
-            <View style={styles.authorAndDate}>
-              <CSText text={`Par ${issue.author}`}/>
-              <CSText text={issue.createdAt.toLocaleDateString()}/>
-            </View>
+        <IssueFieldList fields={issue.fields}/>
 
-            <View style={[styles.capsules]}>
-              <CSCapsule text={issue.category.name}/>
-              <CSCapsule text={issue.category.name}/>
-            </View>
-          </View>
+        <CSText text="Commentaires" type="h2" style={styles.commentHeader}/>
 
-          <IssueFieldList fields={issue.fields} />
-
-          <CSText text="Commentaires" type="h2" style={styles.commentHeader}/>
-
-          <ScrollView horizontal contentContainerStyle={{flex: 1}}>
-            <FlatList data={issue.comments}
-                      renderItem={
-                        ({item}) => <CommentItem style={styles.comment} comment={item}/>
-                      }
-            />
-          </ScrollView>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView horizontal contentContainerStyle={{flex: 1}}>
+          <FlatList data={issue.comments}
+                    renderItem={
+                      ({item}) => <CommentItem style={styles.comment} comment={item}/>
+                    }
+          />
+        </ScrollView>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -135,27 +119,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8
   },
-  subtitle: {
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    fontSize: 24,
-    fontWeight: '600'
-  },
-  details: {
-    backgroundColor: 'white',
-    padding: 8,
-    gap: 8,
-  },
   comment: {
     marginVertical: 4,
-  },
-  authorAndDate: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  capsules: {
-    flexDirection: 'row',
-    gap: 8
   },
   commentHeader: {
     marginTop: 16,
