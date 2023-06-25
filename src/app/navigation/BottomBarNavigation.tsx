@@ -1,27 +1,18 @@
-import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SettingsScreen from "../screens/SettingsScreen";
 import StackIssueNavigation from "./StackIssueNavigation";
 import {BottomBarParamList} from "./types/ParamList";
-import HomeCreateScreen from "../screens/HomeCreateScreen";
 import {useColors} from "../themes/hooks/useColors";
-import {useNavigationTheme} from "../themes/hooks";
 import StackCreateNavigation from "./StackCreateNavigation";
-import {StatusBar} from "react-native";
-import {useThemeMode} from "../themes/hooks/useThemeMode";
 
 
 export default function BottomBarNavigation() {
   const BottomTabNavigator = createBottomTabNavigator<BottomBarParamList>()
   const colors = useColors()
-  const {dark} = useThemeMode()
-  const navigationTheme = useNavigationTheme()
 
   return (
     <>
-      <StatusBar backgroundColor={colors.background} barStyle={dark ? "light-content": "dark-content"} />
-      <NavigationContainer theme={navigationTheme}>
         <BottomTabNavigator.Navigator initialRouteName="Home"
                                       screenOptions={{
                                         headerShown: false,
@@ -54,17 +45,7 @@ export default function BottomBarNavigation() {
               ),
               tabBarLabel: 'Paramètres'
             }}/>
-          {/*  <BottomTabNavigator.Screen*/}
-          {/*    name="Test"*/}
-          {/*    component={HomeIssueScreen}*/}
-          {/*    options={{*/}
-          {/*      tabBarIcon: ({color, size}) => (*/}
-          {/*        <MaterialCommunityIcons name="test-tube" color={color} size={size}/>*/}
-          {/*      ),*/}
-          {/*      tabBarLabel: 'Test',*/}
-          {/*    }}/>*/}
         </BottomTabNavigator.Navigator>
-      </NavigationContainer>
     </>
   )
 }

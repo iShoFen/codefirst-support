@@ -26,7 +26,6 @@ function mapIssueModelShortInfo(rawModel: {name: string, shortDescription: strin
 }
 
 function mapIssueModelInfo(rawModel: {id: string, name: string, shortDescription: string, description: string, category: {name: string}}): IssueModelInfo {
-  console.log('mapIssueModelInfo', rawModel)
   return new IssueModelInfo(
     rawModel['id'],
     rawModel['name'],

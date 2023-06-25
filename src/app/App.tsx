@@ -1,14 +1,11 @@
-import BottomBarNavigation from "./navigation/BottomBarNavigation";
-import store, {persistor} from "./redux/store";
+import store from "./redux/store";
 import {Provider} from "react-redux";
-import {PersistGate} from "redux-persist/integration/react";
+import RootScreen from "./screens/RootScreen";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BottomBarNavigation/>
-      </PersistGate>
+      <RootScreen/>
     </Provider>
   );
 }

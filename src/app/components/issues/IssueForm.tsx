@@ -32,15 +32,12 @@ export default function IssueForm(props: IssueFormProps) {
 
   const handleFieldChange = useCallback((index: number, newValue: string) => {
     setFields(prevState => {
-      console.log('prevState', prevState)
-
       const field = prevState[index]
       field.value = newValue
 
       const newState = [...prevState]
       newState[index] = field
 
-      console.log('newState', newState)
       return newState
     })
   }, [])
@@ -66,10 +63,7 @@ export default function IssueForm(props: IssueFormProps) {
             key={field.title + index}
             label={field.title}
             value={field.value}
-            onChange={(text) => {
-              console.log('onCHange', text)
-              handleFieldChange(index, text)
-            }}
+            onChange={(text) => handleFieldChange(index, text)}
             placeholder={field.description}
             multiLine={true}/>
         )

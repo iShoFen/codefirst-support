@@ -11,7 +11,7 @@ export const getIssues = () => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setIssueLoading(true))
-      console.log('api', `request: ${ISSUES_URL}`)
+      console.debug('[GET] - ', ISSUES_URL)
       const promise = await fetch(ISSUES_URL)
       const json = await promise.json()
       //@ts-ignore
@@ -31,7 +31,7 @@ export const getIssue = (id: string) => {
     try {
       dispatch(setIssueLoading(true))
       const url = `${ISSUES_URL}/${id}`
-      console.log('api', `request: ${url}`)
+      console.debug('[GET] - ', url)
       const promise = await fetch(url)
       const json = await promise.json()
 
