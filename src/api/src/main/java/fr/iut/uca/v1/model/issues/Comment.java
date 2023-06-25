@@ -12,10 +12,15 @@ public class Comment {
 
     private String content;
 
-    public Comment(LocalDate createdAt, String author, String content) {
+    public Comment(LocalDate createdAt, String author, String content) throws IllegalArgumentException {
+
+        if (createdAt == null) {
+            throw new IllegalArgumentException("The creation date cannot be null.");
+        }
         this.createdAt = createdAt;
-        this.author = author;
-        this.content = content;
+
+        setAuthor(author);
+        setContent(content);
     }
 
     public LocalDate getCreatedAt() {
@@ -26,7 +31,10 @@ public class Comment {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(String author) throws IllegalArgumentException {
+        if (author == null || author.isBlank()) {
+            throw new IllegalArgumentException("Author cannot be null or blank");
+        }
         this.author = author;
     }
 
@@ -34,7 +42,10 @@ public class Comment {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(String content) throws IllegalArgumentException {
+        if (content == null || content.isBlank()) {
+            throw new IllegalArgumentException("Content cannot be null or blank");
+        }
         this.content = content;
     }
 }

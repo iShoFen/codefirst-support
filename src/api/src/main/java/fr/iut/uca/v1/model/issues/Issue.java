@@ -25,29 +25,49 @@ public class Issue {
 
     private final List<IssueField> fields = new ArrayList<>();
 
-    public Issue(String id, String title, String author, LocalDate createdAt, IssueStatus status, IssueModelInfo model, Category category, List<IssueField> fields, List<Comment> comments) {
+    public Issue(String id, String title, String author, LocalDate createdAt, IssueStatus status, IssueModelInfo model, Category category, List<IssueField> fields, List<Comment> comments) throws IllegalArgumentException {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("The id cannot be null or blank.");
         }
-
         this.id = id;
 
         if (createdAt == null) {
             throw new IllegalArgumentException("The creation date cannot be null.");
         }
-
         this.createdAt = createdAt;
 
         if (model == null) {
             throw new IllegalArgumentException("The model cannot be null");
         }
-
         this.model = model;
 
+        this.category = category;
+
+        init(title, author, status, fields, comments);
+    }
+
+    public Issue(String title, String author, LocalDate createdAt, IssueStatus status, IssueModelInfo model, Category category, List<IssueField> fields) throws IllegalArgumentException {
+        this.id = null;
+
+        if (createdAt == null) {
+            throw new IllegalArgumentException("The creation date cannot be null.");
+        }
+        this.createdAt = createdAt;
+
+        if (model == null) {
+            throw new IllegalArgumentException("The model cannot be null");
+        }
+        this.model = model;
+
+        this.category = category;
+
+        init(title, author, status, fields, new ArrayList<>());
+    }
+
+    private void init(String title, String author, IssueStatus status, List<IssueField> fields, List<Comment> comments) {
         setTitle(title);
         setAuthor(author);
         setStatus(status);
-        this.category = category;
         fields.forEach(this::addField);
         comments.forEach(this::addComment);
     }

@@ -8,7 +8,7 @@ public class IssueModelField {
 
     protected boolean required;
 
-    public IssueModelField(String title, String description, boolean required) {
+    public IssueModelField(String title, String description, boolean required) throws IllegalArgumentException {
         setTitle(title);
         this.description = description;
         this.required = required;

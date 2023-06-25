@@ -4,7 +4,7 @@ public class Category {
 
     private String name;
 
-    public Category(String name) {
+    public Category(String name) throws IllegalArgumentException {
         setName(name);
     }
 

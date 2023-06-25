@@ -13,15 +13,29 @@ public class IssueModel extends IssueModelInfo {
 
     private final List<IssueModelField> fields = new ArrayList<>();
 
-    public IssueModel(String id, String name, String shortDescription, String description, Category category, List<IssueModelField> fields) {
+    public IssueModel(String id, String name, String shortDescription, String description, Category category, List<IssueModelField> fields) throws IllegalArgumentException {
         super(name, shortDescription, description);
+
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Id cannot be null or blank");
+        }
         this.id = id;
-        this.category = category;
-        this.fields.addAll(fields);
+
+        init(category, fields);
     }
 
-    public IssueModel(String name, String shortDescription, String description, Category category, List<IssueModelField> fields) {
-        this(null, name, shortDescription, description, category, fields);
+    public IssueModel(String name, String shortDescription, String description, Category category, List<IssueModelField> fields) throws IllegalArgumentException {
+        super(name, shortDescription, description);
+
+        this.id = null;
+
+        init(category, fields);
+    }
+
+
+    private void init(Category category, List<IssueModelField> fields) {
+        this.category = category;
+        this.fields.addAll(fields);
     }
 
     public String getId() {

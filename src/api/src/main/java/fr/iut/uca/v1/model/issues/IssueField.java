@@ -4,7 +4,7 @@ public class IssueField extends IssueModelField {
 
     private String value;
 
-    public IssueField(String title, String description, boolean required, String value) {
+    public IssueField(String title, String description, boolean required, String value) throws IllegalArgumentException {
         super(title, description, required);
         this.value = value;
     }

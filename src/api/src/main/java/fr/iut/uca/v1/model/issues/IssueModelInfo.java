@@ -7,8 +7,8 @@ public class IssueModelInfo {
 
     private String description;
 
-    public IssueModelInfo(String name, String shortDescription, String description) {
-        this.name = name;
+    public IssueModelInfo(String name, String shortDescription, String description) throws IllegalArgumentException {
+        setName(name);
         this.shortDescription = shortDescription;
         this.description = description;
     }
@@ -17,7 +17,10 @@ public class IssueModelInfo {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
+        }
         this.name = name;
     }
 
