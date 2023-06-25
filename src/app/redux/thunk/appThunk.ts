@@ -1,7 +1,7 @@
 import {CSTheme} from "../../data/themes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AppDispatch} from "../types";
-import {setLoggedUser, setTheme} from "../actions/userAction";
+import {setLoggedUser, setTheme} from "../actions/appAction";
 import {User} from "../../model/User";
 
 const THEME_KEY = 'app_theme'

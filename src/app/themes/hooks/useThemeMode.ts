@@ -10,7 +10,7 @@ type ThemeModeType = {
 
 export function useThemeMode(): ThemeModeType {
   const mode = useColorScheme()
-  const theme = useAppSelector(state => state.userReducer.theme)
+  const theme = useAppSelector(state => state.appReducer.theme)
 
 
   const dark = useMemo<boolean>(() => {

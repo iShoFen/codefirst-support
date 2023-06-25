@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import {render, screen} from "@testing-library/react-native";
 import IssueListItem from "../../../components/issues/IssueListItem";
 import '@testing-library/jest-native/extend-expect'
-import testUserReducer from "../../users/testUserReducer";
+import testAppReducer from "../../app/testAppReducer";
 
 jest.useFakeTimers();
 
@@ -14,7 +14,7 @@ jest.useFakeTimers();
 const store = configureStore({
   reducer: {
     issueReducer: testIssueReducer,
-    userReducer: testUserReducer
+    appReducer: testAppReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -2,18 +2,18 @@ import {SET_THEME, SET_LOGGED_USER} from "../constants";
 import {User} from "../../model/User";
 import {CSTheme, THEMES} from "../../data/themes";
 
-export type UserReducerState = {
+export type AppReducerState = {
   theme: CSTheme
   loggedUser: User | undefined
 }
 
-const initialState: UserReducerState = {
+const initialState: AppReducerState = {
   theme: THEMES[2],
   loggedUser: undefined
 }
 
 //@ts-ignore
-const userReducer = (state: UserReducerState = initialState, action): UserReducerState => {
+const appReducer = (state: AppReducerState = initialState, action): AppReducerState => {
   switch (action.type) {
     case SET_THEME:
       return {
@@ -30,4 +30,4 @@ const userReducer = (state: UserReducerState = initialState, action): UserReduce
   }
 }
 
-export default userReducer
+export default appReducer

@@ -7,7 +7,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {useEffect} from "react";
 import {getTheme} from "../redux/thunk/appThunk";
 import {useAppDispatch} from "../redux/hooks";
-import {setTheme} from "../redux/actions/userAction";
+import {setTheme} from "../redux/actions/appAction";
 
 export default function RootScreen() {
   const colors = useColors()

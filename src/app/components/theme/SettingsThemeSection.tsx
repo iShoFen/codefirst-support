@@ -7,7 +7,7 @@ import {CSTheme} from "../../data/themes";
 import {saveTheme} from "../../redux/thunk/appThunk";
 
 export default function SettingsThemeSection() {
-  const theme = useAppSelector(state => state.userReducer.theme)
+  const theme = useAppSelector(state => state.appReducer.theme)
   const dispatch = useAppDispatch()
 
   const handleChange = useCallback((theme: CSTheme) => {

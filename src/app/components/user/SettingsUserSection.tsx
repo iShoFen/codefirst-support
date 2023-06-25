@@ -6,10 +6,10 @@ import CSButton from "../commons/CSButton";
 import {useNavigation} from "@react-navigation/native";
 import {LoginStackNavigationProp} from "../../navigation/types/NavigationProp";
 import {useCallback} from "react";
-import {setLoggedUser} from "../../redux/actions/userAction";
+import {setLoggedUser} from "../../redux/actions/appAction";
 
 export default function SettingsUserSection() {
-  const user = useAppSelector(state => state.userReducer.loggedUser)
+  const user = useAppSelector(state => state.appReducer.loggedUser)
   const dispatch = useAppDispatch()
   const loginNavigation = useNavigation<LoginStackNavigationProp>()
 

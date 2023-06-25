@@ -4,7 +4,7 @@ import CSText from "../components/commons/CSText";
 import UserList from "../components/user/UserList";
 import {User} from "../model/User";
 import {useAppDispatch} from "../redux/hooks";
-import {setLoggedUser} from "../redux/actions/userAction";
+import {setLoggedUser} from "../redux/actions/appAction";
 import {useNavigation} from "@react-navigation/native";
 import {LoginStackNavigationProp} from "../navigation/types/NavigationProp";
 import {getLoggedUser, saveLoggedUser} from "../redux/thunk/appThunk";
