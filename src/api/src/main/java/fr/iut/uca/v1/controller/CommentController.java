@@ -36,10 +36,8 @@ public class CommentController {
     @APIResponse(responseCode = "500", description = "Internal server error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response create(@RequestBody(required = true) CommentDTO commentDTO) {
         try {
-            Comment result = commentService.create(issueId, commentDTO);
-            CommentDTO resultDTO = CommentExtensions.modelToDTO(result);
-
-            return Response.ok(resultDTO).build();
+            CommentDTO result = commentService.create(issueId, commentDTO);
+            return Response.ok(result).build();
         } catch (UpdateException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         } catch (IllegalArgumentException e) {

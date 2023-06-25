@@ -66,10 +66,10 @@ public class IssueService {
     private List<IssueEntity> getCreatedAt(int index, int count, IssueStatusDTO status, Date createdAt, Date endDate, OperatorDTO operator, IssueStatus statusModel) {
         List<IssueEntity> issueEntities;
         if (status == null) throw new IllegalArgumentException("The status is required when the created_at parameter is used");
-        if (operator == null) throw new IllegalArgumentException("The operator is required when the created_at parameter is used");
-
         if (endDate != null) {
             issueEntities = issueRepository.getIssuesByCreatedDateBetween(DateExtensions.toLocalDate(createdAt), DateExtensions.toLocalDate(endDate), IssueStatusExtensions.modelToEntity(statusModel), index, count);
+        } else if (operator == null) {
+            issueEntities = issueRepository.getIssuesByCreatedDate(DateExtensions.toLocalDate(createdAt), IssueStatusExtensions.modelToEntity(statusModel), index, count);
         } else {
             switch (operator) {
                 case BEFORE -> issueEntities = issueRepository.getIssuesByCreatedDateBefore(DateExtensions.toLocalDate(createdAt), IssueStatusExtensions.modelToEntity(statusModel), index, count);
@@ -77,6 +77,7 @@ public class IssueService {
                 default -> issueEntities = issueRepository.getIssuesByCreatedDate(DateExtensions.toLocalDate(createdAt), IssueStatusExtensions.modelToEntity(statusModel), index, count);
             }
         }
+
         return issueEntities;
     }
 

@@ -56,6 +56,9 @@ public class SurveyService {
         List<SurveyEntity> result;
         if (endDate != null) {
             result = surveyRepository.getSurveysEndBetween(toLocalDate(endAt), toLocalDate(endDate), index, count);
+
+        } else if (operator == null) {
+            result = surveyRepository.getSurveysEndAt(toLocalDate(endAt), index, count);
         } else {
             switch (operator) {
                 case BEFORE -> result = surveyRepository.getSurveysEndBefore(toLocalDate(endAt), index, count);

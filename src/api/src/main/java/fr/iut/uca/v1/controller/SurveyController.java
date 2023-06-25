@@ -94,6 +94,7 @@ public class SurveyController {
 
     @DELETE
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete a survey")
     @APIResponse(responseCode = "204", description = "No Content")
     @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))

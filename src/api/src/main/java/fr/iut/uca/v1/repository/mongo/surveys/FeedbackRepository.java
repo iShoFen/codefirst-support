@@ -71,14 +71,8 @@ public class FeedbackRepository extends GenericRepository<FeedbackEntity> implem
     }
 
     @Override
-    public List<FeedbackEntity> getFeedbackFromAuthor(String mail, int index, int count) {
-        var filter = Filters.eq(AUTHOR, mail);
-        return collection.find().filter(filter).skip(index).limit(count).into(new ArrayList<>());
-    }
-
-    @Override
-    public List<FeedbackEntity> getFeedbackFromSurveyAndAuthor(String surveyId, String userId, int index, int count) {
-        var filter = Filters.and(Filters.eq(SURVEY_ID, new ObjectId(surveyId)), Filters.eq(AUTHOR, userId));
+    public List<FeedbackEntity> getFeedbackFromSurveyAndAuthor(String surveyId, String mail, int index, int count) {
+        var filter = Filters.and(Filters.eq(SURVEY_ID, new ObjectId(surveyId)), Filters.eq(AUTHOR, mail));
         return collection.find().filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
@@ -101,8 +95,8 @@ public class FeedbackRepository extends GenericRepository<FeedbackEntity> implem
     }
 
     @Override
-    public List<FeedbackEntity> getFeedbackFromSurveyBetweenDates(String surveyId, LocalDate date1, LocalDate date2, int index, int count) {
-        var filter = Filters.and(Filters.eq(SURVEY_ID, new ObjectId(surveyId)), Filters.gte(CREATED_AT, date1), Filters.lte(CREATED_AT, date2));
+    public List<FeedbackEntity> getFeedbackFromSurveyBetweenDates(String surveyId, LocalDate startDate, LocalDate endDate, int index, int count) {
+        var filter = Filters.and(Filters.eq(SURVEY_ID, new ObjectId(surveyId)), Filters.gte(CREATED_AT, startDate), Filters.lte(CREATED_AT, endDate));
         return collection.find().filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 }

@@ -31,15 +31,6 @@ public interface IFeedbackRepository extends IGenericRepository<FeedbackEntity> 
     List<FeedbackEntity> getFeedbackFromSurvey(String surveyId, int index, int count);
 
     /**
-     * Get feedbacks from an author.
-     * @param mail Author mail
-     * @param index Index of the first feedback
-     * @param count Number of feedbacks
-     * @return List of feedbacks from an author
-     */
-    List<FeedbackEntity> getFeedbackFromAuthor(String mail, int index, int count);
-
-    /**
      * Get feedbacks from a survey and an author.
      * @param surveyId Survey id
      * @param mail Author mail

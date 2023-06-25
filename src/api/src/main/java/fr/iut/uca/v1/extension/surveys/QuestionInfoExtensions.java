@@ -47,4 +47,15 @@ public abstract class QuestionInfoExtensions {
     public static List<QuestionInfoDTO> modelsToDTOs(List<QuestionInfo> questionInfos) {
         return questionInfos.stream().map(QuestionInfoExtensions::modelToDTO).toList();
     }
+
+    public static QuestionInfo dtoToModel(QuestionInfoDTO questionInfoDTO) {
+        return new QuestionInfo(
+                questionInfoDTO.title(),
+                QuestionTypeExtensions.dtoToModel(questionInfoDTO.type())
+        );
+    }
+
+    public static List<QuestionInfo> dtosToModels(List<QuestionInfoDTO> questionInfoDTOs) {
+        return questionInfoDTOs.stream().map(QuestionInfoExtensions::dtoToModel).toList();
+    }
 }
