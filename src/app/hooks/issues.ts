@@ -57,7 +57,6 @@ const createIssue = async (title: string, author: string, model: IssueModel, fie
   if(response.status !== 200) return
 
   const json = await response.json()
-  console.log(json)
   return mapIssue(json)
 }
 

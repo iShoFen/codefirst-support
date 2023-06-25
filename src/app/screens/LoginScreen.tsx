@@ -22,7 +22,6 @@ export default function LoginScreen() {
     const loadLoggedUser = async () => {
       const loggedUser = await getLoggedUser()
       if (loggedUser) {
-        console.log('ici')
         dispatch(setLoggedUser(loggedUser))
         loginNavigation.navigate('Logged')
       }

@@ -4,7 +4,6 @@ import {User} from "../../model/User";
 import {CSTheme} from "../../data/themes";
 
 export const setTheme = (theme: CSTheme): PayloadAction<CSTheme> => {
-  console.log('setTheme', theme)
   return {
     type: SET_THEME,
     payload: theme
