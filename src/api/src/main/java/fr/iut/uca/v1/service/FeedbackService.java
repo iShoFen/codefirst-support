@@ -21,24 +21,45 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Feedback service
+ */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @ApplicationScoped
 public class FeedbackService {
 
+    /**
+     * Feedback repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     IFeedbackRepository feedbackRepository;
 
+    /**
+     * Survey repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     ISurveyRepository surveyRepository;
 
+    /**
+     * Search survey
+     * @param surveyId Survey id
+     * @throws NotFoundException if survey not found
+     */
     private void searchSurvey(String surveyId) throws NotFoundException {
         if (surveyRepository.getItemById(surveyId).isEmpty()) {
             throw new NotFoundException(String.format("Survey with id %s not found", surveyId));
         }
     }
 
+    /**
+     * Get all feedbacks from survey
+     * @param surveyId Survey id
+     * @param feedbackGetDTO DTO with filters
+     * @return List of feedbacks
+     * @throws NotFoundException if survey not found
+     */
     public List<FeedbackDTO> getAll(String surveyId, FeedbackGetDTO feedbackGetDTO) throws NotFoundException {
         searchSurvey(surveyId);
 
@@ -59,6 +80,16 @@ public class FeedbackService {
         return FeedbackExtensions.modelsToDTOs(feedbacks);
     }
 
+    /**
+     * Get feedbacks from createdAt
+     * @param surveyId Survey id
+     * @param index Index
+     * @param count Count
+     * @param operator Operator
+     * @param createdAt Created at
+     * @param endDate End date
+     * @return List of feedbacks
+     */
     private List<FeedbackEntity> getCreatedAT(String surveyId, int index, int count, OperatorDTO operator, Date createdAt, Date endDate) {
         List<FeedbackEntity> result;
         var createdAtLocalDate = DateExtensions.toLocalDate(createdAt);
@@ -77,6 +108,13 @@ public class FeedbackService {
         return result;
     }
 
+    /**
+     * Get feedback
+     * @param surveyId Survey id
+     * @param feedbackId Feedback id
+     * @return Feedback
+     * @throws NotFoundException feedback not found or not in survey
+     */
     private Optional<FeedbackEntity> getFeedbackEntity(String surveyId, String feedbackId) throws NotFoundException {
         var feedbackEntity = feedbackRepository.getItemById(feedbackId);
         if (feedbackEntity.isEmpty()) {
@@ -88,6 +126,13 @@ public class FeedbackService {
         return feedbackEntity;
     }
 
+    /**
+     * Get one feedback
+     * @param surveyId Survey id
+     * @param feedbackId Feedback id
+     * @return Feedback
+     * @throws NotFoundException if survey not found or feedback not found or not in survey
+     */
     public FeedbackDetailDTO getOne(String surveyId, String feedbackId) throws NotFoundException {
         searchSurvey(surveyId);
 
@@ -97,6 +142,15 @@ public class FeedbackService {
         return FeedbackExtensions.modelToDetailDTO(feedback);
     }
 
+    /**
+     * Create feedback
+     * @param surveyId Survey id
+     * @param feedbackInsertDTO Feedback to create
+     * @return Created feedback
+     * @throws NotFoundException if survey not found
+     * @throws IllegalArgumentException if feedback is not valid
+     * @throws InsertException if an error occurred during insert
+     */
     public FeedbackDetailDTO create(String surveyId, FeedbackInsertDTO feedbackInsertDTO) throws NotFoundException, IllegalArgumentException, InsertException {
         searchSurvey(surveyId);
 
@@ -118,6 +172,16 @@ public class FeedbackService {
         return FeedbackExtensions.modelToDetailDTO(resultFeedback);
     }
 
+    /***
+     * Update feedback
+     * @param surveyId Survey id
+     * @param feedbackId Feedback id
+     * @param feedbackUpdateDTO Feedback to update
+     * @return Updated feedback
+     * @throws NotFoundException if survey not found or feedback not found or not in survey
+     * @throws IllegalArgumentException if feedback is not valid
+     * @throws UpdateException if an error occurred during update
+     */
     public FeedbackDetailDTO update(String surveyId, String feedbackId, FeedbackUpdateDTO feedbackUpdateDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
         searchSurvey(surveyId);
         Optional<FeedbackEntity> feedbackEntity = getFeedbackEntity(surveyId, feedbackId);
@@ -134,7 +198,13 @@ public class FeedbackService {
         return FeedbackExtensions.modelToDetailDTO(resultFeedback);
     }
 
-    public void delete(String surveyId, String feedbackId) {
+    /**
+     * Delete feedback
+     * @param surveyId Survey id
+     * @param feedbackId Feedback id
+     * @throws NotFoundException if survey not found or feedback not found
+     */
+    public void delete(String surveyId, String feedbackId) throws NotFoundException {
         searchSurvey(surveyId);
 
         boolean result = feedbackRepository.deleteItem(feedbackId);

@@ -18,11 +18,21 @@ import java.util.List;
 
 import static fr.iut.uca.v1.extension.issues.CategoryExtensions.categoriesToDTOs;
 
+/**
+ * Category controller
+ */
 @Path("/categories")
 public class CategoryController {
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(CategoryController.class);
 
+    /**
+     * Get all categories
+     * @return Response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all categories")

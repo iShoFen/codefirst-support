@@ -16,16 +16,33 @@ import org.jboss.logging.Logger;
 
 import java.util.Date;
 
+/**
+ * Comment controller
+ */
 @Path("/issues/{issue_id}/comments")
 public class CommentController {
+    /**
+     * Issue id
+     */
     @PathParam("issue_id")
     private String issueId;
 
+    /**
+     * Comment service
+     */
     @Inject
     CommentService commentService;
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(CommentController.class);
 
+    /**
+     * Create a comment for an issue
+     * @param commentDTO Comment to create
+     * @return Response
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,6 +68,12 @@ public class CommentController {
         }
     }
 
+    /**
+     * Delete a comment for an issue
+     * @param createdAt Comment creation date
+     * @param author Comment author
+     * @return Response
+     */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete a comment for an issue")

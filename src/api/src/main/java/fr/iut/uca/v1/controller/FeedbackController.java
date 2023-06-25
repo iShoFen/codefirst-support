@@ -17,16 +17,33 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 
+/**
+ * Feedback controller
+ */
 @Path("/surveys/{survey_id}/feedbacks")
 public class FeedbackController {
+    /**
+     * Feedback service
+     */
     @Inject
     FeedbackService feedbackService;
 
+    /**
+     * Survey id
+     */
     @PathParam("survey_id")
     private String surveyId;
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(FeedbackController.class);
 
+    /**
+     * Get all feedbacks from a survey with pagination and filters
+     * @param feedbackGetDTO filters
+     * @return Response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all feedbacks from a survey with pagination and filters")
@@ -43,6 +60,11 @@ public class FeedbackController {
         }
     }
 
+    /**
+     * Get a feedback from a survey
+     * @param feedbackId feedback id
+     * @return Response
+     */
     @GET
     @Path("/{feedback_id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,6 +82,11 @@ public class FeedbackController {
         }
     }
 
+    /**
+     * Create a feedback for a survey
+     * @param feedbackInsertDTO feedback to create
+     * @return Response
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -85,6 +112,12 @@ public class FeedbackController {
         }
     }
 
+    /**
+     * Update a feedback for a survey
+     * @param feedbackId feedback id
+     * @param feedbackUpdateDTO feedback to update
+     * @return Response
+     */
     @PUT
     @Path("/{feedback_id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -111,6 +144,11 @@ public class FeedbackController {
         }
     }
 
+    /**
+     * Delete a feedback from a survey
+     * @param feedbackId feedback id
+     * @return Response
+     */
     @DELETE
     @Path("/{feedback_id}")
     @Produces(MediaType.APPLICATION_JSON)

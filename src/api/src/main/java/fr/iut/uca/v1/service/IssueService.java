@@ -26,18 +26,33 @@ import java.util.*;
 import static fr.iut.uca.v1.extension.issues.IssueExtensions.entityToModel;
 import static fr.iut.uca.v1.extension.issues.IssueExtensions.entitiesToModels;
 
+/**
+ * Issue service
+ */
 @ApplicationScoped
 public class IssueService {
 
+    /**
+     * Issue repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueRepository issueRepository;
 
+    /**
+     * Issue model repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueModelRepository issueModelRepository;
 
 
+    /**
+     * Get all issues with pagination and filters
+     * @param getIssueDTO DTO with filters
+     * @return List of issues
+     * @throws IllegalArgumentException if filters are invalid
+     */
     public List<IssueDTO> getAll(IssueGetDTO getIssueDTO) throws IllegalArgumentException {
 
         List<IssueEntity> issueEntities;
@@ -63,6 +78,17 @@ public class IssueService {
         return IssueExtensions.modelsToDTOs(issues);
     }
 
+    /**
+     * Get all issues from created date
+     * @param index index
+     * @param count count
+     * @param status status
+     * @param createdAt created at
+     * @param endDate end date
+     * @param operator operator
+     * @param statusModel status model
+     * @return List of issues
+     */
     private List<IssueEntity> getCreatedAt(int index, int count, IssueStatusDTO status, Date createdAt, Date endDate, OperatorDTO operator, IssueStatus statusModel) {
         List<IssueEntity> issueEntities;
         if (status == null) throw new IllegalArgumentException("The status is required when the created_at parameter is used");
@@ -81,6 +107,12 @@ public class IssueService {
         return issueEntities;
     }
 
+    /**
+     * Get one issue by id
+     * @param id id
+     * @return Issue
+     * @throws NotFoundException if the issue cannot be found
+     */
     public IssueDetailDTO getOne(String id)
             throws NotFoundException {
 
@@ -94,6 +126,14 @@ public class IssueService {
         return IssueExtensions.modelToDetailDTO(issue);
     }
 
+    /**
+     * get issue fields from a model
+     * @param modelFields model fields
+     * @param fields fields
+     * @param errorMessage error message
+     * @return List of issue fields
+     * @throws IllegalArgumentException if fields are invalid
+     */
     private static List<IssueField> getIssueFields(List<? extends IssueModelField> modelFields, Map<String, String> fields, String errorMessage) throws IllegalArgumentException {
         List<IssueField> issueFields = new ArrayList<>();
         for (IssueModelField field : modelFields) {
@@ -108,6 +148,13 @@ public class IssueService {
         return issueFields;
     }
 
+    /**
+     * Create an issue
+     * @param issueInsertDTO issue insert DTO
+     * @return Issue
+     * @throws InsertException if the issue cannot be inserted
+     * @throws IllegalArgumentException if the issue is invalid
+     */
     public IssueDetailDTO create(IssueInsertDTO issueInsertDTO) throws InsertException, IllegalArgumentException {
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(issueInsertDTO.modelId());
 
@@ -143,6 +190,14 @@ public class IssueService {
         return IssueExtensions.modelToDetailDTO(issueResult);
     }
 
+    /**
+     * Update an issue
+     * @param id id
+     * @param issueUpdateDTO issue update DTO
+     * @return Issue
+     * @throws NotFoundException if the issue cannot be found
+     * @throws UpdateException if an error occurred while updating the issue
+     */
     public IssueDetailDTO update(String id, IssueUpdateDTO issueUpdateDTO) throws NotFoundException, UpdateException {
         Optional<IssueEntity> optionalIssue = issueRepository.getItemById(id);
 
@@ -174,6 +229,13 @@ public class IssueService {
         return IssueExtensions.modelToDetailDTO(issueResult);
     }
 
+    /**
+     * Update the status of an issue
+     * @param id id
+     * @return Issue
+     * @throws NotFoundException if the issue cannot be found
+     * @throws UpdateException if an error occurred while updating the issue
+     */
     public IssueDetailDTO updateStatus(String id) throws NotFoundException, UpdateException {
         Optional<IssueEntity> optionalIssue = issueRepository.getItemById(id);
 
@@ -199,6 +261,11 @@ public class IssueService {
         return IssueExtensions.modelToDetailDTO(issueResult);
     }
 
+    /**
+     * Delete an issue
+     * @param id id
+     * @throws NotFoundException if the issue cannot be found
+     */
     public void delete(String id)
             throws NotFoundException {
 
@@ -209,6 +276,10 @@ public class IssueService {
         }
     }
 
+    /**
+     * Get the number of issues by status
+     * @return IssueWithStatusDTO
+     */
     public IssueWithStatusDTO getIssueWithStatus() {
         var issueWithStatus = new IssueWithStatus(issueRepository.getIssuesCountByStatus().getIssuesCountByStatus());
 

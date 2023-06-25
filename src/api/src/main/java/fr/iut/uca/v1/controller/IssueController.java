@@ -18,15 +18,29 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 
+/**
+ * Issue controller
+ */
 @Path("/issues")
 public class IssueController {
 
+    /**
+     * Issue service
+     */
     @Inject
     IssueService issueService;
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(IssueController.class);
 
 
+    /**
+     * Get all issues with pagination and filters
+     * @param getIssueDTO filters
+     * @return Response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all issues with pagination and filters")
@@ -43,6 +57,11 @@ public class IssueController {
         }
     }
 
+    /**
+     * Get an issue by id
+     * @param id issue id
+     * @return Response
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,6 +79,11 @@ public class IssueController {
         }
     }
 
+    /**
+     * Create a new issue
+     * @param issueInsertDTO issue to create
+     * @return Response
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -81,6 +105,12 @@ public class IssueController {
         }
     }
 
+    /**
+     * Update an issue
+     * @param id issue id
+     * @param issueUpdateDTO issue to update
+     * @return Response
+     */
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -103,6 +133,11 @@ public class IssueController {
         }
     }
 
+    /**
+     * Delete an issue
+     * @param id issue id
+     * @return Response
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -120,6 +155,11 @@ public class IssueController {
         }
     }
 
+    /**
+     * Switch status of an issue. Opened it if it's closed, closed it if it's opened
+     * @param id issue id
+     * @return Response
+     */
     @PUT
     @Path("/{id}/status")
     @Produces(MediaType.APPLICATION_JSON)
@@ -141,6 +181,10 @@ public class IssueController {
         }
     }
 
+    /**
+     * Get all issues status and get the number of issues for each status
+     * @return Response
+     */
     @GET
     @Path("/issues-status")
     @Produces(MediaType.APPLICATION_JSON)

@@ -16,13 +16,28 @@ import jakarta.ws.rs.NotFoundException;
 import java.util.Date;
 import java.util.Optional;
 
+/**
+ * Comment service
+ */
 @ApplicationScoped
 public class CommentService {
 
+    /**
+     * Issue repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueRepository issueRepository;
 
+    /**
+     * Create a comment
+     * @param issueId Issue id
+     * @param commentDTO Comment DTO
+     * @return Comment DTO
+     * @throws NotFoundException if issue not found
+     * @throws IllegalArgumentException if comment is not valid
+     * @throws UpdateException if an error occurred while updating the issue
+     */
     public CommentDTO create(String issueId, CommentDTO commentDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
         Optional<IssueEntity> optionalIssueEntity = issueRepository.getItemById(issueId);
 
@@ -44,6 +59,14 @@ public class CommentService {
         return CommentExtensions.modelToDTO(comment);
     }
 
+    /**
+     * Delete a comment
+     * @param issueId Issue id
+     * @param author Author
+     * @param createdAt Created at
+     * @throws NotFoundException if issue or comment not found
+     * @throws UpdateException if an error occurred while updating the issue
+     */
     public void delete(String issueId, String author, Date createdAt) throws NotFoundException, UpdateException {
         Optional<IssueEntity> optionalIssueEntity = issueRepository.getItemById(issueId);
 

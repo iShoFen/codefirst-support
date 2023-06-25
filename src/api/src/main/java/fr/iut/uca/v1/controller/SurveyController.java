@@ -18,15 +18,29 @@ import org.jboss.logging.Logger;
 import java.util.List;
 
 
+/**
+ * Survey controller
+ */
 @Path("/surveys")
 public class SurveyController {
 
+    /**
+     * Survey service
+     */
     @Inject
     SurveyService surveyService;
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(SurveyController.class);
 
 
+    /**
+     * get all surveys with pagination and filters
+     * @param surveyGetDTO filters
+     * @return Response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all surveys with pagination and filters")
@@ -43,6 +57,11 @@ public class SurveyController {
         }
     }
 
+    /**
+     * Get one survey by id
+     * @param id survey id
+     * @return Response
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,6 +79,11 @@ public class SurveyController {
         }
     }
 
+    /**
+     * Create a survey
+     * @param surveyInsertDTO survey to create
+     * @return Response
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -81,6 +105,12 @@ public class SurveyController {
         }
     }
 
+    /**
+     * Delete a survey
+     * @param id survey id
+     * @param surveyUpdateDTO survey to delete
+     * @return Response
+     */
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -107,6 +137,11 @@ public class SurveyController {
         }
     }
 
+    /**
+     * Delete a survey
+     * @param id survey id
+     * @return Response
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

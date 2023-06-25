@@ -1,5 +1,6 @@
 package fr.iut.uca.v1.controller;
 
+import fr.iut.uca.exception.UpdateException;
 import fr.iut.uca.v1.dto.issues.issuemodel.*;
 import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.v1.service.IssueModelService;
@@ -16,14 +17,28 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 
+/**
+ * Issue model controller
+ */
 @Path("/issues/models")
 public class IssueModelController {
 
+    /**
+     * Issue model service
+     */
     @Inject
     IssueModelService issueModelService;
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(IssueModelController.class);
 
+    /**
+     * Get all issue models with pagination and name filter
+     * @param getIssueModelDTO filters
+     * @return Response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all issue models with pagination and name filter")
@@ -40,6 +55,11 @@ public class IssueModelController {
         }
     }
 
+    /**
+     * Get one issue model by id
+     * @param id issue model id
+     * @return Response
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -57,6 +77,11 @@ public class IssueModelController {
         }
     }
 
+    /**
+     * Create a new issue model
+     * @param issueModelInsertDTO issue model to create
+     * @return Response
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -78,6 +103,12 @@ public class IssueModelController {
         }
     }
 
+    /**
+     * Delete one issue model by id
+     * @param id issue model id
+     * @param issueModelUpdateDTO issue model to delete
+     * @return Response
+     */
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -86,6 +117,7 @@ public class IssueModelController {
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDetailDTO.class)))
     @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
+    @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response update(@PathParam("id") String id, IssueModelUpdateDTO issueModelUpdateDTO) {
         try {
             IssueModelDetailDTO result = issueModelService.update(id, issueModelUpdateDTO);
@@ -97,9 +129,17 @@ public class IssueModelController {
         } catch (NotFoundException e) {
             LOG.error("Issue model with id %s not found !".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        } catch (UpdateException e) {
+            LOG.error("An error occurred while updating issue model !");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
+    /**
+     * Delete one issue model by id
+     * @param id issue model id
+     * @return Response
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

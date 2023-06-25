@@ -1,5 +1,6 @@
 package fr.iut.uca.v1.service;
 
+import fr.iut.uca.exception.UpdateException;
 import fr.iut.uca.v1.dto.issues.issuemodel.*;
 import fr.iut.uca.v1.entity.issues.IssueModelEntity;
 import fr.iut.uca.exception.InsertException;
@@ -19,13 +20,25 @@ import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Issue model service
+ */
 @ApplicationScoped
 public class IssueModelService {
 
+    /**
+     * Issue model repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueModelRepository issueModelRepository;
 
+    /**
+     * Get all issue models with pagination and filters
+     * @param issueModelGetDTO DTO with filters
+     * @return List of issue models
+     * @throws IllegalArgumentException if filters are invalid
+     */
     public List<IssueModelDTO> getAll(IssueModelGetDTO issueModelGetDTO) throws IllegalArgumentException {
         List<IssueModelEntity> entities;
         var name = issueModelGetDTO.getName();
@@ -42,6 +55,12 @@ public class IssueModelService {
         return IssueModelExtensions.modelsToDTOs(issueModel);
     }
 
+    /**
+     * Get one issue model by id
+     * @param id Issue model id
+     * @return Issue model
+     * @throws NotFoundException if the issue model cannot be found
+     */
     public IssueModelDetailDTO getOne(String id) throws NotFoundException {
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(id);
 
@@ -53,6 +72,13 @@ public class IssueModelService {
         return IssueModelExtensions.modelToDetailDTO(issueModel);
     }
 
+    /**
+     * Create an issue model
+     * @param issueModelInsertDTO Issue model to create
+     * @return Created issue model
+     * @throws InsertException if an error occurred while inserting the issue model
+     * @throws IllegalArgumentException if the issue model is invalid
+     */
     public IssueModelDetailDTO create(IssueModelInsertDTO issueModelInsertDTO) throws InsertException, IllegalArgumentException {
 
         Category category = CategoryExtensions.categoryDTOToModel(issueModelInsertDTO.category());
@@ -76,7 +102,16 @@ public class IssueModelService {
         return IssueModelExtensions.modelToDetailDTO(resultIssueModel);
     }
 
-    public IssueModelDetailDTO update(String id, IssueModelUpdateDTO issueModelUpdateDTO) throws NotFoundException, IllegalArgumentException {
+    /**
+     * Update an issue model
+     * @param id Issue model id
+     * @param issueModelUpdateDTO Issue model to update
+     * @return Updated issue model
+     * @throws NotFoundException if the issue model cannot be found
+     * @throws IllegalArgumentException if the issue model is invalid
+     * @throws UpdateException if an error occurred while updating the issue model
+     */
+    public IssueModelDetailDTO update(String id, IssueModelUpdateDTO issueModelUpdateDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
 
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(id);
 
@@ -95,13 +130,18 @@ public class IssueModelService {
         Optional<IssueModelEntity> result = issueModelRepository.updateItem(issueModel.getId(), IssueModelExtensions.modelToEntity(issueModel));
 
         if (result.isEmpty()) {
-            throw new NotFoundException("An error occured while updating the issue model");
+            throw new UpdateException("An error occured while updating the issue model");
         }
 
         var resultIssueModel = IssueModelExtensions.entityToModel(result.get());
         return IssueModelExtensions.modelToDetailDTO(resultIssueModel);
     }
 
+    /**
+     * Delete an issue model
+     * @param id Issue model id
+     * @throws NotFoundException if the issue model cannot be found
+     */
     public void delete(String id)
             throws NotFoundException {
 

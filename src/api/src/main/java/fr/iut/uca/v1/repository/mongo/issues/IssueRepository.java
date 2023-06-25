@@ -76,7 +76,6 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
-
     @Override
     public List<IssueEntity> getIssuesByCreatedDate(LocalDate createdAt, IssueStatusEntity status, int index, int count) {
         var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.eq(CREATED_AT, createdAt));
