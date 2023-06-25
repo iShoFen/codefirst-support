@@ -150,8 +150,8 @@ public class IssueCodec implements Codec<IssueEntity> {
         for (var comment : comments) {
             bsonWriter.writeStartDocument();
 
-            bsonWriter.writeString(CommentExtensions.AUTHOR, comment.getAuthor());
             bsonWriter.writeDateTime(CommentExtensions.CREATED_AT, DateExtensions.toTimestamp(comment.getCreatedAt()));
+            bsonWriter.writeString(CommentExtensions.AUTHOR, comment.getAuthor());
             bsonWriter.writeString(CommentExtensions.CONTENT, comment.getContent());
 
             bsonWriter.writeEndDocument();

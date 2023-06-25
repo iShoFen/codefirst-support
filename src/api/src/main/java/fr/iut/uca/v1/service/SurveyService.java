@@ -141,7 +141,7 @@ public class SurveyService {
         survey.setDescription(surveyUpdateDTO.description());
         surveyUpdateDTO.questions().forEach(questionUpdateDTO -> survey.updateQuestion(QuestionExtensions.dtoToModel(questionUpdateDTO)));
 
-        var result = surveyRepository.updateItem(SurveyExtensions.modelToEntity(survey));
+        var result = surveyRepository.updateItem(survey.getId(), SurveyExtensions.modelToEntity(survey));
 
         if (result.isEmpty()) {
             throw new UpdateException("An error occurred while updating the survey");
