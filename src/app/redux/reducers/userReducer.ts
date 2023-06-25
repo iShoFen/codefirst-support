@@ -1,21 +1,29 @@
-import {SET_THEME} from "../constants";
-import {PayloadAction} from "@reduxjs/toolkit";
-import {ThemeMode} from "../../themes/types";
+import {SET_THEME, SET_LOGGED_USER} from "../constants";
+import {User} from "../../model/User";
+import {CSTheme, THEMES} from "../../data/themes";
 
 export type UserReducerState = {
-  theme: ThemeMode
+  theme: CSTheme
+  loggedUser: User | undefined
 }
 
 const initialState: UserReducerState = {
-  theme: 'dark'
+  theme: THEMES[2],
+  loggedUser: undefined
 }
 
-const userReducer = (state: UserReducerState = initialState, action: PayloadAction<ThemeMode>) => {
+//@ts-ignore
+const userReducer = (state: UserReducerState = initialState, action): UserReducerState => {
   switch (action.type) {
     case SET_THEME:
       return {
         ...state,
         theme: action.payload
+      }
+    case SET_LOGGED_USER:
+      return {
+        ...state,
+        loggedUser: action.payload
       }
     default:
       return state

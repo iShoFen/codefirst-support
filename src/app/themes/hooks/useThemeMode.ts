@@ -1,10 +1,10 @@
 import {useMemo} from "react";
 import {useColorScheme} from "react-native";
 import {useAppSelector} from "../../redux/hooks";
-import {ThemeMode} from "../types";
+import {CSTheme} from "../../data/themes";
 
 type ThemeModeType = {
-  theme: ThemeMode,
+  theme: CSTheme,
   dark: boolean
 }
 
@@ -14,7 +14,7 @@ export function useThemeMode(): ThemeModeType {
 
 
   const dark = useMemo<boolean>(() => {
-    return (theme === 'system' && mode === 'dark') || theme === 'dark'
+    return (theme.value === 'system' && mode === 'dark') || theme.value === 'dark'
   }, [mode, theme]);
 
   return {
