@@ -1,5 +1,6 @@
 package fr.iut.uca.v1.extension.surveys;
 
+import fr.iut.uca.v1.dto.surveys.QuestionInfoDTO;
 import fr.iut.uca.v1.entity.surveys.QuestionInfoEntity;
 import fr.iut.uca.v1.model.surveys.QuestionInfo;
 
@@ -12,27 +13,38 @@ public abstract class QuestionInfoExtensions {
 
     private QuestionInfoExtensions() { }
 
-    public static QuestionInfoEntity toEntity(QuestionInfo questionInfo) {
+    public static QuestionInfoEntity modelToEntity(QuestionInfo questionInfo) {
         var questionInfoEntity = new QuestionInfoEntity();
 
         questionInfoEntity.setTitle(questionInfo.getTitle());
-        questionInfoEntity.setType(QuestionTypeExtensions.toEntity(questionInfo.getType()));
+        questionInfoEntity.setType(QuestionTypeExtensions.modelToEntity(questionInfo.getType()));
 
         return questionInfoEntity;
     }
 
-    public static List<QuestionInfoEntity> toEntities(List<QuestionInfo> questionInfos) {
-        return questionInfos.stream().map(QuestionInfoExtensions::toEntity).toList();
+    public static List<QuestionInfoEntity> modelsToEntities(List<QuestionInfo> questionInfos) {
+        return questionInfos.stream().map(QuestionInfoExtensions::modelToEntity).toList();
     }
 
-    public static QuestionInfo toModel(QuestionInfoEntity questionInfoEntity) {
+    public static QuestionInfo entityToModel(QuestionInfoEntity questionInfoEntity) {
         return new QuestionInfo(
                 questionInfoEntity.getTitle(),
-                QuestionTypeExtensions.toModel(questionInfoEntity.getType())
+                QuestionTypeExtensions.entityToModel(questionInfoEntity.getType())
         );
     }
 
-    public static List<QuestionInfo> toModels(List<QuestionInfoEntity> questionInfoEntities) {
-        return questionInfoEntities.stream().map(QuestionInfoExtensions::toModel).toList();
+    public static List<QuestionInfo> entitiesToModels(List<QuestionInfoEntity> questionInfoEntities) {
+        return questionInfoEntities.stream().map(QuestionInfoExtensions::entityToModel).toList();
+    }
+
+    public static QuestionInfoDTO modelToDTO(QuestionInfo questionInfo) {
+        return new QuestionInfoDTO(
+                questionInfo.getTitle(),
+                QuestionTypeExtensions.modelToDTO(questionInfo.getType())
+        );
+    }
+
+    public static List<QuestionInfoDTO> modelsToDTOs(List<QuestionInfo> questionInfos) {
+        return questionInfos.stream().map(QuestionInfoExtensions::modelToDTO).toList();
     }
 }

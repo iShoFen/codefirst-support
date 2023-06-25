@@ -1,19 +1,25 @@
 package fr.iut.uca.v1.service;
 
+import fr.iut.uca.exception.InsertException;
+import fr.iut.uca.exception.UpdateException;
 import fr.iut.uca.v1.dto.OperatorDTO;
+import fr.iut.uca.v1.dto.surveys.survey.*;
 import fr.iut.uca.v1.entity.surveys.SurveyEntity;
+import fr.iut.uca.v1.extension.surveys.QuestionExtensions;
+import fr.iut.uca.v1.extension.surveys.SurveyExtensions;
 import fr.iut.uca.v1.model.surveys.Survey;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
 import fr.iut.uca.v1.repository.surveys.ISurveyRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static fr.iut.uca.v1.extension.DateExtensions.toLocalDate;
-import static fr.iut.uca.v1.extension.surveys.SurveyExtensions.toModels;
 
 @ApplicationScoped
 public class SurveyService {
@@ -22,14 +28,16 @@ public class SurveyService {
     @RepositoryQualifier(RepositoryType.MONGO)
     ISurveyRepository surveyRepository;
 
-    public List<Survey> getAll(int index,
-                               int count,
-                               Date createdAt,
-                               Date publishedAt,
-                               Date endAt,
-                               Date endDate,
-                               OperatorDTO operator) throws IllegalArgumentException {
+    public List<SurveyDTO> getAll(SurveyGetDTO surveyGetDTO) throws IllegalArgumentException {
         List<SurveyEntity> result;
+        int index = surveyGetDTO.getIndex();
+        int count = surveyGetDTO.getCount();
+        Date createdAt = surveyGetDTO.getCreatedAt();
+        Date publishedAt = surveyGetDTO.getPublishedAt();
+        Date endAt = surveyGetDTO.getEndAt();
+        Date endDate = surveyGetDTO.getEndDate();
+        OperatorDTO operator = surveyGetDTO.getOperator();
+
         if (createdAt != null) {
             result = getCreatedAt(index, count, createdAt, endDate, operator);
         } else if (publishedAt != null) {
@@ -40,7 +48,8 @@ public class SurveyService {
             result = surveyRepository.getItems(index, count);
         }
 
-        return toModels(result);
+        List<Survey> surveys = SurveyExtensions.entitiesToModels(result);
+        return SurveyExtensions.modelsToDTOs(surveys);
     }
 
     private List<SurveyEntity> getEndAt(int index, int count, Date endAt, Date endDate, OperatorDTO operator) {
@@ -83,5 +92,67 @@ public class SurveyService {
             }
         }
         return result;
+    }
+
+    public SurveyDetailDTO getOne(String id) throws NotFoundException {
+        Optional<SurveyEntity> surveyEntity = surveyRepository.getItemById(id);
+
+        if (surveyEntity.isEmpty()) {
+            throw new NotFoundException(String.format("Survey with id %s not found", id));
+        }
+
+        Survey survey = SurveyExtensions.entityToModel(surveyEntity.get());
+        return SurveyExtensions.modelToDetailDTO(survey);
+    }
+
+    public SurveyDetailDTO create(SurveyInsertDTO surveyInsertDTO) throws IllegalArgumentException, InsertException {
+        var survey = new Survey(
+                surveyInsertDTO.title(),
+                surveyInsertDTO.createdAt(),
+                surveyInsertDTO.publishedAt(),
+                surveyInsertDTO.endAt(),
+                surveyInsertDTO.description(),
+                QuestionExtensions.dtosToModels(surveyInsertDTO.questions()));
+
+        var result = surveyRepository.addItem(SurveyExtensions.modelToEntity(survey));
+
+        if (result.isEmpty()) {
+            throw new InsertException("An error occurred while inserting the survey");
+        }
+
+        var resultSurvey = SurveyExtensions.entityToModel(result.get());
+        return SurveyExtensions.modelToDetailDTO(resultSurvey);
+    }
+
+    public SurveyDetailDTO update(String id, SurveyUpdateDTO surveyUpdateDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
+        Optional<SurveyEntity> surveyEntity = surveyRepository.getItemById(id);
+
+        if (surveyEntity.isEmpty()) {
+            throw new NotFoundException(String.format("Survey with id %s not found", id));
+        }
+
+        var survey = SurveyExtensions.entityToModel(surveyEntity.get());
+        survey.setTitle(surveyUpdateDTO.title());
+        survey.setPublishedAt(surveyUpdateDTO.publishedAt());
+        survey.setEndAt(surveyUpdateDTO.endAt());
+        survey.setDescription(surveyUpdateDTO.description());
+        surveyUpdateDTO.questions().forEach(questionUpdateDTO -> survey.updateQuestion(QuestionExtensions.dtoToModel(questionUpdateDTO)));
+
+        var result = surveyRepository.updateItem(SurveyExtensions.modelToEntity(survey));
+
+        if (result.isEmpty()) {
+            throw new UpdateException("An error occurred while updating the survey");
+        }
+
+        var resultSurvey = SurveyExtensions.entityToModel(result.get());
+        return SurveyExtensions.modelToDetailDTO(resultSurvey);
+    }
+
+    public void delete(String id) throws NotFoundException {
+        boolean result = surveyRepository.deleteItem(id);
+
+        if (!result) {
+            throw new NotFoundException(String.format("Survey with id %s not found", id));
+        }
     }
 }

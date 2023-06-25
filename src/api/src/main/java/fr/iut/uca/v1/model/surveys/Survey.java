@@ -39,16 +39,16 @@ public class Survey {
         init(title, publishedAt, endAt, description, questions);
     }
 
-//    public Survey(String title, LocalDate createdAt, LocalDate publishedAt, LocalDate endAt, String description, List<Question> questions) throws IllegalArgumentException {
-//        this.id = null;
-//
-//        if (createdAt == null) {
-//            throw new IllegalArgumentException("The creation date cannot be null.");
-//        }
-//
-//        this.createdAt = createdAt;
-//        init(title, publishedAt, endAt, description, questions);
-//    }
+    public Survey(String title, LocalDate createdAt, LocalDate publishedAt, LocalDate endAt, String description, List<Question> questions) throws IllegalArgumentException {
+        this.id = null;
+
+        if (createdAt == null) {
+            throw new IllegalArgumentException("The creation date cannot be null.");
+        }
+
+        this.createdAt = createdAt;
+        init(title, publishedAt, endAt, description, questions);
+    }
 
     private void init(String title, LocalDate publishedAt, LocalDate endAt, String description, List<Question> questions) throws IllegalArgumentException {
         setTitle(title);
@@ -129,6 +129,18 @@ public class Survey {
 
     public boolean removeQuestion(Question question) {
         return questions.remove(question);
+    }
+
+    public void updateQuestion(Question question) throws IllegalArgumentException {
+        if (question == null) {
+            throw new IllegalArgumentException("The question cannot be null.");
+        }
+
+        if (!questions.contains(question)) {
+            questions.add(question);
+        }
+
+        questions.set(questions.indexOf(question), question);
     }
 
     public Optional<Feedback> getFeedback() {

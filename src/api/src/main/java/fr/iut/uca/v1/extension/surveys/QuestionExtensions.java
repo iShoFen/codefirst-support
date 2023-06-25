@@ -15,44 +15,57 @@ public abstract class QuestionExtensions {
 
     private QuestionExtensions() { }
 
-    public static QuestionEntity toEntity(Question question) {
+    public static QuestionEntity modelToEntity(Question question) {
         var questionEntity = new QuestionEntity();
 
         questionEntity.setChoices(question.getChoices());
         questionEntity.setDescription(question.getDescription());
         questionEntity.setTitle(question.getTitle());
-        questionEntity.setType(QuestionTypeExtensions.toEntity(question.getType()));
+        questionEntity.setType(QuestionTypeExtensions.modelToEntity(question.getType()));
 
         return questionEntity;
     }
 
-    public static List<QuestionEntity> toEntities(List<Question> questions) {
-        return questions.stream().map(QuestionExtensions::toEntity).toList();
+    public static List<QuestionEntity> modelsToEntities(List<Question> questions) {
+        return questions.stream().map(QuestionExtensions::modelToEntity).toList();
     }
 
-    public static Question toModel(QuestionEntity questionEntity) {
+    public static Question entityToModel(QuestionEntity questionEntity) {
         return new Question(
                 questionEntity.getTitle(),
-                QuestionTypeExtensions.toModel(questionEntity.getType()),
+                QuestionTypeExtensions.entityToModel(questionEntity.getType()),
                 questionEntity.getDescription(),
                 questionEntity.getChoices()
         );
     }
 
-    public static List<Question> toModels(List<QuestionEntity> questionEntities) {
-        return questionEntities.stream().map(QuestionExtensions::toModel).toList();
+    public static List<Question> entitiesToModels(List<QuestionEntity> questionEntities) {
+        return questionEntities.stream().map(QuestionExtensions::entityToModel).toList();
     }
 
-    public static QuestionDTO toDTO(Question question) {
+    public static QuestionDTO modelToDTO(Question question) {
         return new QuestionDTO(
                 question.getTitle(),
                 question.getDescription(),
-                QuestionTypeExtensions.toDTO(question.getType()),
+                QuestionTypeExtensions.modelToDTO(question.getType()),
                 question.getChoices()
         );
     }
 
-    public static List<QuestionDTO> toDTOs(List<Question> questions) {
-        return questions.stream().map(QuestionExtensions::toDTO).toList();
+    public static List<QuestionDTO> modelsToDTOs(List<Question> questions) {
+        return questions.stream().map(QuestionExtensions::modelToDTO).toList();
+    }
+
+    public static Question dtoToModel(QuestionDTO questionDTO) {
+        return new Question(
+                questionDTO.title(),
+                QuestionTypeExtensions.dtoToModel(questionDTO.type()),
+                questionDTO.description(),
+                questionDTO.choices()
+        );
+    }
+
+    public static List<Question> dtosToModels(List<QuestionDTO> questionDTOs) {
+        return questionDTOs.stream().map(QuestionExtensions::dtoToModel).toList();
     }
 }

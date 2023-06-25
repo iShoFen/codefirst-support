@@ -1,6 +1,7 @@
 package fr.iut.uca.v1.extension.surveys;
 
 import fr.iut.uca.v1.dto.surveys.survey.SurveyDTO;
+import fr.iut.uca.v1.dto.surveys.survey.SurveyDetailDTO;
 import fr.iut.uca.v1.entity.surveys.SurveyEntity;
 import fr.iut.uca.v1.model.surveys.Survey;
 
@@ -20,7 +21,7 @@ public abstract class SurveyExtensions {
 
     private SurveyExtensions() { }
 
-    public static SurveyEntity toEntity(Survey survey) {
+    public static SurveyEntity modelToEntity(Survey survey) {
         var surveyEntity =  new SurveyEntity();
         surveyEntity.setCreatedAt(survey.getCreatedAt());
         surveyEntity.setDescription(survey.getDescription());
@@ -29,15 +30,15 @@ public abstract class SurveyExtensions {
         surveyEntity.setPublishedAt(survey.getPublishedAt());
         surveyEntity.setId(survey.getId());
 
-        surveyEntity.setQuestions(QuestionExtensions.toEntities(survey.getQuestions()));
+        surveyEntity.setQuestions(QuestionExtensions.modelsToEntities(survey.getQuestions()));
 
         return surveyEntity;
     }
-    public List<SurveyEntity> toEntities(List<Survey> surveys) {
-        return surveys.stream().map(SurveyExtensions::toEntity).toList();
+    public List<SurveyEntity> modelsToEntities(List<Survey> surveys) {
+        return surveys.stream().map(SurveyExtensions::modelToEntity).toList();
     }
 
-    public static Survey toModel(SurveyEntity surveyEntity) {
+    public static Survey entityToModel(SurveyEntity surveyEntity) {
         return new Survey(
                 surveyEntity.getId(),
                 surveyEntity.getTitle(),
@@ -45,16 +46,16 @@ public abstract class SurveyExtensions {
                 surveyEntity.getPublishedAt(),
                 surveyEntity.getEndAt(),
                 surveyEntity.getDescription(),
-                QuestionExtensions.toModels(surveyEntity.getQuestions()),
-                surveyEntity.getFeedback().isPresent() ? FeedbackExtensions.toModel(surveyEntity.getFeedback().get()) : null
+                QuestionExtensions.entitiesToModels(surveyEntity.getQuestions()),
+                surveyEntity.getFeedback().isPresent() ? FeedbackExtensions.entityToModel(surveyEntity.getFeedback().get()) : null
         );
     }
 
-    public static List<Survey> toModels(List<SurveyEntity> surveyEntities) {
-        return surveyEntities.stream().map(SurveyExtensions::toModel).toList();
+    public static List<Survey> entitiesToModels(List<SurveyEntity> surveyEntities) {
+        return surveyEntities.stream().map(SurveyExtensions::entityToModel).toList();
     }
 
-    public static SurveyDTO toDTO(Survey survey) {
+    public static SurveyDTO modelToDTO(Survey survey) {
         return new SurveyDTO(
                 survey.getId(),
                 survey.getCreatedAt(),
@@ -65,7 +66,24 @@ public abstract class SurveyExtensions {
         );
     }
 
-    public static List<SurveyDTO> toDTOs(List<Survey> surveys) {
-        return surveys.stream().map(SurveyExtensions::toDTO).toList();
+    public static List<SurveyDTO> modelsToDTOs(List<Survey> surveys) {
+        return surveys.stream().map(SurveyExtensions::modelToDTO).toList();
+    }
+
+    public static SurveyDetailDTO modelToDetailDTO(Survey survey) {
+        return new SurveyDetailDTO(
+                survey.getId(),
+                survey.getCreatedAt(),
+                survey.getPublishedAt(),
+                survey.getEndAt(),
+                survey.getTitle(),
+                survey.getDescription(),
+                QuestionExtensions.modelsToDTOs(survey.getQuestions()),
+                survey.getFeedback().isPresent() ? FeedbackExtensions.modelToDTO(survey.getFeedback().get()) : null
+        );
+    }
+
+    public static List<SurveyDetailDTO> modelsToDetailDTOs(List<Survey> surveys) {
+        return surveys.stream().map(SurveyExtensions::modelToDetailDTO).toList();
     }
 }
