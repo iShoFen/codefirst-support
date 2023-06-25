@@ -1,21 +1,11 @@
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper'
-import BottomBarNavigation from "./navigation/BottomBarNavigation";
+import store from "./redux/store";
+import {Provider} from "react-redux";
+import RootScreen from "./screens/RootScreen";
 
 export default function App() {
   return (
-    <PaperProvider>
-      <BottomBarNavigation/>
-    </PaperProvider>
+    <Provider store={store}>
+      <RootScreen/>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

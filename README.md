@@ -1,5 +1,20 @@
 # Codefirst Support
 
+Codefirst Support is an application for reporting issue and answering survey around [Codefirst](https://codefirst.iut.uca.fr/) eco-system.
+
+This repository contains two projects:
+- A [React Native](https://reactnative.dev/) application for the frontend: show more [here](docs/app/)
+- A [Quarkus](https://quarkus.io/) API for the backend: show more [here](docs/api/)
+
+
+## Authors
+- Florent Marques
+    - [![Florent Marques](https://img.shields.io/badge/-flomSStaar-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/flomSStaar)
+    - [![Florent Marques](https://img.shields.io/badge/-Florent%20Marques-0077B5?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/florent-marques)
+- Samuel Sirven
+    - [![Samuel Sirven](https://img.shields.io/badge/-iShofen-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/iShofen)
+    - [![Samuel Sirven](https://img.shields.io/badge/-Samuel%20Sirven-0077B5?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/samuel-sirven-b49b53211/)
+
 ## Documentation
 
 ### Modèle conceptuel de données (MCD)

@@ -1,10 +1,35 @@
-type BottomBarParamList = {
+import {Issue} from "../../model/issues/Issue";
+import {Survey} from "../../model/surveys/Survey";
+
+export type BottomBarParamList = {
   Home: undefined
-  AddTicket: undefined
+  Add: undefined
   Settings: undefined
+  Test: undefined
 }
 
-type TicketParamList = {
+export type HomeParamList = {
+  Issue: undefined
+  Survey: undefined
+}
+
+type FeatureParamList<T> = {
   List: undefined
-  Item: { id: number }
+  Item: { id: string, title: string }
+}
+
+export type IssueParamList = FeatureParamList<Issue> & {
+  HomeTickets: undefined
+}
+export type SurveyParamList = FeatureParamList<Survey>
+
+export type CreateParamList = {
+  HomeCreate: undefined
+  CreateIssue: undefined
+  CreateSurvey: undefined
+}
+
+export type LoginParamList = {
+  Login: undefined
+  Logged: undefined
 }
