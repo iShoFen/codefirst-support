@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.jboss.logging.Logger;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class IssueModelController {
     @Inject
     IssueModelService issueModelService;
 
+    private static final Logger LOG = Logger.getLogger(IssueModelController.class);
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all issue models with pagination and name filter")
@@ -29,8 +32,10 @@ public class IssueModelController {
     public Response getAll(@BeanParam IssueModelGetDTO getIssueModelDTO) {
         try {
             List<IssueModelDTO> result = issueModelService.getAll(getIssueModelDTO);
+            LOG.info("Returning %d issue models".formatted(result.size()));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Invalid parameters for get all issue models ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
@@ -44,8 +49,10 @@ public class IssueModelController {
     public Response getOne(@PathParam("id") String id) {
         try {
             IssueModelDetailDTO result = issueModelService.getOne(id);
+            LOG.info("Returning issue model with id %s".formatted(id));
             return Response.ok(result).build();
         } catch (NotFoundException e) {
+            LOG.error("Issue model with id %s not found !".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -60,11 +67,13 @@ public class IssueModelController {
     public Response create(@RequestBody(required = true) IssueModelInsertDTO issueModelInsertDTO) {
         try {
             IssueModelDetailDTO result = issueModelService.create(issueModelInsertDTO);
-
+            LOG.info("Issue model with id %s created".formatted(result.id()));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Invalid parameters for create issue model ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (InsertException e) {
+            LOG.error("An error occurred while creating issue model !");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -80,11 +89,14 @@ public class IssueModelController {
     public Response update(@PathParam("id") String id, IssueModelUpdateDTO issueModelUpdateDTO) {
         try {
             IssueModelDetailDTO result = issueModelService.update(id, issueModelUpdateDTO);
+            LOG.info("Issue model with id %s updated".formatted(id));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Invalid parameters for update issue model ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (NotFoundException e) {
-        return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            LOG.error("Issue model with id %s not found !".formatted(id));
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -97,8 +109,10 @@ public class IssueModelController {
     public Response delete(@PathParam("id") String id) {
         try {
             issueModelService.delete(id);
+            LOG.info("Issue model with id %s deleted".formatted(id));
             return Response.noContent().build();
         } catch (NotFoundException e) {
+            LOG.error("Issue model with id %s not found !".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }

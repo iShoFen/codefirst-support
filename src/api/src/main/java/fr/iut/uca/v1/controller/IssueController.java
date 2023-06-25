@@ -14,6 +14,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.jboss.logging.Logger;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class IssueController {
     @Inject
     IssueService issueService;
 
+    private static final Logger LOG = Logger.getLogger(IssueController.class);
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all issues with pagination and filters")
@@ -31,8 +35,10 @@ public class IssueController {
     public Response getAll(@BeanParam IssueGetDTO getIssueDTO) {
         try {
             List<IssueDTO> result = issueService.getAll(getIssueDTO);
+            LOG.info("Returning %d issues".formatted(result.size()));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Not valid parameters ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
@@ -46,8 +52,10 @@ public class IssueController {
     public Response getOne(@PathParam("id") String id) {
         try {
             IssueDetailDTO result = issueService.getOne(id);
+            LOG.info("Returning issue with id %s".formatted(id));
             return Response.ok(result).build();
         } catch (NotFoundException e) {
+            LOG.error("Issue with id %s not found".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -62,10 +70,13 @@ public class IssueController {
     public Response create(@RequestBody(required = true) IssueInsertDTO issueInsertDTO) {
         try {
             IssueDetailDTO result = issueService.create(issueInsertDTO);
+            LOG.info("Issue created with id %s".formatted(result.id()));
             return Response.status(Response.Status.CREATED).entity(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Not valid parameters for issue creation ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (InsertException e) {
+            LOG.error("An error occurred during issue creation !");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -81,10 +92,13 @@ public class IssueController {
     public Response update(@PathParam("id") String id, @RequestBody(required = true) IssueUpdateDTO issueUpdateDTO) {
         try {
             IssueDetailDTO result = issueService.update(id, issueUpdateDTO);
+            LOG.info("Issue with id %s updated".formatted(id));
             return Response.ok(result).build();
         } catch (NotFoundException e) {
+            LOG.error("Issue with id %s not found".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
+            LOG.error("An error occurred during issue update !");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -98,11 +112,12 @@ public class IssueController {
     public Response delete(@PathParam("id") String id) {
         try {
             issueService.delete(id);
+            LOG.info("Issue with id %s deleted".formatted(id));
             return Response.noContent().build();
         } catch (NotFoundException e) {
+            LOG.error("Issue with id %s not found".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
-
     }
 
     @PUT
@@ -115,10 +130,13 @@ public class IssueController {
     public Response updateStatus(@PathParam("id") String id) {
         try {
             IssueDetailDTO result = issueService.updateStatus(id);
+            LOG.info("Issue with id %s status updated ! Issue is now %s".formatted(id, result.status().getValue()));
             return Response.ok(result).build();
         } catch (NotFoundException e) {
+            LOG.error("Issue with id %s not found".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
+            LOG.error("An error occurred during issue status update !");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -130,6 +148,7 @@ public class IssueController {
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueWithStatusDTO.class)))
     public Response getIssuesStatus() {
         IssueWithStatusDTO issuesStatus = issueService.getIssueWithStatus();
+        LOG.info("Returning issues status");
         return Response.ok(issuesStatus).build();
     }
 }

@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.jboss.logging.Logger;
 
 import java.util.Date;
 
@@ -22,6 +23,8 @@ public class CommentController {
 
     @Inject
     CommentService commentService;
+
+    private static final Logger LOG = Logger.getLogger(CommentController.class);
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -34,12 +37,16 @@ public class CommentController {
     public Response create(@RequestBody(required = true) CommentDTO commentDTO) {
         try {
             CommentDTO result = commentService.create(issueId, commentDTO);
+            LOG.info("Comment created from author %s for issue %s".formatted(commentDTO.author(), issueId));
             return Response.status(Response.Status.CREATED).entity(result).build();
         } catch (UpdateException e) {
+            LOG.error("Error while creating comment from author %s for issue %s".formatted(commentDTO.author(), issueId));
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Error while creating comment for issue %s ! Reason : %s".formatted(issueId, e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (NotFoundException e) {
+            LOG.error("Error while creating comment, issue %s not found".formatted(issueId));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -54,15 +61,18 @@ public class CommentController {
     public Response delete(@QueryParam("created_at") Date createdAt, @QueryParam("author") String author) {
         try {
             if (createdAt == null || author == null) {
+                LOG.error("Missing query parameters ! createdAt and author are required.");
                 return Response.status(Response.Status.BAD_REQUEST).entity("Missing query parameters ! createdAt and author are required.").build();
             }
 
             commentService.delete(issueId, author, createdAt);
-
+            LOG.info("Comment deleted from author %s for issue %s".formatted(author, issueId));
             return Response.noContent().build();
         } catch (UpdateException e) {
+            LOG.error("Error while deleting comment from author %s for issue %s".formatted(author, issueId));
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         } catch (NotFoundException e) {
+            LOG.error("Error while deleting comment, issue %s not found".formatted(issueId));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }

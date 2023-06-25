@@ -13,6 +13,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.jboss.logging.Logger;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class SurveyController {
     @Inject
     SurveyService surveyService;
 
+    private static final Logger LOG = Logger.getLogger(SurveyController.class);
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all surveys with pagination and filters")
@@ -31,8 +35,10 @@ public class SurveyController {
     public Response getAll(@BeanParam SurveyGetDTO surveyGetDTO) {
         try {
             List<SurveyDTO> result = surveyService.getAll(surveyGetDTO);
+            LOG.info("Returning %d surveys".formatted(result.size()));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Invalid parameters for getAll surveys ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
@@ -46,8 +52,10 @@ public class SurveyController {
     public Response getOne(@PathParam("id") String id) {
         try {
             SurveyDetailDTO result = surveyService.getOne(id);
+            LOG.info("Returning survey with id %s".formatted(id));
             return Response.ok(result).build();
         } catch (NotFoundException e) {
+            LOG.error("Survey with id %s not found !".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -62,10 +70,13 @@ public class SurveyController {
     public Response create(@RequestBody(required = true) SurveyInsertDTO surveyInsertDTO) {
         try {
             SurveyDetailDTO result = surveyService.create(surveyInsertDTO);
+            LOG.info("Survey created with id %s".formatted(result.id()));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Invalid parameters for create survey ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (InsertException e) {
+            LOG.error("An error occurred while creating survey !");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -82,12 +93,16 @@ public class SurveyController {
     public Response update(@PathParam("id") String id, SurveyUpdateDTO surveyUpdateDTO) {
         try {
             SurveyDetailDTO result = surveyService.update(id, surveyUpdateDTO);
+            LOG.info("Survey with id %s updated".formatted(id));
             return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
+            LOG.error("Invalid parameters for update survey ! Reason : %s".formatted(e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (NotFoundException e) {
+            LOG.error("Survey with id %s not found !".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
+            LOG.error("An error occurred while updating survey !");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -101,8 +116,10 @@ public class SurveyController {
     public Response delete(@PathParam("id") String id) {
         try {
             surveyService.delete(id);
+            LOG.info("Survey with id %s deleted".formatted(id));
             return Response.noContent().build();
         } catch (NotFoundException e) {
+            LOG.error("Survey with id %s not found !".formatted(id));
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
