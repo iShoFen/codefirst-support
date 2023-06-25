@@ -39,7 +39,7 @@ public class DatabaseClient {
     @ConfigProperty(name = "codefirst-support.database.name")
     String databaseName;
 
-    @ConfigProperty(name = "%dev.quarkus.mongodb.connection-string")
+    @ConfigProperty(name = "quarkus.mongodb.connection-string")
     String connectionString;
 
     private MongoClient client;
