@@ -39,6 +39,7 @@ public interface IGenericRepository<T> {
 
     /**
      * Update an item in the repository
+     * @param id Id of the item to update
      * @param item Item to update
      * @return Updated item if successful
      */
