@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "codefirst-ticket",
-    "slug": "codefirst-ticket",
+    "name": "codefirst-support",
+    "slug": "codefirst-support",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
