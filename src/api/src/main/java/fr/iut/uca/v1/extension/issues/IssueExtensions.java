@@ -28,6 +28,7 @@ public abstract class IssueExtensions {
         entity.setTitle(issue.getTitle());
         entity.setAuthor(issue.getAuthor());
         entity.setCreatedAt(issue.getCreatedAt());
+        entity.setCategory(CategoryExtensions.categoryToEntity(issue.getCategory()));
         entity.setStatus(IssueStatusExtensions.modelToEntity(issue.getStatus()));
         entity.setModel(IssueModelInfoExtensions.issueModelInfoToEntity(issue.getModel()));
         entity.setComments(CommentExtensions.modelsToEntities(issue.getComments()));

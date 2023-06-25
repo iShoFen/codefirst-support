@@ -56,13 +56,13 @@ public class IssueController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Create a new issue")
-    @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueDetailDTO.class)))
+    @APIResponse(responseCode = "201", description = "Created", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueDetailDTO.class)))
     @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response create(@RequestBody(required = true) IssueInsertDTO issueInsertDTO) {
         try {
             IssueDetailDTO result = issueService.create(issueInsertDTO);
-            return Response.ok(result).build();
+            return Response.status(Response.Status.CREATED).entity(result).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (InsertException e) {

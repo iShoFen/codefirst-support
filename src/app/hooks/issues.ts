@@ -7,10 +7,14 @@ import {mapIssue, mapIssueModelInfo} from "../utils/mappers";
 import {Issue} from "../model/issues/Issue";
 import {IssueField} from "../model/issues/IssueField";
 
-const fetchIssueModel = async (id: string): Promise<IssueModel> => {
+const fetchIssueModel = async (id: string): Promise<IssueModel | undefined> => {
   const url = `${ISSUE_MODELS_URL}/${id}`
   console.debug('[GET] - ', url)
   const response = await fetch(url)
+  if (response.status !== 200) {
+    console.error('[GET] - Erreur: ', response.status)
+    return undefined
+  }
   const json = await response.json()
 
   //@ts-ignore
@@ -28,7 +32,10 @@ const fetchIssueModel = async (id: string): Promise<IssueModel> => {
 const fetchIssueModels = async (): Promise<IssueModelInfo[]> => {
   console.debug('[GET] - ', ISSUE_MODELS_URL)
   const response = await fetch(ISSUE_MODELS_URL)
-  if (response.status !== 200) return []
+  if (response.status !== 200) {
+    console.error('[GET] - Erreur: ', response.status)
+    return []
+  }
   const json = await response.json()
 
   //@ts-ignore
@@ -54,7 +61,10 @@ const createIssue = async (title: string, author: string, model: IssueModel, fie
 
   console.debug('[POST] - ', ISSUES_URL)
   const response = await fetch(ISSUES_URL, options)
-  if(response.status !== 200) return
+  if (response.status !== 201) {
+    console.error('[POST] - Erreur: ', response.status)
+    return
+  }
 
   const json = await response.json()
   return mapIssue(json)
@@ -68,7 +78,11 @@ const deleteIssue = async (id: string): Promise<boolean> => {
   const url = `${ISSUES_URL}/${id}`
   console.debug('[DELETE] - ', url)
   const response = await fetch(url, options)
-  return response.status === 204
+  if (response.status !== 204) {
+    console.error('[DELETE] - Erreur: ', response.status)
+    return false
+  }
+  return true
 }
 
 export {

@@ -26,7 +26,7 @@ public class IssueModelController {
     @Operation(summary = "Get all issue models with pagination and name filter")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDTO.class)))
     @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
-    public Response getAll(IssueModelGetDTO getIssueModelDTO) {
+    public Response getAll(@BeanParam IssueModelGetDTO getIssueModelDTO) {
         try {
             List<IssueModelDTO> result = issueModelService.getAll(getIssueModelDTO);
             return Response.ok(result).build();
