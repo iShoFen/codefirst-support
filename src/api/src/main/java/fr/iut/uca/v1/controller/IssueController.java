@@ -2,10 +2,8 @@ package fr.iut.uca.v1.controller;
 
 import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.exception.UpdateException;
-import fr.iut.uca.v1.dto.OperatorDTO;
-import fr.iut.uca.v1.dto.issues.IssueStatusDTO;
+import fr.iut.uca.v1.dto.issues.IssueWithStatusDTO;
 import fr.iut.uca.v1.dto.issues.issue.*;
-import fr.iut.uca.v1.model.issues.Issue;
 import fr.iut.uca.v1.service.IssueService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -17,11 +15,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-import java.util.Date;
 import java.util.List;
-
-import static fr.iut.uca.v1.extension.issues.IssueExtensions.modelToDetailDTO;
-import static fr.iut.uca.v1.extension.issues.IssueExtensions.modelsToDTOs;
 
 @Path("/issues")
 public class IssueController {
@@ -34,16 +28,10 @@ public class IssueController {
     @Operation(summary = "Get all issues with pagination and filters")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueDTO.class)))
     @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
-    public Response getAll(@QueryParam("index") int index,
-                           @QueryParam("count") int count,
-                           @QueryParam("status") IssueStatusDTO status,
-                           @QueryParam("created_at") Date createdAt,
-                           @QueryParam("end_date") Date endDate,
-                           @QueryParam("operator")OperatorDTO operator) {
+    public Response getAll(@BeanParam IssueGetDTO getIssueDTO) {
         try {
-            List<Issue> issues = issueService.getAll(index, count, status, createdAt, endDate, operator);
-            List<IssueDTO> response = modelsToDTOs(issues);
-            return Response.ok(response).build();
+            List<IssueDTO> result = issueService.getAll(getIssueDTO);
+            return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -57,9 +45,8 @@ public class IssueController {
     @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response getOne(@PathParam("id") String id) {
         try {
-            Issue issue = issueService.getOne(id);
-            IssueDetailDTO issueDTO = modelToDetailDTO(issue);
-            return Response.ok(issueDTO).build();
+            IssueDetailDTO result = issueService.getOne(id);
+            return Response.ok(result).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
@@ -74,9 +61,8 @@ public class IssueController {
     @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response create(@RequestBody(required = true) IssueInsertDTO issueInsertDTO) {
         try {
-            Issue issue = issueService.create(issueInsertDTO);
-            IssueDetailDTO issueDetailDTO = modelToDetailDTO(issue);
-            return Response.ok(issueDetailDTO).build();
+            IssueDetailDTO result = issueService.create(issueInsertDTO);
+            return Response.ok(result).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (InsertException e) {
@@ -94,9 +80,8 @@ public class IssueController {
     @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response update(@PathParam("id") String id, @RequestBody(required = true) IssueUpdateDTO issueUpdateDTO) {
         try {
-            Issue issue = issueService.update(id, issueUpdateDTO);
-            IssueDetailDTO issueDetailDTO = modelToDetailDTO(issue);
-            return Response.ok(issueDetailDTO).build();
+            IssueDetailDTO result = issueService.update(id, issueUpdateDTO);
+            return Response.ok(result).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
@@ -129,13 +114,22 @@ public class IssueController {
     @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response updateStatus(@PathParam("id") String id) {
         try {
-            Issue issue = issueService.updateStatus(id);
-            IssueDetailDTO issueDetailDTO = modelToDetailDTO(issue);
-            return Response.ok(issueDetailDTO).build();
+            IssueDetailDTO result = issueService.updateStatus(id);
+            return Response.ok(result).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
+    }
+
+    @GET
+    @Path("/issues-status")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all issues status and get the number of issues for each status")
+    @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueWithStatusDTO.class)))
+    public Response getIssuesStatus() {
+        IssueWithStatusDTO issuesStatus = issueService.getIssueWithStatus();
+        return Response.ok(issuesStatus).build();
     }
 }

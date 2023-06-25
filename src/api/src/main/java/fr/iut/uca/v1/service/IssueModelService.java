@@ -1,7 +1,6 @@
 package fr.iut.uca.v1.service;
 
-import fr.iut.uca.v1.dto.issues.issuemodel.IssueModelInsertDTO;
-import fr.iut.uca.v1.dto.issues.issuemodel.IssueModelUpdateDTO;
+import fr.iut.uca.v1.dto.issues.issuemodel.*;
 import fr.iut.uca.v1.entity.issues.IssueModelEntity;
 import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.v1.extension.issues.CategoryExtensions;
@@ -27,33 +26,39 @@ public class IssueModelService {
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueModelRepository issueModelRepository;
 
-    public List<IssueModel> getAll(int index, int count, String name) throws IllegalArgumentException {
+    public List<IssueModelDTO> getAll(IssueModelGetDTO issueModelGetDTO) throws IllegalArgumentException {
         List<IssueModelEntity> entities;
+        var name = issueModelGetDTO.getName();
+        var index = issueModelGetDTO.getIndex();
+        var count = issueModelGetDTO.getCount();
+
         if (name != null) {
             entities = issueModelRepository.getIssueModelsByNameContaining(name,index, count);
         } else {
             entities = issueModelRepository.getItems(index, count);
         }
 
-        return IssueModelExtensions.entitiesToModels(entities);
+        var issueModel =  IssueModelExtensions.entitiesToModels(entities);
+        return IssueModelExtensions.modelsToDTOs(issueModel);
     }
 
-    public IssueModel getOne(String id) throws NotFoundException {
+    public IssueModelDetailDTO getOne(String id) throws NotFoundException {
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(id);
 
         if (optionalIssueModel.isEmpty()) {
             throw new NotFoundException("The issue model cannot be found");
         }
 
-        return IssueModelExtensions.entityToModel(optionalIssueModel.get());
+        var issueModel = IssueModelExtensions.entityToModel(optionalIssueModel.get());
+        return IssueModelExtensions.modelToDetailDTO(issueModel);
     }
 
-    public IssueModel create(IssueModelInsertDTO issueModelInsertDTO) throws InsertException, IllegalArgumentException {
+    public IssueModelDetailDTO create(IssueModelInsertDTO issueModelInsertDTO) throws InsertException, IllegalArgumentException {
 
         Category category = CategoryExtensions.categoryDTOToModel(issueModelInsertDTO.category());
         List<IssueModelField> fields = IssueModelFieldExtensions.dtosToModels(issueModelInsertDTO.fields());
 
-        var issue = new IssueModel(
+        var issueModel = new IssueModel(
             issueModelInsertDTO.name(),
             issueModelInsertDTO.shortDescription(),
             issueModelInsertDTO.description(),
@@ -61,16 +66,17 @@ public class IssueModelService {
             fields
         );
 
-        Optional<IssueModelEntity> result = issueModelRepository.addItem(IssueModelExtensions.modelToEntity(issue));
+        Optional<IssueModelEntity> result = issueModelRepository.addItem(IssueModelExtensions.modelToEntity(issueModel));
 
         if (result.isEmpty()) {
             throw new InsertException("An error occured while inserting the issue model");
         }
 
-        return IssueModelExtensions.entityToModel(result.get());
+        var resultIssueModel = IssueModelExtensions.entityToModel(result.get());
+        return IssueModelExtensions.modelToDetailDTO(resultIssueModel);
     }
 
-    public IssueModel update(String id, IssueModelUpdateDTO issueModelUpdateDTO) throws NotFoundException, IllegalArgumentException {
+    public IssueModelDetailDTO update(String id, IssueModelUpdateDTO issueModelUpdateDTO) throws NotFoundException, IllegalArgumentException {
 
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(id);
 
@@ -92,7 +98,8 @@ public class IssueModelService {
             throw new NotFoundException("An error occured while updating the issue model");
         }
 
-        return IssueModelExtensions.entityToModel(result.get());
+        var resultIssueModel = IssueModelExtensions.entityToModel(result.get());
+        return IssueModelExtensions.modelToDetailDTO(resultIssueModel);
     }
 
     public void delete(String id)

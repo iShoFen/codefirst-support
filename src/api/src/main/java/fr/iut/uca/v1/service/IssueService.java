@@ -4,14 +4,14 @@ import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.exception.UpdateException;
 import fr.iut.uca.v1.dto.OperatorDTO;
 import fr.iut.uca.v1.dto.issues.IssueStatusDTO;
-import fr.iut.uca.v1.dto.issues.issue.IssueFieldInsertDTO;
-import fr.iut.uca.v1.dto.issues.issue.IssueInsertDTO;
-import fr.iut.uca.v1.dto.issues.issue.IssueUpdateDTO;
+import fr.iut.uca.v1.dto.issues.IssueWithStatusDTO;
+import fr.iut.uca.v1.dto.issues.issue.*;
 import fr.iut.uca.v1.entity.issues.*;
 import fr.iut.uca.v1.extension.DateExtensions;
 import fr.iut.uca.v1.extension.issues.IssueExtensions;
 import fr.iut.uca.v1.extension.issues.IssueModelExtensions;
 import fr.iut.uca.v1.extension.issues.IssueStatusExtensions;
+import fr.iut.uca.v1.model.IssueWithStatus;
 import fr.iut.uca.v1.model.issues.*;
 import fr.iut.uca.qualifier.RepositoryQualifier;
 import fr.iut.uca.qualifier.RepositoryType;
@@ -38,29 +38,29 @@ public class IssueService {
     IIssueModelRepository issueModelRepository;
 
 
-    public List<Issue> getAll(int index,
-                              int count,
-                              IssueStatusDTO status,
-                              Date createdAt,
-                              Date endDate,
-                              OperatorDTO operator) throws IllegalArgumentException {
+    public List<IssueDTO> getAll(IssueGetDTO getIssueDTO) throws IllegalArgumentException {
 
         List<IssueEntity> issueEntities;
         IssueStatus statusModel = null;
+        var status = getIssueDTO.getStatus();
         if (status != null) {
             statusModel = IssueStatusExtensions.dtoToModel(status);
         }
 
+        var index = getIssueDTO.getIndex();
+        var count = getIssueDTO.getCount();
+        var createdAt = getIssueDTO.getCreatedAt();
         if (statusModel != null && createdAt == null) {
             issueEntities = issueRepository.getItemsByStatus(IssueStatusExtensions.modelToEntity(statusModel), index, count);
         } else if (createdAt != null) {
-            issueEntities = getCreatedAt(index, count, status, createdAt, endDate, operator, statusModel);
+            issueEntities = getCreatedAt(index, count, status, createdAt, getIssueDTO.getEndDate(), getIssueDTO.getOperator(), statusModel);
         }
         else {
             issueEntities = issueRepository.getItems(index, count);
         }
 
-        return entitiesToModels(issueEntities);
+        var issues = entitiesToModels(issueEntities);
+        return IssueExtensions.modelsToDTOs(issues);
     }
 
     private List<IssueEntity> getCreatedAt(int index, int count, IssueStatusDTO status, Date createdAt, Date endDate, OperatorDTO operator, IssueStatus statusModel) {
@@ -80,7 +80,7 @@ public class IssueService {
         return issueEntities;
     }
 
-    public Issue getOne(String id)
+    public IssueDetailDTO getOne(String id)
             throws NotFoundException {
 
         Optional<IssueEntity> entity = issueRepository.getItemById(id);
@@ -89,7 +89,8 @@ public class IssueService {
             throw new NotFoundException("The issue cannot be found");
         }
 
-        return entityToModel(entity.get());
+        var issue = entityToModel(entity.get());
+        return IssueExtensions.modelToDetailDTO(issue);
     }
 
     private static List<IssueField> getIssueFields(List<? extends IssueModelField> modelFields, Map<String, String> fields, String errorMessage) throws IllegalArgumentException {
@@ -106,11 +107,11 @@ public class IssueService {
         return issueFields;
     }
 
-    public Issue create(IssueInsertDTO issueInsertDTO) throws InsertException, IllegalArgumentException {
+    public IssueDetailDTO create(IssueInsertDTO issueInsertDTO) throws InsertException, IllegalArgumentException {
         Optional<IssueModelEntity> optionalIssueModel = issueModelRepository.getItemById(issueInsertDTO.modelId());
 
         if (optionalIssueModel.isEmpty()) {
-            throw new IllegalArgumentException("The model with id '" + issueInsertDTO.modelId() + "' does not exist");
+            throw new IllegalArgumentException("The model with id '" + issueInsertDTO.modelId() + " does not exist");
         }
 
         IssueModel issueModel = IssueModelExtensions.entityToModel(optionalIssueModel.get());
@@ -137,10 +138,11 @@ public class IssueService {
             throw new InsertException("An error occurred while inserting the issue");
         }
 
-        return entityToModel(result.get());
+        var issueResult = IssueExtensions.entityToModel(result.get());
+        return IssueExtensions.modelToDetailDTO(issueResult);
     }
 
-    public Issue update(String id, IssueUpdateDTO issueUpdateDTO) throws NotFoundException, UpdateException {
+    public IssueDetailDTO update(String id, IssueUpdateDTO issueUpdateDTO) throws NotFoundException, UpdateException {
         Optional<IssueEntity> optionalIssue = issueRepository.getItemById(id);
 
         if (optionalIssue.isEmpty()) {
@@ -167,10 +169,11 @@ public class IssueService {
             throw new UpdateException("An error occurred while updating the issue");
         }
 
-        return entityToModel(result.get());
+        var issueResult = IssueExtensions.entityToModel(result.get());
+        return IssueExtensions.modelToDetailDTO(issueResult);
     }
 
-    public Issue updateStatus(String id) throws NotFoundException, UpdateException {
+    public IssueDetailDTO updateStatus(String id) throws NotFoundException, UpdateException {
         Optional<IssueEntity> optionalIssue = issueRepository.getItemById(id);
 
         if (optionalIssue.isEmpty()) {
@@ -191,7 +194,8 @@ public class IssueService {
             throw new UpdateException("An error occurred while updating the issue");
         }
 
-        return entityToModel(result.get());
+        var issueResult = IssueExtensions.entityToModel(result.get());
+        return IssueExtensions.modelToDetailDTO(issueResult);
     }
 
     public void delete(String id)
@@ -204,5 +208,9 @@ public class IssueService {
         }
     }
 
+    public IssueWithStatusDTO getIssueWithStatus() {
+        var issueWithStatus = new IssueWithStatus(issueRepository.getIssuesCountByStatus().getIssuesCountByStatus());
 
+        return new IssueWithStatusDTO(issueWithStatus.getIssuesCountByStatus());
+    }
 }

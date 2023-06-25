@@ -8,8 +8,6 @@ import fr.iut.uca.v1.entity.issues.IssueEntity;
 import fr.iut.uca.v1.extension.DateExtensions;
 import fr.iut.uca.v1.extension.issues.CommentExtensions;
 import fr.iut.uca.v1.extension.issues.IssueExtensions;
-import fr.iut.uca.v1.model.issues.Comment;
-import fr.iut.uca.v1.model.issues.Issue;
 import fr.iut.uca.v1.repository.issues.IIssueRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -25,7 +23,7 @@ public class CommentService {
     @RepositoryQualifier(RepositoryType.MONGO)
     IIssueRepository issueRepository;
 
-    public Comment create(String issueId, CommentDTO commentDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
+    public CommentDTO create(String issueId, CommentDTO commentDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
         Optional<IssueEntity> optionalIssueEntity = issueRepository.getItemById(issueId);
 
         if (optionalIssueEntity.isEmpty()) {
@@ -42,7 +40,8 @@ public class CommentService {
         }
         var result = IssueExtensions.entityToModel(optionalResult.get());
 
-        return result.getComments().get(result.getComments().size() - 1);
+        var comment =  result.getComments().get(result.getComments().size() - 1);
+        return CommentExtensions.modelToDTO(comment);
     }
 
     public void delete(String issueId, String author, Date createdAt) throws NotFoundException, UpdateException {
