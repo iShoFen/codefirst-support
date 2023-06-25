@@ -39,7 +39,7 @@ const createIssue = async (title: string, author: string, model: IssueModel, fie
   const body = {
     title: title,
     author: author,
-    createdAt: new Date(),
+    created_at: new Date(),
     model: model.id,
     fields: fields.map(field => ({title: field.title, value: field.value}))
   }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public record IssueInsertDTO(String title,
                              String author,
-                             @JsonProperty("created_At") LocalDate createdAt,
+                             @JsonProperty("created_at") LocalDate createdAt,
                              @JsonProperty("model") String modelId,
                              List<IssueFieldInsertDTO> fields) {
 }
