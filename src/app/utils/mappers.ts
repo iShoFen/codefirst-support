@@ -45,8 +45,8 @@ function mapIssueModelInfo(rawModel: {
   )
 }
 
-function mapComment(comment: { createdAt: Date, author: string, content: string }): Comment {
-  return new Comment(new Date(comment.createdAt), comment.author, comment.content)
+function mapComment(comment: { created_at: Date, author: string, content: string }): Comment {
+  return new Comment(new Date(comment.created_at), comment.author, comment.content)
 }
 
 function mapComments(rawComments: any): Comment[] {

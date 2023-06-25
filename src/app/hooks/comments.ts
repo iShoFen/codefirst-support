@@ -33,4 +33,23 @@ const createComment = async (issueId: string, content: string, author: string): 
   return mapComment(json)
 }
 
-export {createComment}
+const deleteComment = async (issueId: string, comment: Comment): Promise<boolean> => {
+  const options: RequestInit = {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+
+  const url = `${getCommentUrl(issueId)}?created_at=${comment.createdAt.toLocaleDateString()}&author=${comment.author}`
+  console.debug('[DELETE] - ', url)
+  const response = await fetch(url, options)
+  if (response.status !== 204) {
+    console.error('[DELETE] - Erreur: ', response.status)
+    return false
+  }
+
+  return true
+}
+
+export {createComment, deleteComment}
