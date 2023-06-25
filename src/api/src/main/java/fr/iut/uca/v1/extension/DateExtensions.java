@@ -14,6 +14,11 @@ public abstract class DateExtensions {
 
     private DateExtensions() { }
 
+    /**
+     * Converts a date to LocalDate.
+     * @param date Date
+     * @return LocalDate from date
+     */
     public static LocalDate toLocalDate(Date date) {
         return date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
     }
@@ -28,6 +33,11 @@ public abstract class DateExtensions {
         return LocalDate.ofInstant(Instant.ofEpochMilli(timestamp), zoneId);
     }
 
+    /**
+     * Converts a LocalDate to a timestamp.
+     * @param date LocalDate
+     * @return long Timestamp in milliseconds
+     */
     public static long toTimestamp(LocalDate date) {
         return date.atStartOfDay(zoneOffset).toInstant().toEpochMilli();
     }
