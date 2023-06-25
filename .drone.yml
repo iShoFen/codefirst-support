@@ -9,7 +9,7 @@ trigger:
 steps:
   # App
   - name: tests-for-react-native-app
-    image: cfreak/jest:latest
+    image: node:alpine
     commands:
       - cd src/app/
       - yarn
