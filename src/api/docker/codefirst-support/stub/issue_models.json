@@ -1,6 +1,7 @@
 [
     {
         "_id": {"$oid": "64846959f660a9babbe122c9" },
+        "version": 1,
         "name": "Article",
         "short_description": "Modèle d'article",
         "description": "Ce modèle représente les articles du système",
@@ -22,6 +23,7 @@
     },
     {
         "_id": {"$oid": "64846959f660a9babbe122ca" },
+        "version": 1,
         "name": "Bug",
         "short_description": "Modèle de bug",
         "description": "Ce modèle représente les bugs du système",
@@ -48,6 +50,7 @@
     },
     {
         "_id": {"$oid": "64846959f660a9babbe122cb" },
+        "version": 1,
         "name": "Tâche",
         "short_description": "Modèle de tâche",
         "description": "Ce modèle représente les tâches à accomplir",
@@ -79,6 +82,7 @@
     },
     {
         "_id": {"$oid": "64846959f660a9babbe122cc" },
+        "version": 1,
         "name": "Amélioration",
         "short_description": "Modèle d'amélioration",
         "description": "Ce modèle représente les améliorations à apporter",
@@ -105,6 +109,7 @@
     },
     {
         "_id": {"$oid": "64846959f660a9babbe122cd" },
+        "version": 1,
         "name": "Erreur",
         "short_description": "Modèle d'erreur",
         "description": "Ce modèle représente les erreurs du système",
@@ -131,6 +136,7 @@
     },
     {
         "_id": {"$oid": "64846959f660a9babbe122ce" },
+        "version": 1,
         "name": "Demande de fonctionnalité",
         "short_description": "Modèle de demande de fonctionnalité",
         "description": "Ce modèle représente les demandes de nouvelles fonctionnalités",
