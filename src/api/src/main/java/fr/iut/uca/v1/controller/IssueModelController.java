@@ -53,14 +53,14 @@ public class IssueModelController {
     @Produces("application/json")
     @Operation(summary = "Get one issue model by id")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDetailDTO.class)))
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response getOne(@PathParam("id") String id) {
         try {
             IssueModel issueModel = issueModelService.getOne(id);
             IssueModelDetailDTO detailDTO = IssueModelExtensions.modelToDetailDTO(issueModel);
             return Response.ok(detailDTO).build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -91,7 +91,7 @@ public class IssueModelController {
     @Operation(summary = "Update one issue model by id")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueModelDetailDTO.class)))
     @APIResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.TEXT_PLAIN))
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response update(@PathParam("id") String id, IssueModelUpdateDTO issueModelUpdateDTO) {
         try {
             IssueModel issueModel = issueModelService.update(id, issueModelUpdateDTO);
@@ -100,7 +100,7 @@ public class IssueModelController {
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (NotFoundException e) {
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -108,13 +108,13 @@ public class IssueModelController {
     @Path("/{id}")
     @Operation(summary = "Delete one issue model by id")
     @APIResponse(responseCode = "204", description = "No Content")
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response delete(@PathParam("id") String id) {
         try {
             issueModelService.delete(id);
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.noContent().build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 }

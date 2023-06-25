@@ -30,7 +30,7 @@ public abstract class IssueExtensions {
         entity.setCreatedAt(issue.getCreatedAt());
         entity.setStatus(IssueStatusExtensions.modelToEntity(issue.getStatus()));
         entity.setModel(IssueModelInfoExtensions.issueModelInfoToEntity(issue.getModel()));
-        entity.setComments(CommentExtensions.toEntities(issue.getComments()));
+        entity.setComments(CommentExtensions.modelsToEntities(issue.getComments()));
         entity.setFields(IssueFieldExtensions.toEntities(issue.getFields()));
 
         return entity;
@@ -50,7 +50,7 @@ public abstract class IssueExtensions {
                 IssueModelInfoExtensions.issueModelInfoEntityToModel(entity.getModel()),
                 CategoryExtensions.toModel(entity.getCategory()),
                 IssueFieldExtensions.issueFieldEntitiesToModels(entity.getFields()),
-                CommentExtensions.toModels(entity.getComments())
+                CommentExtensions.entitiesToModels(entity.getComments())
         );
     }
 
@@ -83,7 +83,7 @@ public abstract class IssueExtensions {
                 IssueStatusExtensions.modelToDTO(issue.getStatus()),
                 IssueModelInfoExtensions.issueModelInfoToDTO(issue.getModel()),
                 IssueFieldExtensions.issueFieldsToDTOs(issue.getFields()),
-                CommentExtensions.commentsToDTOs(issue.getComments())
+                CommentExtensions.modelsToDTOs(issue.getComments())
         );
     }
 

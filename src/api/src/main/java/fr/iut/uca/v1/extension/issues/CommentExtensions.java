@@ -4,7 +4,6 @@ import fr.iut.uca.v1.dto.issues.CommentDTO;
 import fr.iut.uca.v1.entity.issues.CommentEntity;
 import fr.iut.uca.v1.model.issues.Comment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CommentExtensions {
@@ -15,7 +14,7 @@ public abstract class CommentExtensions {
     private CommentExtensions() {
     }
 
-    public static CommentEntity toEntity(Comment comment) {
+    public static CommentEntity modelToEntity(Comment comment) {
         var commentEntity = new CommentEntity();
 
         commentEntity.setAuthor(comment.getAuthor());
@@ -25,19 +24,19 @@ public abstract class CommentExtensions {
         return commentEntity;
     }
 
-    public static List<CommentEntity> toEntities(List<Comment> comments) {
-        return comments.stream().map(CommentExtensions::toEntity).toList();
+    public static List<CommentEntity> modelsToEntities(List<Comment> comments) {
+        return comments.stream().map(CommentExtensions::modelToEntity).toList();
     }
 
-    public static Comment toModel(CommentEntity commentEntity) {
+    public static Comment entityToModel(CommentEntity commentEntity) {
         return new Comment(commentEntity.getCreatedAt(), commentEntity.getAuthor(), commentEntity.getContent());
     }
 
-    public static List<Comment> toModels(List<CommentEntity> commentEntities) {
-        return commentEntities.stream().map(CommentExtensions::toModel).toList();
+    public static List<Comment> entitiesToModels(List<CommentEntity> commentEntities) {
+        return commentEntities.stream().map(CommentExtensions::entityToModel).toList();
     }
 
-    public static CommentDTO commentToDTO(Comment comment) {
+    public static CommentDTO modelToDTO(Comment comment) {
         return new CommentDTO(
                 comment.getCreatedAt(),
                 comment.getAuthor(),
@@ -45,9 +44,15 @@ public abstract class CommentExtensions {
         );
     }
 
-    public static List<CommentDTO> commentsToDTOs(List<Comment> comments) {
-        List<CommentDTO> dtos = new ArrayList<>();
-        comments.forEach(comment -> dtos.add(commentToDTO(comment)));
-        return dtos;
+    public static List<CommentDTO> modelsToDTOs(List<Comment> comments) {
+        return comments.stream().map(CommentExtensions::modelToDTO).toList();
+    }
+
+    public static Comment dtoToModel(CommentDTO commentDTO) {
+        return new Comment(commentDTO.createdAt(), commentDTO.author(), commentDTO.content());
+    }
+
+    public static List<Comment> dtosToModels(List<CommentDTO> commentDTOs) {
+        return commentDTOs.stream().map(CommentExtensions::dtoToModel).toList();
     }
 }

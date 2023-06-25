@@ -54,14 +54,14 @@ public class IssueController {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get one issue by id")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueDetailDTO.class)))
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response getOne(@PathParam("id") String id) {
         try {
             Issue issue = issueService.getOne(id);
             IssueDetailDTO issueDTO = modelToDetailDTO(issue);
             return Response.ok(issueDTO).build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -90,7 +90,7 @@ public class IssueController {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Update an issue")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueDetailDTO.class)))
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response update(@PathParam("id") String id, @RequestBody(required = true) IssueUpdateDTO issueUpdateDTO) {
         try {
@@ -98,7 +98,7 @@ public class IssueController {
             IssueDetailDTO issueDetailDTO = modelToDetailDTO(issue);
             return Response.ok(issueDetailDTO).build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
@@ -109,13 +109,13 @@ public class IssueController {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete an issue")
     @APIResponse(responseCode = "204", description = "No Content")
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response delete(@PathParam("id") String id) {
         try {
             issueService.delete(id);
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.noContent().build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
 
     }
@@ -125,7 +125,7 @@ public class IssueController {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Switch status of an issue. Opened it if it's closed, closed it if it's opened")
     @APIResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = IssueDetailDTO.class)))
-    @APIResponse(responseCode = "404", description = "Not Found")
+    @APIResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     @APIResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public Response updateStatus(@PathParam("id") String id) {
         try {
@@ -133,7 +133,7 @@ public class IssueController {
             IssueDetailDTO issueDetailDTO = modelToDetailDTO(issue);
             return Response.ok(issueDetailDTO).build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (UpdateException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }

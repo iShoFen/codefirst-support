@@ -136,6 +136,13 @@ public class Issue {
         comments.add(comment);
     }
 
+    public void deleteComment(Comment comment) {
+        if (comment == null) {
+            throw new IllegalArgumentException("The comment cannot be null");
+        }
+        comments.remove(comment);
+    }
+
     public void addField(IssueField field) {
         if (field == null) {
             throw new IllegalArgumentException("The field cannot be null");
