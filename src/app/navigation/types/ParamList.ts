@@ -20,6 +20,7 @@ type FeatureParamList<T> = {
 
 export type IssueParamList = FeatureParamList<Issue> & {
   HomeTickets: undefined
+  CreateComment: {issueId: string}
 }
 export type SurveyParamList = FeatureParamList<Survey>
 

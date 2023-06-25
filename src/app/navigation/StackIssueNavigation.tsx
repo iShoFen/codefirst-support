@@ -4,6 +4,7 @@ import IssueItemScreen from "../screens/issues/IssueItemScreen";
 import {IssueParamList} from "./types/ParamList";
 import {useColors} from "../themes/hooks";
 import HomeIssueScreen from "../screens/issues/HomeIssueScreen";
+import CreateCommentScreen from "../screens/issues/CreateCommentScreen";
 
 export default function StackIssueNavigation() {
   const Stack = createStackNavigator<IssueParamList>()
@@ -39,6 +40,10 @@ export default function StackIssueNavigation() {
         options={({route}) => ({
           title: route.params.title,
         })}/>
+      <Stack.Screen
+        name="CreateComment"
+        component={CreateCommentScreen}
+      />
     </Stack.Navigator>
   )
 }

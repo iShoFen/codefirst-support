@@ -6,7 +6,7 @@ const globalColors: GlobalColors = {
   success: '#5BBC27',
   info: '#3075FF',
   warning: '#FFC721',
-  danger: '#E72D0A',
+  danger: '#E9967A',
 }
 
 const lightColors: ThemeColors = {

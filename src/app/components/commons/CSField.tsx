@@ -34,7 +34,7 @@ export default function CSField(props: CSFieldProps) {
   return (<View>
     <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
       {label && <CSText text={label}/>}
-      {required && <CSText text="Requis" type="small" color="red"/>}
+      {required && <CSText text="Requis" type="small" color={colors.danger}/>}
     </View>
     <TextInput editable={enabled}
                value={value}

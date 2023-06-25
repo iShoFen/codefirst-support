@@ -33,7 +33,7 @@ public class CommentService {
         var issue = IssueExtensions.entityToModel(optionalIssueEntity.get());
         issue.addComment(CommentExtensions.dtoToModel(commentDTO));
 
-        Optional<IssueEntity> optionalResult = issueRepository.updateItem(IssueExtensions.modelToEntity(issue));
+        Optional<IssueEntity> optionalResult = issueRepository.updateItem(issue.getId(), IssueExtensions.modelToEntity(issue));
 
         if (optionalResult.isEmpty()) {
             throw new UpdateException("An error occurred while updating the issue");
@@ -62,7 +62,7 @@ public class CommentService {
 
         issue.deleteComment(comment.get());
 
-        Optional<IssueEntity> optionalResult = issueRepository.updateItem(IssueExtensions.modelToEntity(issue));
+        Optional<IssueEntity> optionalResult = issueRepository.updateItem(issue.getId(), IssueExtensions.modelToEntity(issue));
 
         if (optionalResult.isEmpty()) {
             throw new UpdateException("An error occurred while updating the issue");

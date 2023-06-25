@@ -42,7 +42,7 @@ public interface IGenericRepository<T> {
      * @param item Item to update
      * @return Updated item if successful
      */
-    public Optional<T> updateItem(T item);
+    public Optional<T> updateItem(String id, T item);
 
     /**
      * Delete an item from the repository
