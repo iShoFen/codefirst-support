@@ -4,7 +4,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d7" },
     "created_at": {
-      "$date": "2023-05-25T00:00:00.000Z"
+      "$date": "2023-05-25"
     },
     "author": "user1@example.com",
     "question": {
@@ -18,7 +18,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d8" },
     "created_at": {
-      "$date": "2023-05-26T00:00:00.000Z"
+      "$date": "2023-05-26"
     },
     "author": "user2@example.com",
     "question": {
@@ -49,7 +49,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d7" },
     "created_at": {
-      "$date": "2023-05-28T00:00:00.000Z"
+      "$date": "2023-05-28"
     },
     "author": "user4@example.com",
     "question": {
@@ -63,7 +63,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d8" },
     "created_at": {
-      "$date": "2023-05-29T00:00:00.000Z"
+      "$date": "2023-05-29"
     },
     "author": "user5@example.com",
     "question": {
@@ -80,7 +80,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d9" },
     "created_at": {
-      "$date": "2023-05-30T00:00:00.000Z"
+      "$date": "2023-05-30"
     },
     "author": "user6@example.com",
     "question": {
@@ -94,7 +94,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d7" },
     "created_at": {
-      "$date": "2023-06-01T00:00:00.000Z"
+      "$date": "2023-06-01"
     },
     "author": "user7@example.com",
     "question": {
@@ -108,7 +108,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d8" },
     "created_at": {
-      "$date": "2023-06-02T00:00:00.000Z"
+      "$date": "2023-06-02"
     },
     "author": "user8@example.com",
     "question": {
@@ -125,7 +125,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d9" },
     "created_at": {
-      "$date": "2023-06-03T00:00:00.000Z"
+      "$date": "2023-06-03"
     },
     "author": "user9@example.com",
     "question": {
@@ -139,7 +139,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d7" },
     "created_at": {
-      "$date": "2023-06-04T00:00:00.000Z"
+      "$date": "2023-06-04"
     },
     "author": "user10@example.com",
     "question": {
@@ -153,7 +153,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d8" },
     "created_at": {
-      "$date": "2023-06-05T00:00:00.000Z"
+      "$date": "2023-06-05"
     },
     "author": "user11@example.com",
     "question": {
@@ -170,7 +170,7 @@
     "version": 1,
     "survey_id": { "$oid": "64846962f660a9babbe122d9" },
     "created_at": {
-      "$date": "2023-06-06T00:00:00.000Z"
+      "$date": "2023-06-06"
     },
     "author": "user12@example.com",
     "question": {

@@ -30,7 +30,7 @@
         ],
         "author": "alice@example.com",
         "created_at": {
-            "$date": "2023-05-20T09:30:00Z"
+            "$date": "2023-05-20"
         },
         "status": "open",
         "category": {
@@ -39,14 +39,14 @@
         "comments": [
             {
                 "created_at": {
-                    "$date": "2023-05-20T10:00:00Z"
+                    "$date": "2023-05-20"
                 },
                 "author": "bob@example.com",
                 "content": "J'ai le même problème"
             },
             {
                 "created_at": {
-                    "$date": "2023-05-21T14:20:00Z"
+                    "$date": "2023-05-21"
                 },
                 "author": "charlie@example.com",
                 "content": "Avez-vous essayé de redémarrer votre ordinateur ?"
@@ -84,7 +84,7 @@
         ],
         "author": "bob@example.com",
         "created_at": {
-            "$date": "2023-05-21T15:45:00Z"
+            "$date": "2023-05-21"
         },
         "status": "open",
         "category": {
@@ -93,7 +93,7 @@
         "comments": [
             {
                 "created_at": {
-                    "$date": "2023-05-21T16:00:00Z"
+                    "$date": "2023-05-21"
                 },
                 "author": "alice@example.com",
                 "content": "J'ai également rencontré cette erreur"
@@ -125,7 +125,7 @@
         ],
         "author": "john@example.com",
         "created_at": {
-            "$date": "2023-05-22T11:20:00Z"
+            "$date": "2023-05-22"
         },
         "status": "open",
         "category": {
@@ -134,7 +134,7 @@
         "comments": [
             {
                 "created_at": {
-                    "$date": "2023-05-22T12:00:00Z"
+                    "$date": "2023-05-22"
                 },
                 "author": "alice@example.com",
                 "content": "Je ne parviens pas à voir les images associées à cet article"
@@ -166,7 +166,7 @@
         ],
         "author": "charlie@example.com",
         "created_at": {
-            "$date": "2023-05-23T09:10:00Z"
+            "$date": "2023-05-23"
         },
         "status": "closed",
         "category": {
@@ -175,14 +175,14 @@
         "comments": [
             {
                 "created_at": {
-                    "$date": "2023-05-23T09:30:00Z"
+                    "$date": "2023-05-23"
                 },
                 "author": "alice@example.com",
                 "content": "J'ai également remarqué cette erreur de calcul"
             },
             {
                 "created_at": {
-                    "$date": "2023-05-24T14:45:00Z"
+                    "$date": "2023-05-24"
                 },
                 "author": "bob@example.com",
                 "content": "Le problème a été corrigé dans la dernière mise à jour"
@@ -220,7 +220,7 @@
         ],
         "author": "alice@example.com",
         "created_at": {
-            "$date": "2023-05-24T10:15:00Z"
+            "$date": "2023-05-24"
         },
         "status": "open",
         "category": {
@@ -229,14 +229,14 @@
         "comments": [
             {
                 "created_at": {
-                    "$date": "2023-05-24T11:00:00Z"
+                    "$date": "2023-05-24"
                 },
                 "author": "bob@example.com",
                 "content": "Les champs du formulaire ne se valident pas correctement"
             },
             {
                 "created_at": {
-                    "$date": "2023-05-25T09:30:00Z"
+                    "$date": "2023-05-25"
                 },
                 "author": "charlie@example.com",
                 "content": "Je vais regarder cela et trouver une solution"
@@ -274,7 +274,7 @@
         ],
         "author": "bob@example.com",
         "created_at": {
-            "$date": "2023-05-25T14:50:00Z"
+            "$date": "2023-05-25"
         },
         "status": "open",
         "category": {
@@ -283,7 +283,7 @@
         "comments": [
             {
                 "created_at": {
-                    "$date": "2023-05-25T15:00:00Z"
+                    "$date": "2023-05-25"
                 },
                 "author": "alice@example.com",
                 "content": "Le serveur semble être hors ligne depuis un moment"

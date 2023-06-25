@@ -21,13 +21,25 @@ import java.util.Optional;
 
 import static fr.iut.uca.v1.extension.DateExtensions.toLocalDate;
 
+/**
+ * Survey service
+ */
 @ApplicationScoped
 public class SurveyService {
 
+    /**
+     * Survey repository
+     */
     @Inject
     @RepositoryQualifier(RepositoryType.MONGO)
     ISurveyRepository surveyRepository;
 
+    /**
+     * Get all surveys with pagination and filters
+     * @param surveyGetDTO DTO with filters
+     * @return List of surveys
+     * @throws IllegalArgumentException if filters are invalid
+     */
     public List<SurveyDTO> getAll(SurveyGetDTO surveyGetDTO) throws IllegalArgumentException {
         List<SurveyEntity> result;
         int index = surveyGetDTO.getIndex();
@@ -52,6 +64,15 @@ public class SurveyService {
         return SurveyExtensions.modelsToDTOs(surveys);
     }
 
+    /**
+     * Get all surveys for endAt date
+     * @param index index
+     * @param count count
+     * @param endAt endAt date
+     * @param endDate end date
+     * @param operator operator
+     * @return List of surveys
+     */
     private List<SurveyEntity> getEndAt(int index, int count, Date endAt, Date endDate, OperatorDTO operator) {
         List<SurveyEntity> result;
         if (endDate != null) {
@@ -69,6 +90,15 @@ public class SurveyService {
         return result;
     }
 
+    /**
+     * Get all surveys for publishedAt date
+     * @param index index
+     * @param count count
+     * @param publishedAt publishedAt date
+     * @param endDate end date
+     * @param operator operator
+     * @return List of surveys
+     */
     private List<SurveyEntity> getPublishedAt(int index, int count, Date publishedAt, Date endDate, OperatorDTO operator) {
         List<SurveyEntity> result;
         if (endDate != null) {
@@ -83,6 +113,15 @@ public class SurveyService {
         return result;
     }
 
+    /**
+     * Get all surveys for createdAt date
+     * @param index index
+     * @param count count
+     * @param createdAt createdAt date
+     * @param endDate end date
+     * @param operator operator
+     * @return List of surveys
+     */
     private List<SurveyEntity> getCreatedAt(int index, int count, Date createdAt, Date endDate, OperatorDTO operator) {
         List<SurveyEntity> result;
         if (endDate != null) {
@@ -97,6 +136,12 @@ public class SurveyService {
         return result;
     }
 
+    /**
+     * Get one survey by id
+     * @param id id
+     * @return Survey
+     * @throws NotFoundException if survey not found
+     */
     public SurveyDetailDTO getOne(String id) throws NotFoundException {
         Optional<SurveyEntity> surveyEntity = surveyRepository.getItemById(id);
 
@@ -108,6 +153,13 @@ public class SurveyService {
         return SurveyExtensions.modelToDetailDTO(survey);
     }
 
+    /**
+     * Create a survey
+     * @param surveyInsertDTO survey to create
+     * @return Survey created
+     * @throws IllegalArgumentException if survey is invalid
+     * @throws InsertException if an error occurred while inserting the survey
+     */
     public SurveyDetailDTO create(SurveyInsertDTO surveyInsertDTO) throws IllegalArgumentException, InsertException {
         var survey = new Survey(
                 surveyInsertDTO.title(),
@@ -127,6 +179,15 @@ public class SurveyService {
         return SurveyExtensions.modelToDetailDTO(resultSurvey);
     }
 
+    /**
+     * Update a survey
+     * @param id id
+     * @param surveyUpdateDTO survey to update
+     * @return Survey updated
+     * @throws NotFoundException if survey not found
+     * @throws IllegalArgumentException if survey is invalid
+     * @throws UpdateException if an error occurred while updating the survey
+     */
     public SurveyDetailDTO update(String id, SurveyUpdateDTO surveyUpdateDTO) throws NotFoundException, IllegalArgumentException, UpdateException {
         Optional<SurveyEntity> surveyEntity = surveyRepository.getItemById(id);
 
@@ -151,6 +212,11 @@ public class SurveyService {
         return SurveyExtensions.modelToDetailDTO(resultSurvey);
     }
 
+    /**
+     * Delete a survey
+     * @param id id
+     * @throws NotFoundException if survey not found
+     */
     public void delete(String id) throws NotFoundException {
         boolean result = surveyRepository.deleteItem(id);
 

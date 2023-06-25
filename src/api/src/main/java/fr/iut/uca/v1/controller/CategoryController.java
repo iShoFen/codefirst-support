@@ -11,15 +11,28 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.jboss.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static fr.iut.uca.v1.extension.issues.CategoryExtensions.categoriesToDTOs;
 
+/**
+ * Category controller
+ */
 @Path("/categories")
 public class CategoryController {
 
+    /**
+     * Logger
+     */
+    private static final Logger LOG = Logger.getLogger(CategoryController.class);
+
+    /**
+     * Get all categories
+     * @return Response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all categories")
@@ -32,6 +45,7 @@ public class CategoryController {
 
         List<CategoryDTO> categoryDTOS = categoriesToDTOs(categories);
 
+        LOG.info("Returning all categories : " + categoryDTOS);
         return Response.ok(categoryDTOS).build();
     }
 }
