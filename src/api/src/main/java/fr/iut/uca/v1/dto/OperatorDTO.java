@@ -4,15 +4,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OperatorDTO {
-    @JsonProperty("equals")
     EQUALS,
-    @JsonProperty("before")
     BEFORE,
-    @JsonProperty("after")
     AFTER;
 
     @JsonValue
     public String getValue() {
         return this.name().toLowerCase();
+    }
+
+    public static OperatorDTO fromString(String value) {
+        for (OperatorDTO operator : OperatorDTO.values()) {
+            if (operator.getValue().equalsIgnoreCase(value)) {
+                return operator;
+            }
+        }
+        return null;
     }
 }
