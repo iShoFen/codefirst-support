@@ -92,7 +92,7 @@ public class IssueModelService {
         issueModel.setCategory(CategoryExtensions.categoryDTOToModel(issueModelUpdateDTO.category()));
         issueModelUpdateDTO.fields().forEach(field -> issueModel.updateField(IssueModelFieldExtensions.dtoToModel(field)));
 
-        Optional<IssueModelEntity> result = issueModelRepository.updateItem(IssueModelExtensions.modelToEntity(issueModel));
+        Optional<IssueModelEntity> result = issueModelRepository.updateItem(issueModel.getId(), IssueModelExtensions.modelToEntity(issueModel));
 
         if (result.isEmpty()) {
             throw new NotFoundException("An error occured while updating the issue model");

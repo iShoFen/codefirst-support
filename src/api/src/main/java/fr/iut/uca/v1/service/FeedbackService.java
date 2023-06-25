@@ -127,7 +127,7 @@ public class FeedbackService {
         var feedback = FeedbackExtensions.entityToModel(feedbackEntity.get());
         feedback.updateAnswers(feedbackUpdateDTO.answer());
 
-        var result = feedbackRepository.updateItem(FeedbackExtensions.modelToEntity(feedback));
+        var result = feedbackRepository.updateItem(feedback.getId(), FeedbackExtensions.modelToEntity(feedback));
         if (result.isEmpty()) {
             throw new UpdateException("An error occurred while updating the feedback");
         }

@@ -164,7 +164,7 @@ public class IssueService {
         issue.setTitle(issueUpdateDTO.title());
         issueFields.forEach(issue::updateField);
 
-        Optional<IssueEntity> result = issueRepository.updateItem(IssueExtensions.modelToEntity(issue));
+        Optional<IssueEntity> result = issueRepository.updateItem(issue.getId(), IssueExtensions.modelToEntity(issue));
 
         if (result.isEmpty()) {
             throw new UpdateException("An error occurred while updating the issue");
@@ -189,7 +189,7 @@ public class IssueService {
             issue.setStatus(IssueStatus.CLOSED);
         }
 
-        Optional<IssueEntity> result = issueRepository.updateItem(IssueExtensions.modelToEntity(issue));
+        Optional<IssueEntity> result = issueRepository.updateItem(issue.getId(), IssueExtensions.modelToEntity(issue));
 
         if (result.isEmpty()) {
             throw new UpdateException("An error occurred while updating the issue");

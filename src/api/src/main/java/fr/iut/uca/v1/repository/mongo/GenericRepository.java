@@ -77,15 +77,15 @@ public abstract class GenericRepository<T> implements IGenericRepository<T> {
     }
 
     @Override
-    public Optional<T> updateItem(T item) {
-        var filter = eq(typeId, new ObjectId(item.toString()));
+    public Optional<T> updateItem(String id, T item) {
+        var filter = eq(typeId, new ObjectId(id));
         UpdateResult updateResult = collection.replaceOne(filter, item);
 
         if (updateResult.getModifiedCount() == 0) {
             return Optional.empty();
         }
 
-        return getItemById(Objects.requireNonNull(updateResult.getUpsertedId()).asObjectId().getValue().toString());
+        return getItemById(id);
     }
 
     @Override
