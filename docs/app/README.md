@@ -50,13 +50,13 @@ You can find here the application sketches on Figma:
     - [ ] Owner
 
 ### Comments
-- [ ] Add a comment on issue
-- [ ] Delete a comment on issue
+- [x] Add a comment on issue
+- [x] Delete a comment on issue
 
 ### Users
-- [ ] Choose user account
-- [ ] Display user avatar
-- [ ] Show user details in settings
+- [x] Choose user account
+- [x] Display user avatar
+- [x] Show user details in settings
 
 ### Theme
 - [x] Select user theme mode
