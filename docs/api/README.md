@@ -13,6 +13,21 @@ Administrators can create surveys with some questions then users reply with a fe
 
 ## 📦 Getting started
 
+Run the docker container
+
+```bash
+$ cd src/api/docker/codefirst-support
+$ docker compose -f docker-compose-dev.yml up -d
+```
+
+Fill the database with `docker-stub.sh`
+
+> PS: If you use the mongo client, you can fill the database with all the files in `stub` directory
+
+```bash
+$ ./docker-stub.sh
+```
+
 Run the api in development mode:
 
 ```bash
