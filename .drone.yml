@@ -16,12 +16,6 @@ steps:
       - yarn test
 
   # Api
-  - name: build-codefirst-support-app
-    image: ubuntu
-    command:
-      - cd src/api/
-      - ./mvnw compile
-
   - name: build-docker-codefirst-support-api
     image: plugins/docker
     settings:
