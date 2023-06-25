@@ -20,6 +20,7 @@ import {setSelectedIssue} from "../../redux/actions/issueAction";
 import {IssueStackNavigationProp} from "../../navigation/types/NavigationProp";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {deleteIssue} from "../../hooks/issues";
+import IssueFieldList from "../../components/issues/fields/IssueFieldList";
 
 export default function IssueItemScreen() {
   const navigation = useNavigation<IssueStackNavigationProp>()
@@ -112,22 +113,7 @@ export default function IssueItemScreen() {
             </View>
           </View>
 
-          <View style={[styles.fields, {
-            backgroundColor: colors.backgroundVariant,
-            borderRadius: 8
-          }]}>
-            {issue.fields.map((field, index) => (
-              <View
-                key={field.title + index}
-                style={{
-                  padding: 8,
-                  gap: 4
-                }}>
-                <CSText text={field.title} type="bold"/>
-                <CSText text={field.value} type="small"/>
-              </View>
-            ))}
-          </View>
+          <IssueFieldList fields={issue.fields} />
 
           <CSText text="Commentaires" type="h2" style={styles.commentHeader}/>
 
@@ -159,10 +145,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 8,
     gap: 8,
-  },
-  fields: {
-    backgroundColor: 'white',
-    marginTop: 8
   },
   comment: {
     marginVertical: 4,
