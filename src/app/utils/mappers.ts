@@ -17,7 +17,11 @@ function mapStatus(rawStatus: string): IssueStatus {
   return status
 }
 
-function mapIssueModelShortInfo(rawModel: {name: string, shortDescription: string, description: string}): IssueModelShortInfo {
+function mapIssueModelShortInfo(rawModel: {
+  name: string,
+  shortDescription: string,
+  description: string
+}): IssueModelShortInfo {
   return new IssueModelShortInfo(
     rawModel['name'],
     rawModel['shortDescription'],
@@ -25,7 +29,13 @@ function mapIssueModelShortInfo(rawModel: {name: string, shortDescription: strin
   )
 }
 
-function mapIssueModelInfo(rawModel: {id: string, name: string, shortDescription: string, description: string, category: {name: string}}): IssueModelInfo {
+function mapIssueModelInfo(rawModel: {
+  id: string,
+  name: string,
+  shortDescription: string,
+  description: string,
+  category: { name: string }
+}): IssueModelInfo {
   return new IssueModelInfo(
     rawModel['id'],
     rawModel['name'],
@@ -35,15 +45,24 @@ function mapIssueModelInfo(rawModel: {id: string, name: string, shortDescription
   )
 }
 
+function mapComment(comment: { createdAt: Date, author: string, content: string }): Comment {
+  return new Comment(new Date(comment.createdAt), comment.author, comment.content)
+}
+
 function mapComments(rawComments: any): Comment[] {
-  return rawComments.map((comment: {createdAt: Date, author: string, content: string}) => new Comment(new Date(comment.createdAt), comment.author, comment.content))
+  return rawComments.map((comment: any) => mapComment(comment))
 }
 
 function mapFields(rawFields: any): IssueField[] {
-  return rawFields.map((field: {title: string, description: string, required: boolean, value: string}) => new IssueField(field.title, field.description, field.required, field.value))
+  return rawFields.map((field: {
+    title: string,
+    description: string,
+    required: boolean,
+    value: string
+  }) => new IssueField(field.title, field.description, field.required, field.value))
 }
 
-function mapCategory(rawCategory: {name: string}) {
+function mapCategory(rawCategory: { name: string }) {
   return new Category(rawCategory.name)
 }
 
@@ -77,6 +96,7 @@ export {
   mapStatus,
   mapFields,
   mapIssueModelInfo,
+  mapComment,
   mapComments,
   mapIssue,
   mapIssueSummary
