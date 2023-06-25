@@ -7,6 +7,13 @@ trigger:
     - push
 
 steps:
+  # App
+  - name: tests-for-react-native-app
+    image: node:alpine
+    commands:
+      - cd src/app/
+      - yarn
+      - yarn test
 
   # Api
   - name: build-docker-codefirst-support-api
@@ -20,6 +27,9 @@ steps:
         from_secret: SECRET_REGISTRY_USERNAME
       password:
         from_secret: SECRET_REGISTRY_PASSWORD
+    when:
+      branch:
+        - main
 
     # database container deployment
   - name: deploy-container-mongodb
@@ -31,7 +41,10 @@ steps:
         # OVERWRITE: false
         PRIVATE: true
         ADMINS: samuelsirven
-    # depends_on: [ build-docker-codefirst-support-api ]
+    when:
+      branch:
+        - main
+    depends_on: [ build-docker-codefirst-support-api ]
 
   - name: deploy-codefirst-support-api-container
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
@@ -41,4 +54,7 @@ steps:
       COMMAND: create
       OVERWRITE: true
       ADMINS: samuelsirven
+    when:
+      branch:
+        - main
     depends_on: [ build-docker-codefirst-support-api ]

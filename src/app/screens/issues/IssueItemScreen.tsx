@@ -89,7 +89,7 @@ export default function IssueItemScreen() {
       <View style={styles.container}>
         <IssueDetails issue={issue}/>
         <IssueFieldList fields={issue.fields}/>
-        <CommentSection comments={issue.comments}/>
+        <CommentSection issueId={issue.id} comments={issue.comments}/>
       </View>
     </ScrollView>
   )
