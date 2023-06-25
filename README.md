@@ -80,10 +80,13 @@ feedback ||--|{ question_info : contains
 
 ### Diagramme de classes des entités
 
-Vous pouvez retrouver le diagramme de classes des entités complet [ici](docs/api/class-diagramm.md)
+#### Tickets
+
+Vous pouvez retrouver le diagramme de classes des entités complet [ici](docs/api/class-diagram-issue.md)
 
 ```plantuml
 @startuml
+
 class Category {
 }
 
@@ -102,20 +105,31 @@ class IssueField {
 class IssueModelField {
 }
 
-class IssueModelInfo {
+enum IssueStatus {
+  UNDEFINED
+  OPENED
+  CLOSED
 }
 
-Issue -up-> "category 1" Category
 Issue --> "fields *" IssueField
 Issue --> "comments *" Comment
-Issue -down-> "model 1" IssueModelInfo
+Issue --> "model 1" IssueModel
+Issue --> "status 1" IssueStatus
 
 IssueModel --> "category 1" Category
-IssueModel -left-> "fields *" IssueModelField
+IssueModel --> "fields *" IssueModelField
 
-IssueModel -up-|> IssueModelInfo
-IssueField -up-|> IssueModelField
+IssueField --|> IssueModelField
 
+@enduml
+```
+
+#### Questionnaires
+
+Vous pouvez retrouver le diagramme de classes des entités complet [ici](docs/api/class-diagram-survey.md)
+
+```plantuml
+@startuml
 
 class Survey {
 }
@@ -135,10 +149,11 @@ class Feedback {
 class QuestionInfo {
 }
 
-Survey -up-> "comments *" Question
+Survey --> "questions *" Question
 Feedback --> "question 1" QuestionInfo
-QuestionInfo -right-> "type 1" QuestionType
+QuestionInfo --> "type 1" QuestionType
 
 Question -up-|> QuestionInfo
+
 @enduml
 ```
