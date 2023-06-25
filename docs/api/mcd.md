@@ -70,11 +70,10 @@ entity "question_info" as question_info {
 }
 
 entity "feedback" as feedback {
-  survey feedback
   +_id: ObjectId
+  +survey_id: ObjectId
   +created_at: date
   +author: string
-  question feedback
   +answer: Array<string>
 }
 
@@ -84,11 +83,11 @@ issue }o--|{ issue_field : contains
 
 model_info ||--|{ category : contains
 
-issue_model }o--{ model_field : contains
+issue_model }o--|{ model_field : contains
 issue_model ||--|{ category : contains
 
 
-survey }o--{ question : contains
+survey }o--|{ question : contains
 survey }o--|| feedback : contains
 
 feedback ||--|{ question_info : contains

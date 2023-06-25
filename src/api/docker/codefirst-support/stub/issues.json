@@ -1,0 +1,293 @@
+[
+    {
+        "_id": { "$oid": "6484695df660a9babbe122d0" },
+        "version": 1,
+        "title": "Problème de connexion",
+        "model": {
+            "name": "User",
+            "short_description": "Modèle utilisateur",
+            "description": "Ce modèle représente les utilisateurs du système"
+        },
+        "fields": [
+            {
+                "title": "Nom d'utilisateur",
+                "description": "Le nom d'utilisateur de l'utilisateur",
+                "required": true,
+                "value": "johnDoe"
+            },
+            {
+                "title": "Mot de passe",
+                "description": "Le mot de passe de l'utilisateur",
+                "required": true,
+                "value": "********"
+            },
+            {
+                "title": "Email",
+                "description": "L'adresse email de l'utilisateur",
+                "required": false,
+                "value": "johndoe@example.com"
+            }
+        ],
+        "author": "alice@example.com",
+        "created_at": {
+            "$date": "2023-05-20T09:30:00Z"
+        },
+        "status": "open",
+        "category": {
+            "name": "Bug"
+        },
+        "comments": [
+            {
+                "created_at": {
+                    "$date": "2023-05-20T10:00:00Z"
+                },
+                "author": "bob@example.com",
+                "content": "J'ai le même problème"
+            },
+            {
+                "created_at": {
+                    "$date": "2023-05-21T14:20:00Z"
+                },
+                "author": "charlie@example.com",
+                "content": "Avez-vous essayé de redémarrer votre ordinateur ?"
+            }
+        ]
+    },
+    {
+        "_id": { "$oid": "6484695df660a9babbe122d1" },
+        "version": 1,
+        "title": "Erreur lors de la sauvegarde",
+        "model": {
+            "name": "Product",
+            "short_description": "Modèle produit",
+            "description": "Ce modèle représente les produits du système"
+        },
+        "fields": [
+            {
+                "title": "Nom du produit",
+                "description": "Le nom du produit",
+                "required": true,
+                "value": "Ordinateur portable"
+            },
+            {
+                "title": "Prix",
+                "description": "Le prix du produit",
+                "required": true,
+                "value": "999.99"
+            },
+            {
+                "title": "Description",
+                "description": "La description du produit",
+                "required": false,
+                "value": "Un ordinateur portable puissant et léger"
+            }
+        ],
+        "author": "bob@example.com",
+        "created_at": {
+            "$date": "2023-05-21T15:45:00Z"
+        },
+        "status": "open",
+        "category": {
+            "name": "Bug"
+        },
+        "comments": [
+            {
+                "created_at": {
+                    "$date": "2023-05-21T16:00:00Z"
+                },
+                "author": "alice@example.com",
+                "content": "J'ai également rencontré cette erreur"
+            }
+        ]
+    },
+    {
+        "_id": { "$oid": "6484695df660a9babbe122d2" },
+        "version": 1,
+        "title": "Problème d'affichage des images",
+        "model": {
+            "name": "Article",
+            "short_description": "Modèle d'article",
+            "description": "Ce modèle représente les articles du système"
+        },
+        "fields": [
+            {
+                "title": "Titre de l'article",
+                "description": "Le titre de l'article",
+                "required": true,
+                "value": "Nouvelles fonctionnalités"
+            },
+            {
+                "title": "Contenu de l'article",
+                "description": "Le contenu détaillé de l'article",
+                "required": true,
+                "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac lorem eu odio convallis interdum."
+            }
+        ],
+        "author": "john@example.com",
+        "created_at": {
+            "$date": "2023-05-22T11:20:00Z"
+        },
+        "status": "open",
+        "category": {
+            "name": "Bug"
+        },
+        "comments": [
+            {
+                "created_at": {
+                    "$date": "2023-05-22T12:00:00Z"
+                },
+                "author": "alice@example.com",
+                "content": "Je ne parviens pas à voir les images associées à cet article"
+            }
+        ]
+    },
+    {
+       "_id": { "$oid": "6484695df660a9babbe122d3" },
+        "version": 1,
+        "title": "Erreur de calcul dans le panier",
+        "model": {
+            "name": "Panier",
+            "short_description": "Modèle de panier",
+            "description": "Ce modèle représente les paniers d'achats du système"
+        },
+        "fields": [
+            {
+                "title": "Produits",
+                "description": "La liste des produits dans le panier",
+                "required": true,
+                "value": "Produit A, Produit B, Produit C"
+            },
+            {
+                "title": "Total",
+                "description": "Le montant total du panier",
+                "required": true,
+                "value": "150.99"
+            }
+        ],
+        "author": "charlie@example.com",
+        "created_at": {
+            "$date": "2023-05-23T09:10:00Z"
+        },
+        "status": "closed",
+        "category": {
+            "name": "Bug"
+        },
+        "comments": [
+            {
+                "created_at": {
+                    "$date": "2023-05-23T09:30:00Z"
+                },
+                "author": "alice@example.com",
+                "content": "J'ai également remarqué cette erreur de calcul"
+            },
+            {
+                "created_at": {
+                    "$date": "2023-05-24T14:45:00Z"
+                },
+                "author": "bob@example.com",
+                "content": "Le problème a été corrigé dans la dernière mise à jour"
+            }
+        ]
+    },
+    {
+        "_id": { "$oid": "6484695df660a9babbe122d4" },
+        "version": 1,
+        "title": "Erreur de validation des formulaires",
+        "model": {
+            "name": "Formulaire",
+            "short_description": "Modèle de formulaire",
+            "description": "Ce modèle représente les formulaires du système"
+        },
+        "fields": [
+            {
+                "title": "Nom",
+                "description": "Le nom de l'utilisateur",
+                "required": true,
+                "value": ""
+            },
+            {
+                "title": "Email",
+                "description": "L'adresse email de l'utilisateur",
+                "required": true,
+                "value": "john@example.com"
+            },
+            {
+                "title": "Message",
+                "description": "Le message de l'utilisateur",
+                "required": true,
+                "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            }
+        ],
+        "author": "alice@example.com",
+        "created_at": {
+            "$date": "2023-05-24T10:15:00Z"
+        },
+        "status": "open",
+        "category": {
+            "name": "Bug"
+        },
+        "comments": [
+            {
+                "created_at": {
+                    "$date": "2023-05-24T11:00:00Z"
+                },
+                "author": "bob@example.com",
+                "content": "Les champs du formulaire ne se valident pas correctement"
+            },
+            {
+                "created_at": {
+                    "$date": "2023-05-25T09:30:00Z"
+                },
+                "author": "charlie@example.com",
+                "content": "Je vais regarder cela et trouver une solution"
+            }
+        ]
+    },
+    {
+        "_id": { "$oid": "6484695df660a9babbe122d5" },
+        "version": 1,
+        "title": "Problème d'accès au serveur",
+        "model": {
+            "name": "Serveur",
+            "short_description": "Modèle de serveur",
+            "description": "Ce modèle représente les serveurs du système"
+        },
+        "fields": [
+            {
+                "title": "Adresse IP",
+                "description": "L'adresse IP du serveur",
+                "required": true,
+                "value": "192.168.1.100"
+            },
+            {
+                "title": "Statut",
+                "description": "Le statut actuel du serveur",
+                "required": true,
+                "value": "Hors ligne"
+            },
+            {
+                "title": "Remarques",
+                "description": "Remarques supplémentaires sur le serveur",
+                "required": false,
+                "value": "Le serveur a été redémarré récemment"
+            }
+        ],
+        "author": "bob@example.com",
+        "created_at": {
+            "$date": "2023-05-25T14:50:00Z"
+        },
+        "status": "open",
+        "category": {
+            "name": "Bug"
+        },
+        "comments": [
+            {
+                "created_at": {
+                    "$date": "2023-05-25T15:00:00Z"
+                },
+                "author": "alice@example.com",
+                "content": "Le serveur semble être hors ligne depuis un moment"
+            }
+        ]
+    }
+]

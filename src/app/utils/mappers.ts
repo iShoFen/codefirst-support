@@ -51,7 +51,7 @@ function mapIssue(rawIssue: any): Issue {
   const issueId = rawIssue['id'] as string
   const title = rawIssue['title'] as string
   const author = rawIssue['author'] as string
-  const createdAt = new Date(rawIssue['createdAt'])
+  const createdAt = new Date(rawIssue['created_at'])
   const status = mapStatus(rawIssue['status'])
   const category = mapCategory(rawIssue['category'])
   const model: IssueModelShortInfo = mapIssueModelShortInfo(rawIssue['model'])
@@ -65,7 +65,7 @@ function mapIssueSummary(rawIssueSummary: any): IssueSummary {
   const id = rawIssueSummary['id'] as string
   const title = rawIssueSummary['title'] as string
   const author = rawIssueSummary['author'] as string
-  const createdAt = new Date(rawIssueSummary['createdAt'])
+  const createdAt = new Date(rawIssueSummary['created_at'])
   const status = mapStatus(rawIssueSummary['status'])
   const category = new Category(rawIssueSummary['category'].name)
 
