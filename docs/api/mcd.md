@@ -81,7 +81,7 @@ issue ||-o{ model_info : contains
 issue }o--|| comment : contains
 issue }o--|{ issue_field : contains 
 
-model_info ||--|{ category : contains
+issue ||--|{ category : contains
 
 issue_model }o--|{ model_field : contains
 issue_model ||--|{ category : contains
