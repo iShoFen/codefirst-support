@@ -46,7 +46,7 @@ public class Issue {
         init(title, author, status, fields, comments);
     }
 
-    public Issue(String title, String author, LocalDate createdAt, IssueStatus status, IssueModelInfo model, Category category, List<IssueField> fields) throws IllegalArgumentException {
+    public Issue(String title, String author, LocalDate createdAt, IssueModelInfo model, Category category, List<IssueField> fields) throws IllegalArgumentException {
         this.id = null;
 
         if (createdAt == null) {
@@ -61,7 +61,7 @@ public class Issue {
 
         this.category = category;
 
-        init(title, author, status, fields, new ArrayList<>());
+        init(title, author, IssueStatus.OPEN, fields, new ArrayList<>());
     }
 
     private void init(String title, String author, IssueStatus status, List<IssueField> fields, List<Comment> comments) {
@@ -140,6 +140,14 @@ public class Issue {
         if (field == null) {
             throw new IllegalArgumentException("The field cannot be null");
         }
+        fields.add(field);
+    }
+
+    public void updateField(IssueField field) {
+        if (field == null) {
+            throw new IllegalArgumentException("The field cannot be null");
+        }
+        fields.removeIf(f -> f.getTitle().equals(field.getTitle()));
         fields.add(field);
     }
 }

@@ -6,27 +6,15 @@ import fr.iut.uca.v1.model.surveys.QuestionType;
 
 public abstract class QuestionTypeExtensions {
 
-    public static QuestionTypeEntity toEntity(QuestionType questionType) {
-        try {
-            return QuestionTypeEntity.valueOf(questionType.name());
-        } catch (IllegalArgumentException e) {
-            return QuestionTypeEntity.NONE;
-        }
+    public static QuestionTypeEntity toEntity(QuestionType questionType) throws IllegalArgumentException {
+        return QuestionTypeEntity.valueOf(questionType.name());
     }
 
-    public static QuestionType toModel(QuestionTypeEntity questionTypeEntity) {
-        try {
-            return QuestionType.valueOf(questionTypeEntity.name());
-        } catch (IllegalArgumentException e) {
-            return QuestionType.NONE;
-        }
+    public static QuestionType toModel(QuestionTypeEntity questionTypeEntity) throws IllegalArgumentException {
+        return QuestionType.valueOf(questionTypeEntity.name());
     }
 
-    public static QuestionTypeDTO toDTO(QuestionType questionType) {
-        try {
-            return QuestionTypeDTO.valueOf(questionType.name());
-        } catch (IllegalArgumentException e) {
-            return QuestionTypeDTO.NONE;
-        }
+    public static QuestionTypeDTO toDTO(QuestionType questionType) throws IllegalArgumentException {
+        return QuestionTypeDTO.valueOf(questionType.name());
     }
 }

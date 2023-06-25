@@ -21,7 +21,7 @@ public abstract class IssueExtensions {
     private IssueExtensions() {
     }
 
-    public static IssueEntity toEntity(Issue issue) {
+    public static IssueEntity modelToEntity(Issue issue) {
         var entity = new IssueEntity();
 
         entity.setId(issue.getId());
@@ -36,11 +36,11 @@ public abstract class IssueExtensions {
         return entity;
     }
 
-    public static List<IssueEntity> toEntities(List<Issue> issues) {
-        return issues.stream().map(IssueExtensions::toEntity).toList();
+    public static List<IssueEntity> modelsToEntities(List<Issue> issues) {
+        return issues.stream().map(IssueExtensions::modelToEntity).toList();
     }
 
-    public static Issue issueToModel(IssueEntity entity) {
+    public static Issue entityToModel(IssueEntity entity) {
         return new Issue(
                 entity.getId(),
                 entity.getTitle(),
@@ -54,11 +54,11 @@ public abstract class IssueExtensions {
         );
     }
 
-    public static List<Issue> issuesToModels(List<IssueEntity> entities) {
-        return entities.stream().map(IssueExtensions::issueToModel).toList();
+    public static List<Issue> entitiesToModels(List<IssueEntity> entities) {
+        return entities.stream().map(IssueExtensions::entityToModel).toList();
     }
 
-    public static IssueDTO issueToDTO(Issue issue) {
+    public static IssueDTO modelToDTO(Issue issue) {
         return new IssueDTO(
                 issue.getId(),
                 issue.getTitle(),
@@ -69,11 +69,11 @@ public abstract class IssueExtensions {
         );
     }
 
-    public static List<IssueDTO> issuesToDTOs(List<Issue> issues) {
-        return issues.stream().map(IssueExtensions::issueToDTO).toList();
+    public static List<IssueDTO> modelsToDTOs(List<Issue> issues) {
+        return issues.stream().map(IssueExtensions::modelToDTO).toList();
     }
 
-    public static IssueDetailDTO issueToDetailDTO(Issue issue) {
+    public static IssueDetailDTO modelToDetailDTO(Issue issue) {
         return new IssueDetailDTO(
                 issue.getId(),
                 issue.getTitle(),
@@ -87,7 +87,7 @@ public abstract class IssueExtensions {
         );
     }
 
-    public static List<IssueDetailDTO> issuesToDetailDTOs(List<Issue> issues) {
-        return issues.stream().map(IssueExtensions::issueToDetailDTO).toList();
+    public static List<IssueDetailDTO> modelsToDetailsDTOs(List<Issue> issues) {
+        return issues.stream().map(IssueExtensions::modelToDetailDTO).toList();
     }
 }

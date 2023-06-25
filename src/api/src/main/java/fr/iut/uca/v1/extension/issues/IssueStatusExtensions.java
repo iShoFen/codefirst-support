@@ -8,35 +8,19 @@ public abstract class IssueStatusExtensions {
 
     private IssueStatusExtensions() { }
 
-    public static IssueStatusEntity modelToEntity(IssueStatus status) {
-        try {
-            return IssueStatusEntity.valueOf(status.name());
-        } catch (Exception e) {
-            return IssueStatusEntity.UNDEFINED;
-        }
+    public static IssueStatusEntity modelToEntity(IssueStatus status) throws IllegalArgumentException {
+        return IssueStatusEntity.valueOf(status.name());
     }
 
-    public static IssueStatus entityToModel(IssueStatusEntity status) {
-        try {
-            return IssueStatus.valueOf(status.name());
-        } catch (Exception e) {
-            return IssueStatus.UNDEFINED;
-        }
+    public static IssueStatus entityToModel(IssueStatusEntity status) throws IllegalArgumentException {
+        return IssueStatus.valueOf(status.name());
     }
 
-    public static IssueStatusDTO modelToDTO(IssueStatus status) {
-        try {
-            return IssueStatusDTO.valueOf(status.name());
-        } catch (Exception e) {
-            return IssueStatusDTO.UNDEFINED;
-        }
+    public static IssueStatusDTO modelToDTO(IssueStatus status) throws IllegalArgumentException {
+        return IssueStatusDTO.valueOf(status.name());
     }
 
-    public static IssueStatus dtoToModel(IssueStatusDTO status) {
-        try {
-            return IssueStatus.valueOf(status.name());
-        } catch (Exception e) {
-            return IssueStatus.UNDEFINED;
-        }
+    public static IssueStatus dtoToModel(IssueStatusDTO status) throws IllegalArgumentException {
+        return IssueStatus.valueOf(status.name());
     }
 }

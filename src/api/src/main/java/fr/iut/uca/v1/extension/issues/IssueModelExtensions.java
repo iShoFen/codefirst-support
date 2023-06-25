@@ -37,7 +37,7 @@ public abstract class IssueModelExtensions {
         return issueModels.stream().map(IssueModelExtensions::toEntity).toList();
     }
 
-    public static IssueModel issueModelEntityToModel(IssueModelEntity issueModelEntity) {
+    public static IssueModel entityToModel(IssueModelEntity issueModelEntity) {
         return new IssueModel(
                 issueModelEntity.getId(),
                 issueModelEntity.getName(),
@@ -48,11 +48,11 @@ public abstract class IssueModelExtensions {
         );
     }
 
-    public static List<IssueModel> issueModelEntitiesToModels(List<IssueModelEntity> issueModelEntities) {
-        return issueModelEntities.stream().map(IssueModelExtensions::issueModelEntityToModel).toList();
+    public static List<IssueModel> entitiesToModels(List<IssueModelEntity> issueModelEntities) {
+        return issueModelEntities.stream().map(IssueModelExtensions::entityToModel).toList();
     }
 
-    public static IssueModelDTO issueModelToDTO(IssueModel model) {
+    public static IssueModelDTO modelToDTO(IssueModel model) {
         return new IssueModelDTO(
                 model.getId(),
                 model.getName(),
@@ -62,7 +62,7 @@ public abstract class IssueModelExtensions {
         );
     }
 
-    public static IssueModelDetailDTO issueModelToDetailDTO(IssueModel model) {
+    public static IssueModelDetailDTO modelToDetailDTO(IssueModel model) {
         return new IssueModelDetailDTO(
                 model.getId(),
                 model.getName(),
@@ -73,9 +73,9 @@ public abstract class IssueModelExtensions {
         );
     }
 
-    public static List<IssueModelDTO> issueModelsToDTOs(List<IssueModel> issueModels) {
+    public static List<IssueModelDTO> modelsToDTOS(List<IssueModel> issueModels) {
         List<IssueModelDTO> dtos = new ArrayList<>();
-        issueModels.forEach(model -> dtos.add(issueModelToDTO(model)));
+        issueModels.forEach(model -> dtos.add(modelToDTO(model)));
         return dtos;
     }
 }

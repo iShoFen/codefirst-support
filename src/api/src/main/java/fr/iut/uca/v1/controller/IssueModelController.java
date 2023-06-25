@@ -30,7 +30,7 @@ public class IssueModelController {
                            @QueryParam("count") int count) {
         try {
             List<IssueModel> issueModels = issueModelService.getAll(index, count);
-            List<IssueModelDTO> dtos = IssueModelExtensions.issueModelsToDTOs(issueModels);
+            List<IssueModelDTO> dtos = IssueModelExtensions.modelsToDTOS(issueModels);
             return Response.ok(dtos).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -42,7 +42,7 @@ public class IssueModelController {
     public Response getOne(@PathParam("id") String id) {
         try {
             IssueModel issueModel = issueModelService.getOne(id);
-            IssueModelDetailDTO detailDTO = IssueModelExtensions.issueModelToDetailDTO(issueModel);
+            IssueModelDetailDTO detailDTO = IssueModelExtensions.modelToDetailDTO(issueModel);
             return Response.ok(detailDTO).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -56,7 +56,7 @@ public class IssueModelController {
             List<IssueModelField> fields = IssueModelFieldExtensions.issueModelFieldDTOsToModels(issueModelInsertDTO.fields());
             IssueModel issueModel = issueModelService.create(issueModelInsertDTO.name(), issueModelInsertDTO.shortDescription(), issueModelInsertDTO.description(), category, fields);
 
-            IssueModelDetailDTO issueModelDTO = IssueModelExtensions.issueModelToDetailDTO(issueModel);
+            IssueModelDetailDTO issueModelDTO = IssueModelExtensions.modelToDetailDTO(issueModel);
             return Response.ok(issueModelDTO).build();
         } catch (IllegalArgumentException | InsertException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

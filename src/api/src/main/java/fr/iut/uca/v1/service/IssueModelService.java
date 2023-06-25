@@ -30,7 +30,7 @@ public class IssueModelService {
     public List<IssueModel> getAll(int index, int count) {
         List<IssueModelEntity> entities = issueModelRepository.getItems(index, count);
 
-        return IssueModelExtensions.issueModelEntitiesToModels(entities);
+        return IssueModelExtensions.entitiesToModels(entities);
     }
 
     public IssueModel getOne(String id)
@@ -42,7 +42,7 @@ public class IssueModelService {
             throw new NotFoundException("The issue model cannot be found");
         }
 
-        return IssueModelExtensions.issueModelEntityToModel(optionalIssueModel.get());
+        return IssueModelExtensions.entityToModel(optionalIssueModel.get());
     }
 
     public IssueModel create(String name, String shortDescription, String description, Category category, List<IssueModelField> fields) throws InsertException {
@@ -64,7 +64,7 @@ public class IssueModelService {
             throw new InsertException("An error occured while inserting the issue model");
         }
 
-        return IssueModelExtensions.issueModelEntityToModel(result.get());
+        return IssueModelExtensions.entityToModel(result.get());
     }
 
     public void delete(String id)
