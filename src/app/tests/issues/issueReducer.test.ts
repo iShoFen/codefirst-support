@@ -6,7 +6,7 @@ import {Issue} from "../../model/issues/Issue";
 import {ISSUE_LIST, ISSUE_SELECTED} from "../../data/stub";
 
 
-describe('test reducer', () => {
+describe('test issue reducer', () => {
 
   let initialState: IssueReducerState = {
     issues: [],

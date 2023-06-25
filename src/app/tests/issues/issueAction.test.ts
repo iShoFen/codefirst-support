@@ -5,7 +5,7 @@ import {setIssueLoading, setIssues, setSelectedIssue} from "../../redux/actions/
 import {Issue} from "../../model/issues/Issue";
 import {ISSUE_LIST, ISSUE_SELECTED} from "../../data/stub";
 
-describe('tests actions', () => {
+describe('test issue actions', () => {
 
   it('should create an action with SET_ISSUES type', () => {
     const payload: IssueSummary[] = ISSUE_LIST
