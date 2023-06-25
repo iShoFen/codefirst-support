@@ -1,31 +1,50 @@
 import {CSTheme} from "../../data/themes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AppDispatch} from "../types";
-import {setTheme} from "../actions/userAction";
+import {setLoggedUser, setTheme} from "../actions/userAction";
+import {User} from "../../model/User";
 
 const THEME_KEY = 'app_theme'
+const LOGGED_USER_KEY = 'logged_user'
 
-const storeTheme = async (theme: CSTheme): Promise<void> => {
+const storeToAsyncStorage = async (key: string, value: any): Promise<void> => {
   try {
-    const jsonTheme = JSON.stringify(theme)
-    await AsyncStorage.setItem(THEME_KEY, jsonTheme)
+    const json = JSON.stringify(value)
+    await AsyncStorage.setItem(key, json)
   } catch (error) {
-    console.error('An error occured while saving theme to AsyncStorage', error)
+    console.error('An error occured while saving value to AsyncStorage', error)
+  }
+}
+
+const getValueFromAsyncStorage = async (key: string): Promise<any> => {
+  try {
+    const json = await AsyncStorage.getItem(key)
+    return json !== null ? JSON.parse(json) : null
+  } catch (error) {
+    console.error('An error occured while retrieving from AsyncStorage', error)
   }
 }
 
 export const saveTheme = (theme: CSTheme) => {
   return async (dispatch: AppDispatch) => {
-    await storeTheme(theme)
+    await storeToAsyncStorage(THEME_KEY, theme)
     dispatch(setTheme(theme))
   }
 }
 
-export const getTheme = async (): Promise<CSTheme | undefined> => {
-  try {
-    const jsonTheme = await AsyncStorage.getItem(THEME_KEY)
-    return jsonTheme !== null ? JSON.parse(jsonTheme) : null
-  } catch (error) {
-    console.error('An error occured while retrieving theme to AsyncStorage', error)
+export async function getTheme(): Promise<CSTheme | undefined> {
+  return await getValueFromAsyncStorage(THEME_KEY)
+}
+
+export const saveLoggedUser = (user: User) => {
+  return async (dispatch: AppDispatch) => {
+    await storeToAsyncStorage(LOGGED_USER_KEY, user)
+    dispatch(setLoggedUser(user))
   }
+}
+
+export async function getLoggedUser(): Promise<User | undefined> {
+  const json = await getValueFromAsyncStorage(LOGGED_USER_KEY)
+  if(!json) return
+  return new User(json['_email'], json['_image'], json['_isAdmin'])
 }

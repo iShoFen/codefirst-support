@@ -19,8 +19,8 @@ export default function RootScreen() {
     // load theme for AsyncStorage and save it to redux
     const loadTheme = async () => {
       const theme = await getTheme()
-      if(theme) {
-         dispatch(setTheme(theme))
+      if (theme) {
+        dispatch(setTheme(theme))
       }
     }
     void loadTheme()
@@ -28,9 +28,9 @@ export default function RootScreen() {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
-      <StatusBar backgroundColor={colors.background} barStyle={dark ? "light-content": "dark-content"} />
+      <StatusBar backgroundColor={colors.background} barStyle={dark ? "light-content" : "dark-content"}/>
       <NavigationContainer theme={navigationTheme}>
-        <StackLoginNavigation />
+        <StackLoginNavigation/>
       </NavigationContainer>
     </SafeAreaView>
   )
