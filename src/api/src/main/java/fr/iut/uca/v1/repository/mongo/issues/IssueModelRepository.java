@@ -1,7 +1,6 @@
 package fr.iut.uca.v1.repository.mongo.issues;
 
 import com.mongodb.client.model.Filters;
-import fr.iut.uca.v1.entity.issues.CategoryEntity;
 import fr.iut.uca.v1.repository.mongo.DatabaseClient;
 import fr.iut.uca.v1.entity.issues.IssueModelEntity;
 import fr.iut.uca.qualifier.RepositoryQualifier;
@@ -41,10 +40,5 @@ public class IssueModelRepository extends GenericRepository<IssueModelEntity> im
     public List<IssueModelEntity> getIssueModelsByNameContaining(String nameFilter, int index, int count) {
         var filter = Filters.regex(NAME, nameFilter);
         return collection.find(IssueModelEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
-    }
-
-    @Override
-    public List<CategoryEntity> getCategories() {
-        return collection.distinct(CATEGORY, CategoryEntity.class).into(new ArrayList<>());
     }
 }

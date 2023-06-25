@@ -14,18 +14,13 @@ public interface IIssueModelRepository extends IGenericRepository<IssueModelEnti
 
     /**
      * Get a list of issue models by name
+     *
      * @param nameFilter Name filter
      * @param index Index of the offset
      * @param count Number of items to get
      * @return List of issue models matching the name filter
      */
     List<IssueModelEntity> getIssueModelsByNameContaining(String nameFilter, int index, int count);
-
-    /**
-     * Get a list of all the categories
-     * @return List of all the categories
-     */
-    List<CategoryEntity> getCategories();
 }
 
 

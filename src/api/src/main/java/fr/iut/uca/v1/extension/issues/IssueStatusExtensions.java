@@ -8,7 +8,7 @@ public abstract class IssueStatusExtensions {
 
     private IssueStatusExtensions() { }
 
-    public static IssueStatusEntity toEntity(IssueStatus status) {
+    public static IssueStatusEntity modelToEntity(IssueStatus status) {
         try {
             return IssueStatusEntity.valueOf(status.name());
         } catch (Exception e) {
@@ -16,7 +16,7 @@ public abstract class IssueStatusExtensions {
         }
     }
 
-    public static IssueStatus toModel(IssueStatusEntity status) {
+    public static IssueStatus entityToModel(IssueStatusEntity status) {
         try {
             return IssueStatus.valueOf(status.name());
         } catch (Exception e) {
@@ -24,11 +24,19 @@ public abstract class IssueStatusExtensions {
         }
     }
 
-    public static IssueStatusDTO statusToDTO(IssueStatus status) {
+    public static IssueStatusDTO modelToDTO(IssueStatus status) {
         try {
             return IssueStatusDTO.valueOf(status.name());
         } catch (Exception e) {
             return IssueStatusDTO.UNDEFINED;
+        }
+    }
+
+    public static IssueStatus dtoToModel(IssueStatusDTO status) {
+        try {
+            return IssueStatus.valueOf(status.name());
+        } catch (Exception e) {
+            return IssueStatus.UNDEFINED;
         }
     }
 }

@@ -28,7 +28,7 @@ public abstract class IssueExtensions {
         entity.setTitle(issue.getTitle());
         entity.setAuthor(issue.getAuthor());
         entity.setCreatedAt(issue.getCreatedAt());
-        entity.setStatus(IssueStatusExtensions.toEntity(issue.getStatus()));
+        entity.setStatus(IssueStatusExtensions.modelToEntity(issue.getStatus()));
         entity.setModel(IssueModelInfoExtensions.issueModelInfoToEntity(issue.getModel()));
         entity.setComments(CommentExtensions.toEntities(issue.getComments()));
         entity.setFields(IssueFieldExtensions.toEntities(issue.getFields()));
@@ -46,7 +46,7 @@ public abstract class IssueExtensions {
                 entity.getTitle(),
                 entity.getAuthor(),
                 entity.getCreatedAt(),
-                IssueStatusExtensions.toModel(entity.getStatus()),
+                IssueStatusExtensions.entityToModel(entity.getStatus()),
                 IssueModelInfoExtensions.issueModelInfoEntityToModel(entity.getModel()),
                 CategoryExtensions.toModel(entity.getCategory()),
                 IssueFieldExtensions.issueFieldEntitiesToModels(entity.getFields()),
@@ -65,7 +65,7 @@ public abstract class IssueExtensions {
                 issue.getAuthor(),
                 issue.getCreatedAt(),
                 CategoryExtensions.categoryToDTO(issue.getCategory()),
-                IssueStatusExtensions.statusToDTO(issue.getStatus())
+                IssueStatusExtensions.modelToDTO(issue.getStatus())
         );
     }
 
@@ -80,7 +80,7 @@ public abstract class IssueExtensions {
                 issue.getAuthor(),
                 issue.getCreatedAt(),
                 CategoryExtensions.categoryToDTO(issue.getCategory()),
-                IssueStatusExtensions.statusToDTO(issue.getStatus()),
+                IssueStatusExtensions.modelToDTO(issue.getStatus()),
                 IssueModelInfoExtensions.issueModelInfoToDTO(issue.getModel()),
                 IssueFieldExtensions.issueFieldsToDTOs(issue.getFields()),
                 CommentExtensions.commentsToDTOs(issue.getComments())

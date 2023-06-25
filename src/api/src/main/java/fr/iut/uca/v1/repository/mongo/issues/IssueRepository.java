@@ -71,45 +71,45 @@ public class IssueRepository extends GenericRepository<IssueEntity> implements I
     }
 
     @Override
-    public List<IssueEntity> getItemsByStatus(String status, int index, int count) {
-        var filter = Filters.eq(STATUS, status);
+    public List<IssueEntity> getItemsByStatus(IssueStatusEntity status, int index, int count) {
+        var filter = Filters.eq(STATUS, status.name().toLowerCase());
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
 
     @Override
-    public List<IssueEntity> getIssuesByCreatedDate(LocalDate createdAt, String status, int index, int count) {
-        var filter = Filters.and(Filters.eq(STATUS, status), Filters.eq(CREATED_AT, createdAt));
+    public List<IssueEntity> getIssuesByCreatedDate(LocalDate createdAt, IssueStatusEntity status, int index, int count) {
+        var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.eq(CREATED_AT, createdAt));
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
-    public List<IssueEntity> getIssuesByCreatedDateBefore(LocalDate createdAt, String status, int index, int count) {
-        var filter = Filters.and(Filters.eq(STATUS, status), Filters.lt(CREATED_AT, createdAt));
+    public List<IssueEntity> getIssuesByCreatedDateBefore(LocalDate createdAt, IssueStatusEntity status, int index, int count) {
+        var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.lt(CREATED_AT, createdAt));
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
-    public List<IssueEntity> getIssuesByCreatedDateAfter(LocalDate createdAt, String status, int index, int count) {
-        var filter = Filters.and(Filters.eq(STATUS, status), Filters.gt(CREATED_AT, createdAt));
+    public List<IssueEntity> getIssuesByCreatedDateAfter(LocalDate createdAt, IssueStatusEntity status, int index, int count) {
+        var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.gt(CREATED_AT, createdAt));
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
-    public List<IssueEntity> getIssuesByCreatedDateBetween(LocalDate start, String status, LocalDate end, int index, int count) {
-        var filter = Filters.and(Filters.eq(STATUS, status), Filters.gte(CREATED_AT, start), Filters.lte(CREATED_AT, end));
+    public List<IssueEntity> getIssuesByCreatedDateBetween(LocalDate start, LocalDate end, IssueStatusEntity status, int index, int count) {
+        var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.gte(CREATED_AT, start), Filters.lte(CREATED_AT, end));
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
-    public List<IssueEntity> getIssuesWithTitleContaining(String title, String status, int index, int count) {
-        var filter = Filters.and(Filters.eq(STATUS, status), Filters.regex(TITLE, title));
+    public List<IssueEntity> getIssuesWithTitleContaining(String title, IssueStatusEntity status, int index, int count) {
+        var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.regex(TITLE, title));
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 
     @Override
-    public List<IssueEntity> getIssuesOfAuthor(String author, String status, int index, int count) {
-        var filter = Filters.and(Filters.eq(STATUS, status), Filters.eq(AUTHOR, author));
+    public List<IssueEntity> getIssuesOfAuthor(String author, IssueStatusEntity status, int index, int count) {
+        var filter = Filters.and(Filters.eq(STATUS, status.name().toLowerCase()), Filters.eq(AUTHOR, author));
         return collection.find(IssueEntity.class).filter(filter).skip(index).limit(count).into(new ArrayList<>());
     }
 }
