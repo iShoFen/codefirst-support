@@ -1,14 +1,11 @@
 import {
   Alert,
-  FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View
 } from "react-native";
-import CommentItem from "../../components/issues/comments/CommentItem";
-import CSCapsule from "../../components/commons/CSCapsule";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {IssueItemRouteProps} from "../../navigation/types/RouteProps";
 import CSText from "../../components/commons/CSText";
@@ -22,6 +19,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {deleteIssue} from "../../hooks/issues";
 import IssueFieldList from "../../components/issues/fields/IssueFieldList";
 import IssueDetails from "../../components/issues/IssueDetails";
+import CommentSection from "../../components/issues/comments/CommentSection";
 
 export default function IssueItemScreen() {
   const navigation = useNavigation<IssueStackNavigationProp>()
@@ -79,36 +77,19 @@ export default function IssueItemScreen() {
     }
   }, [dispatch, id]);
 
-  if (loading) {
-    return <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <CSText text="Chargement..." type="bold"/>
-      </View>
-    </SafeAreaView>
-  } else if (!issue) {
-    return <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <CSText text="Impossible de récupérer le ticket car il n'existe pas" color="red" type="h1"/>
-      </View>
-    </SafeAreaView>
+  if (loading || !issue) {
+    const text = loading ? "Chargement..." : "Impossible de récupérer le ticket car il n'existe pas"
+    return <View style={styles.container}>
+      <CSText text={text} type="bold" color={colors.danger}/>
+    </View>
   }
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={styles.container}>
         <IssueDetails issue={issue}/>
-
         <IssueFieldList fields={issue.fields}/>
-
-        <CSText text="Commentaires" type="h2" style={styles.commentHeader}/>
-
-        <ScrollView horizontal contentContainerStyle={{flex: 1}}>
-          <FlatList data={issue.comments}
-                    renderItem={
-                      ({item}) => <CommentItem style={styles.comment} comment={item}/>
-                    }
-          />
-        </ScrollView>
+        <CommentSection comments={issue.comments}/>
       </View>
     </ScrollView>
   )
@@ -118,12 +99,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 8
-  },
-  comment: {
-    marginVertical: 4,
-  },
-  commentHeader: {
-    marginTop: 16,
-    marginBottom: 8
   }
 })
