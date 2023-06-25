@@ -150,11 +150,15 @@ public class Issue {
         fields.add(field);
     }
 
-    public void updateField(IssueField field) {
+    public void updateField(IssueField field) throws IllegalArgumentException {
         if (field == null) {
             throw new IllegalArgumentException("The field cannot be null");
         }
-        fields.removeIf(f -> f.getTitle().equals(field.getTitle()));
-        fields.add(field);
+
+        if (!fields.contains(field)) {
+            addField(field);
+        }
+
+        fields.set(fields.indexOf(field), field);
     }
 }

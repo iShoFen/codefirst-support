@@ -54,9 +54,16 @@ public class IssueModel extends IssueModelInfo {
         return Collections.unmodifiableList(fields);
     }
 
-    public void updateField(IssueModelField field) {
-        this.fields.removeIf(f -> f.equals(field));
-        this.fields.add(field);
+    public void updateField(IssueModelField field) throws IllegalArgumentException {
+        if (field == null) {
+            throw new IllegalArgumentException("The field cannot be null.");
+        }
+
+        if (!fields.contains(field)) {
+            fields.add(field);
+        }
+
+        fields.set(fields.indexOf(field), field);
     }
 
     @Override
