@@ -7,6 +7,13 @@ trigger:
     - push
 
 steps:
+  # App
+  - name: tests-for-react-native-app
+    image: cfreak/jest:latest
+    commands:
+      - cd src/app/
+      - yarn
+      - yarn test
 
   # Api
   - name: build-docker-codefirst-support-api
