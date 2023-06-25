@@ -3,13 +3,13 @@
         "_id": { "$oid": "64846962f660a9babbe122d7" },
         "version": 1,
         "created_at": {
-            "$date": "2023-05-25T00:00:00.000Z"
+            "$date": "2023-05-25"
         },
         "published_at": {
-            "$date": "2023-05-26T00:00:00.000Z"
+            "$date": "2023-05-26"
         },
         "end_at": {
-            "$date": "2023-06-02T00:00:00.000Z"
+            "$date": "2023-06-02"
         },
         "title": "Sondage sur la satisfaction des utilisateurs",
         "description": "Ce sondage vise à recueillir des informations sur la satisfaction des utilisateurs",
@@ -48,13 +48,13 @@
         "_id": { "$oid": "64846962f660a9babbe122d8" },
         "version": 1,
         "created_at": {
-            "$date": "2023-05-25T00:00:00.000Z"
+            "$date": "2023-05-25"
         },
         "published_at": {
-            "$date": "2023-05-26T00:00:00.000Z"
+            "$date": "2023-05-26"
         },
         "end_at": {
-            "$date": "2023-06-02T00:00:00.000Z"
+            "$date": "2023-06-02"
         },
         "title": "Enquête de satisfaction des clients",
         "description": "Cette enquête vise à recueillir des feedbacks des clients sur nos produits et services",
@@ -90,13 +90,13 @@
         "_id": { "$oid": "64846962f660a9babbe122d9" },
         "version": 1,
         "created_at": {
-            "$date": "2023-05-25T00:00:00.000Z"
+            "$date": "2023-05-25"
         },
         "published_at": {
-            "$date": "2023-05-26T00:00:00.000Z"
+            "$date": "2023-05-26"
         },
         "end_at": {
-            "$date": "2023-06-02T00:00:00.000Z"
+            "$date": "2023-06-02"
         },
         "title": "Sondage sur les habitudes alimentaires",
         "description": "Ce sondage vise à collecter des informations sur les habitudes alimentaires des participants",

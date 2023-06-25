@@ -2,10 +2,7 @@ package fr.iut.uca.v1.controller;
 
 import fr.iut.uca.exception.UpdateException;
 import fr.iut.uca.v1.dto.issues.CommentDTO;
-import fr.iut.uca.v1.extension.issues.CommentExtensions;
-import fr.iut.uca.v1.model.issues.Comment;
 import fr.iut.uca.v1.service.CommentService;
-import fr.iut.uca.v1.service.IssueService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

@@ -4,7 +4,6 @@ import fr.iut.uca.exception.InsertException;
 import fr.iut.uca.exception.UpdateException;
 import fr.iut.uca.v1.dto.surveys.feedback.*;
 import fr.iut.uca.v1.service.FeedbackService;
-import fr.iut.uca.v1.service.SurveyService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
